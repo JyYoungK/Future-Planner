@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Transition } from "@headlessui/react";
+import ChildrenGoal from "./children/childrenGoal";
 import "./App.css";
 
 function FadeTransition({ show, children }) {
@@ -30,13 +30,14 @@ function App() {
   if (step === 1) {
     content = (
       <div className="fixed inset-0 z-10 flex items-center justify-center">
-        <div className="bg-white p-10 rounded-lg shadow-md">
-          <h1 className="text-3xl font-bold mb-5">Welcome</h1>
-          <h1 className="text-md font-bold mb-5">
-            This app will help you reach your financial goal
+        <div className="rounded-lg bg-white p-10 shadow-md">
+          <h1 className="mb-5 text-3xl font-bold">Welcome</h1>
+          <h1 className="text-md mb-5 font-bold">
+            This app will help you plan your career, future and reach your
+            financial goal
           </h1>
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out"
+            className="rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
             onClick={() => handleButtonClick(2)}
           >
             Continue
@@ -47,24 +48,24 @@ function App() {
   } else if (step === 2) {
     content = (
       <div className="fixed inset-0 z-10 flex items-center justify-center">
-        <div className="bg-white p-10 rounded-lg shadow-md">
-          <h1 className="text-3xl font-bold mb-5">Select your age</h1>
+        <div className="rounded-lg bg-white p-10 shadow-md">
+          <h1 className="mb-5 text-3xl font-bold">Select your age</h1>
           <div className="space-x-4">
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out"
+              className="rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
               onClick={() => handleButtonClick(3)}
             >
               Children
             </button>
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out"
-              onClick={() => handleButtonClick(3)}
+              className="rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
+              onClick={() => handleButtonClick(4)}
             >
               Adult
             </button>
           </div>
           <button
-            className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md mt-5 hover:bg-gray-400 transition duration-300 ease-in-out"
+            className="mt-5 rounded-md bg-gray-300 px-4 py-2 text-gray-700 transition duration-300 ease-in-out hover:bg-gray-400"
             onClick={() => handleButtonClick(1)}
           >
             Back
@@ -73,21 +74,11 @@ function App() {
       </div>
     );
   } else if (step === 3) {
-    content = (
-      <>
-        <h1 className="text-3xl font-bold mb-5">Thanks for choosing</h1>
-        <button
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out"
-          onClick={() => handleButtonClick(1)}
-        >
-          Back
-        </button>
-      </>
-    );
+    content = <ChildrenGoal handleButtonClick={handleButtonClick} />;
   }
 
   return (
-    <div className=" bg-white flex items-center justify-center">
+    <div className=" flex items-center justify-center bg-white">
       <FadeTransition show={showContent}>{content}</FadeTransition>
     </div>
   );
