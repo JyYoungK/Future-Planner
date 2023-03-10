@@ -101,9 +101,10 @@ function childrenGoal({ handleButtonClick }) {
         <div className="mx-5 text-lg font-bold">By</div>
         <input
           type="number"
-          placeholder="Age"
+          placeholder="Year"
           min="0"
           max="99"
+          maxLength="2"
           className="focus:shadow-outline appearance-none rounded border border-gray-400 bg-white px-4 py-2 leading-tight shadow hover:border-gray-500 focus:outline-none"
         />
       </div>
