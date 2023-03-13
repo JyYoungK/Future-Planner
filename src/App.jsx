@@ -1,19 +1,8 @@
 import { useState } from "react";
 import Country from "./pages/countrySelect";
 import EarnGoal from "./pages/earnGoal";
+import FadeTransition from "./components/fadeTransition";
 import "./App.css";
-
-function FadeTransition({ show, children, step }) {
-  return (
-    <div
-      className={`fixed inset-0 z-10 flex transition-opacity duration-500 ${
-        show ? "opacity-100" : "opacity-0"
-      } ${step !== 3 ? "items-center justify-center" : ""}`}
-    >
-      {children}
-    </div>
-  );
-}
 
 function App() {
   const [step, setStep] = useState(1);

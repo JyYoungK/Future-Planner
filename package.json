@@ -9,8 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@headlessui/react": "^1.7.13",
+    "@mui/icons-material": "^5.11.11",
+    "@mui/material": "^5.11.12",
+    "@mui/styled-engine": "^5.11.11",
+    "apexcharts": "^3.37.1",
     "react": "^18.2.0",
+    "react-apexcharts": "^1.4.0",
     "react-dom": "^18.2.0",
     "semantic-ui-css": "^2.5.0",
     "semantic-ui-react": "^2.1.4"
