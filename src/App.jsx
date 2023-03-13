@@ -3,12 +3,12 @@ import Country from "./pages/countrySelect";
 import EarnGoal from "./pages/earnGoal";
 import "./App.css";
 
-function FadeTransition({ show, children }) {
+function FadeTransition({ show, children, step }) {
   return (
     <div
-      className={`fixed inset-0 z-10 flex items-center justify-center transition-opacity duration-500 ${
+      className={`fixed inset-0 z-10 flex transition-opacity duration-500 ${
         show ? "opacity-100" : "opacity-0"
-      }`}
+      } ${step !== 3 ? "items-center justify-center" : ""}`}
     >
       {children}
     </div>
@@ -19,8 +19,6 @@ function App() {
   const [step, setStep] = useState(1);
   const [showContent, setShowContent] = useState(true);
   const [country, setCountry] = useState("");
-
-  console.log(country);
 
   const handleButtonClick = (nextStep) => {
     setShowContent(false);
@@ -88,8 +86,10 @@ function App() {
   }
 
   return (
-    <div className=" flex items-center justify-center bg-white">
-      <FadeTransition show={showContent}>{content}</FadeTransition>
+    <div className=" flex  bg-white">
+      <FadeTransition step={step} show={showContent}>
+        {content}
+      </FadeTransition>
     </div>
   );
 }
