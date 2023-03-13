@@ -1,5 +1,6 @@
 import { useState } from "react";
-import ChildrenGoal from "./children/childrenGoal";
+import Country from "./pages/countrySelect";
+import EarnGoal from "./pages/earnGoal";
 import "./App.css";
 
 function FadeTransition({ show, children }) {
@@ -17,6 +18,9 @@ function FadeTransition({ show, children }) {
 function App() {
   const [step, setStep] = useState(1);
   const [showContent, setShowContent] = useState(true);
+  const [country, setCountry] = useState("");
+
+  console.log(country);
 
   const handleButtonClick = (nextStep) => {
     setShowContent(false);
@@ -32,7 +36,7 @@ function App() {
       <div className="fixed inset-0 z-10 flex items-center justify-center">
         <div className="rounded-lg bg-white p-10 shadow-md">
           <h1 className="mb-5 text-3xl font-bold">Welcome</h1>
-          <h1 className="text-md mb-5 font-bold">
+          <h1 className="mb-5 text-lg font-bold">
             This app will help you plan your career, future and reach your
             financial goal
           </h1>
@@ -46,6 +50,14 @@ function App() {
       </div>
     );
   } else if (step === 2) {
+    content = (
+      <Country handleButtonClick={handleButtonClick} setCountry={setCountry} />
+    );
+  } else if (step === 3) {
+    content = (
+      <EarnGoal handleButtonClick={handleButtonClick} country={country} />
+    );
+  } else if (step === 4) {
     content = (
       <div className="fixed inset-0 z-10 flex items-center justify-center">
         <div className="rounded-lg bg-white p-10 shadow-md">
@@ -73,8 +85,6 @@ function App() {
         </div>
       </div>
     );
-  } else if (step === 3) {
-    content = <ChildrenGoal handleButtonClick={handleButtonClick} />;
   }
 
   return (

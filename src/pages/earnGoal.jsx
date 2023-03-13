@@ -1,8 +1,8 @@
 import { useState } from "react";
 import euroFlag from "../assets/euro.png";
 
-function childrenGoal({ handleButtonClick }) {
-  const [currency, setCurrency] = useState("USD");
+function earnGoal({ handleButtonClick, country }) {
+  const [currency, setCurrency] = useState("CAD");
   const [amount, setAmount] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
@@ -35,15 +35,12 @@ function childrenGoal({ handleButtonClick }) {
   };
 
   const top20Currencies = [
+    { code: "CAD", flag: "🇨🇦" },
     { code: "USD", flag: "🇺🇸" },
-    {
-      code: "EUR",
-      flag: euroFlag,
-    },
+    { code: "EUR", flag: "🇪🇺" },
     { code: "JPY", flag: "🇯🇵" },
     { code: "GBP", flag: "🇬🇧" },
     { code: "AUD", flag: "🇦🇺" },
-    { code: "CAD", flag: "🇨🇦" },
     { code: "CHF", flag: "🇨🇭" },
     { code: "CNY", flag: "🇨🇳" },
     { code: "HKD", flag: "🇭🇰" },
@@ -108,6 +105,7 @@ function childrenGoal({ handleButtonClick }) {
           className="focus:shadow-outline appearance-none rounded border border-gray-400 bg-white px-4 py-2 leading-tight shadow hover:border-gray-500 focus:outline-none"
         />
       </div>
+      <div className="text-lg font-bold"> This amount value in {country}</div>
       <button
         className="rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
         onClick={() => handleButtonClick(2)}
@@ -118,4 +116,4 @@ function childrenGoal({ handleButtonClick }) {
   );
 }
 
-export default childrenGoal;
+export default earnGoal;
