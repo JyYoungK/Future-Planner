@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Box } from "@mui/material";
 import PieChart from "../components/pieChart";
 import { top20Currencies } from "../constant/topCurrencies";
+import Category from "./category";
 
 function earnGoal({ handleButtonClick, country }) {
   const [currency, setCurrency] = useState("CAD");
@@ -21,12 +22,13 @@ function earnGoal({ handleButtonClick, country }) {
     if (inputAmount > 1000000000) {
       inputAmount = 999999999;
     }
-    setTotalAmount(
-      inputAmount.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-      })
-    );
+    // setTotalAmount(
+    //   inputAmount.toLocaleString("en-US", {
+    //     style: "currency",
+    //     currency: "USD",
+    //   })
+    // );
+    setTotalAmount(inputAmount);
     setAmount(inputAmount);
   };
 
@@ -43,6 +45,14 @@ function earnGoal({ handleButtonClick, country }) {
     }
   };
 
+  const formatCurrency2 = (value) => {
+    let stringAmount = value.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+    return stringAmount;
+  };
+
   const pieChartItems = [
     { title: "House & Utilities", value: 684, series: [75, 15] },
     { title: "Food", value: 684, series: [75, 25] },
@@ -56,80 +66,76 @@ function earnGoal({ handleButtonClick, country }) {
 
   const handlePieChartClick = (category) => {
     setCategory(category);
-    switch (category) {
-      case "House & Utilities":
-        setContent(<div>Content for House category</div>);
-        break;
-      case "Personal Spending":
-        setContent(<div>Content for Personal category</div>);
-        break;
-      case "Medical & Healthcare":
-        setContent(<div>Content for Medical category</div>);
-        break;
-      case "Saving & Investing":
-        setContent(<div>Content for Saving category</div>);
-        break;
-      case "Food":
-        setContent(<div>Content for Food category</div>);
-        break;
-      case "Travel & Transportation":
-        setContent(<div>Content for Travel category</div>);
-        break;
-      case "Insurance":
-        setContent(<div>Content for Insurance category</div>);
-        break;
-      case "Miscellaneous":
-        setContent(<div>Content for Miscellaneous category</div>);
-        break;
-      default:
-        setContent("");
-        break;
-    }
+    setContent(
+      <div>
+        <Category
+          category={category}
+          currency={currency}
+          totalAmount={totalAmount}
+          setTotalAmount={setTotalAmount}
+        />
+      </div>
+    );
+    // setContent(<div>Content for House category</div>);
   };
 
   return (
     <div className="rounded-lg bg-white p-4 shadow-md">
-      <h1 className="mb-5 text-2xl font-bold">How much do you want to earn?</h1>
-      <div className="mb-5 flex flex-row items-center justify-center">
-        <div className="mr-5 text-lg font-bold">Earn</div>
-        <select
-          value={currency}
-          onChange={handleCurrencyChange}
-          className="focus:shadow-outline appearance-none rounded border border-gray-400 bg-white px-4 py-2 leading-tight shadow hover:border-gray-500 focus:outline-none"
-        >
-          {top20Currencies.map((cur) => (
-            <option key={cur.flag} value={cur.code}>
-              {cur.code}
-            </option>
-          ))}
-        </select>
-        <input
-          type="text"
-          placeholder="Enter amount"
-          min="0"
-          max="1000"
-          step="0.01"
-          value={formatCurrency(amount)}
-          onChange={handleAmountChange}
-          onFocus={() => setIsTyping(true)}
-          onBlur={() => setIsTyping(false)}
-          className="focus:shadow-outline rounded border border-gray-400 bg-white px-4 py-2 text-right leading-tight shadow hover:border-gray-500 focus:outline-none"
-        />
-        <div className="mx-5 text-lg font-bold">By</div>
-        <input
-          type="number"
-          placeholder="Year"
-          maxLength="4"
-          className="focus:shadow-outline rounded border border-gray-400 bg-white px-4 py-2 shadow hover:border-gray-500 focus:outline-none"
-        />
-      </div>
+      {category === "Summary" && (
+        <div>
+          <h1 className="mb-5 text-2xl font-bold">
+            How much do you want to earn?
+          </h1>
+          <div className="mb-5 flex flex-row items-center justify-center">
+            <div className="mr-5 text-lg font-bold">Earn</div>
+            <select
+              value={currency}
+              onChange={handleCurrencyChange}
+              className="focus:shadow-outline appearance-none rounded border border-gray-400 bg-white px-4 py-2 leading-tight shadow hover:border-gray-500 focus:outline-none"
+            >
+              {top20Currencies.map((cur) => (
+                <option key={cur.flag} value={cur.code}>
+                  {cur.code}
+                </option>
+              ))}
+            </select>
+            <input
+              type="text"
+              placeholder="Enter amount"
+              min="0"
+              max="1000"
+              step="0.01"
+              value={formatCurrency(amount)}
+              onChange={handleAmountChange}
+              onFocus={() => setIsTyping(true)}
+              onBlur={() => setIsTyping(false)}
+              className="focus:shadow-outline rounded border border-gray-400 bg-white px-4 py-2 text-right leading-tight shadow hover:border-gray-500 focus:outline-none"
+            />
+            <div className="mx-5 text-lg font-bold">By</div>
+            <input
+              type="number"
+              placeholder="Year"
+              maxLength="4"
+              className="focus:shadow-outline rounded border border-gray-400 bg-white px-4 py-2 shadow hover:border-gray-500 focus:outline-none"
+            />
+          </div>
+        </div>
+      )}
       <div className="flex flex-row justify-between p-4">
         <div className=" text-xl font-bold">
-          Your spend summary in {country} value
+          {category === "Summary" ? (
+            <div>Your spend summary in {country} value</div>
+          ) : (
+            <div>
+              Current {category} in {country} value
+            </div>
+          )}
         </div>
-        <div className="text-xl font-bold">Amount Remaining: {totalAmount}</div>
+        <div className="text-xl font-bold">
+          Amount Remaining: {formatCurrency2(totalAmount)}
+        </div>
       </div>
-      <div className="grid md:grid-cols-2">
+      <div className={`grid ${category === "Summary" ? "md:grid-cols-2" : ""}`}>
         {category === "Summary" ? (
           pieChartItems.map((item) => (
             <Box>
@@ -145,16 +151,22 @@ function earnGoal({ handleButtonClick, country }) {
         ) : (
           <div> {content} </div>
         )}
-
-        {/* <Box>{category ? content : <div></div>}</Box> */}
       </div>
-
-      <button
-        className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-        onClick={() => handleButtonClick(2)}
-      >
-        Back
-      </button>
+      {category === "Summary" ? (
+        <button
+          className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
+          onClick={() => handleButtonClick(2)}
+        >
+          Back
+        </button>
+      ) : (
+        <button
+          className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
+          onClick={() => setCategory("Summary")}
+        >
+          Back
+        </button>
+      )}
     </div>
   );
 }

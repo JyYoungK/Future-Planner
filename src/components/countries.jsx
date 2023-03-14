@@ -7,7 +7,6 @@ function DropdownExampleSearchSelection({ setCountry }) {
       (option) => option.value === value
     );
 
-    console.log(selectedOption?.text || "");
     setCountry(selectedOption?.text || "");
   };
 
