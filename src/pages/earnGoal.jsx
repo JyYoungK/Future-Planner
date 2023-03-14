@@ -147,9 +147,8 @@ function earnGoal({ handleButtonClick, country }) {
       <div className={`grid ${category === "Summary" ? "md:grid-cols-2" : ""}`}>
         {category === "Summary" ? (
           pieChartItems.map((item) => (
-            <Box>
+            <Box key={item.title}>
               <PieChart
-                key={item.title}
                 title={item.title}
                 value={item.value}
                 series={item.series}

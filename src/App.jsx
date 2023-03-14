@@ -24,22 +24,25 @@ function App() {
   let content = null;
   if (step === 1) {
     content = (
-      <div className="fixed inset-0 z-10 flex items-center justify-center">
-        <div className="rounded-lg bg-white p-10 shadow-md">
-          <h1 className="mb-5 text-3xl font-bold">Welcome</h1>
-          <h1 className="mb-5 text-lg font-bold">
-            This app will help you plan your career, future and reach your
-            financial goal
-          </h1>
-          <button
-            className="rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-            onClick={() => handleButtonClick(2)}
-          >
-            Continue
-          </button>
-        </div>
-      </div>
+      <EarnGoal handleButtonClick={handleButtonClick} country={country} />
     );
+    // content = (
+    //   <div className="fixed inset-0 z-10 flex items-center justify-center">
+    //     <div className="rounded-lg bg-white p-10 shadow-md">
+    //       <h1 className="mb-5 text-3xl font-bold">Welcome</h1>
+    //       <h1 className="mb-5 text-lg font-bold">
+    //         This app will help you plan your career, future and reach your
+    //         financial goal
+    //       </h1>
+    //       <button
+    //         className="rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
+    //         onClick={() => handleButtonClick(2)}
+    //       >
+    //         Continue
+    //       </button>
+    //     </div>
+    //   </div>
+    // );
   } else if (step === 2) {
     content = (
       <Country handleButtonClick={handleButtonClick} setCountry={setCountry} />
