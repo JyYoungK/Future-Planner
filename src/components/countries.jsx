@@ -3,6 +3,8 @@ import { Dropdown } from "semantic-ui-react";
 
 function DropdownExampleSearchSelection({ setCountry }) {
   const handleCountryChange = (e, { value }) => {
+    setCountry("");
+
     const selectedOption = countryOptions.find(
       (option) => option.value === value
     );

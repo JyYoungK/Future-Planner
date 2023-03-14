@@ -10,11 +10,15 @@ function App() {
   const [country, setCountry] = useState("");
 
   const handleButtonClick = (nextStep) => {
-    setShowContent(false);
-    setTimeout(() => {
-      setStep(nextStep);
-      setShowContent(true);
-    }, 500);
+    if (nextStep === 3 && country === "") {
+      alert("Please select your residing country to continue");
+    } else {
+      setShowContent(false);
+      setTimeout(() => {
+        setStep(nextStep);
+        setShowContent(true);
+      }, 500);
+    }
   };
 
   let content = null;

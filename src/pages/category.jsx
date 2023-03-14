@@ -41,9 +41,9 @@ function category({ category, currency, totalAmount, setTotalAmount }) {
         return healthcare;
       case "Transportation":
         return transportation;
-      case "Food":
+      case "Food Plan":
         return food;
-      case "Travel & Transportation":
+      case "Travel & Recreation":
         return [...recreationActivities, ...recreationStays];
       case "Insurance":
         return insurance;
@@ -91,7 +91,7 @@ function category({ category, currency, totalAmount, setTotalAmount }) {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8	">
+    <div className="container mx-auto w-full px-4 py-8	">
       <div className="">
         <table className="w-full ">
           <thead>
@@ -154,7 +154,7 @@ function category({ category, currency, totalAmount, setTotalAmount }) {
                 </td>
                 <td className="border px-4 py-2">
                   {item.minPrice * item.quantity}
-                  {item?.maxPrice && "~" + item?.maxPrice * item.quantity}
+                  {item?.maxPrice && " ~ " + item?.maxPrice * item.quantity}
                 </td>
               </tr>
             ))}

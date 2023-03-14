@@ -1,16 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import PieChart from "../components/pieChart";
 import { top20Currencies } from "../constant/topCurrencies";
 import Category from "./category";
 
 function earnGoal({ handleButtonClick, country }) {
-  const [currency, setCurrency] = useState("CAD");
+  const [currency, setCurrency] = useState("USD");
   const [amount, setAmount] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [totalAmount, setTotalAmount] = useState(0);
   const [category, setCategory] = useState("Summary");
   const [content, setContent] = useState("");
+
+  useEffect(() => {
+    const matchingCurrency = top20Currencies.find((c) => c.country === country);
+    if (matchingCurrency) {
+      setCurrency(matchingCurrency.code);
+    } else {
+      setCurrency("USD");
+    }
+  }, []);
 
   const handleCurrencyChange = (e) => {
     setCurrency(e.target.value);
@@ -48,20 +57,20 @@ function earnGoal({ handleButtonClick, country }) {
   const formatCurrency2 = (value) => {
     let stringAmount = value.toLocaleString("en-US", {
       style: "currency",
-      currency: "USD",
+      currency: currency,
     });
     return stringAmount;
   };
 
   const pieChartItems = [
     { title: "House & Utilities", value: 684, series: [75, 15] },
-    { title: "Food", value: 684, series: [75, 25] },
+    { title: "Food Plan", value: 684, series: [75, 25] },
     { title: "Personal Spending", value: 550, series: [60, 40] },
-    { title: "Travel & Transportation", value: 550, series: [60, 40] },
+    { title: "Transportation", value: 555, series: [75, 25] },
+    { title: "Travel & Recreation", value: 550, series: [60, 40] },
     { title: "Medical & Healthcare", value: 5684, series: [75, 25] },
     { title: "Saving & Investing", value: 555, series: [75, 25] },
     { title: "Insurance", value: 5684, series: [75, 25] },
-    { title: "Miscellaneous", value: 555, series: [75, 25] },
   ];
 
   const handlePieChartClick = (category) => {
@@ -122,12 +131,12 @@ function earnGoal({ handleButtonClick, country }) {
         </div>
       )}
       <div className="flex flex-row justify-between p-4">
-        <div className=" text-xl font-bold">
+        <div className="mr-8 text-xl font-bold">
           {category === "Summary" ? (
-            <div>Your spend summary in {country} value</div>
+            <div>Your spend summary in {country} </div>
           ) : (
             <div>
-              Current {category} in {country} value
+              Current {category} in {country}
             </div>
           )}
         </div>

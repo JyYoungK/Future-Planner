@@ -16,7 +16,7 @@ const PieChart = ({ title, value, series, onClick }) => {
       py={2}
       gap={2}
       borderRadius="15px"
-      minHeight="110px"
+      minHeight="80px"
       width="350px"
       border="1px solid grey"
       onClick={onClick}
