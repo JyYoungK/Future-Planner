@@ -44,7 +44,6 @@ function earnGoal({ handleButtonClick, country }) {
           category={category}
           currency={currency}
           totalAmount={totalAmount}
-          totalSpent={totalSpent}
           setTotalSpent={setTotalSpent}
           pieChartItems={pieChartItems}
         />
@@ -117,7 +116,7 @@ function earnGoal({ handleButtonClick, country }) {
                 title={item.category}
                 currency={currency}
                 value={item.value}
-                series={[(item.value / totalAmount) * 100]}
+                series={[parseInt((item.value / totalAmount) * 100)]}
                 onClick={() => handlePieChartClick(item.category)}
               />
             </Box>

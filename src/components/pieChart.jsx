@@ -4,6 +4,8 @@ import { formatCurrency } from "./formatCurrency";
 import travelIcon from "../assets/travel.png";
 
 const PieChart = ({ title, currency, value, series, onClick }) => {
+  console.log(value);
+  console.log(series);
   return (
     <Box
       id="chart"
@@ -36,9 +38,12 @@ const PieChart = ({ title, currency, value, series, onClick }) => {
         options={{
           chart: {
             type: "radialBar",
+            offsetY: -10,
           },
           plotOptions: {
             radialBar: {
+              startAngle: -135,
+              endAngle: 135,
               hollow: {
                 size: "40%",
                 image: travelIcon,
@@ -47,12 +52,14 @@ const PieChart = ({ title, currency, value, series, onClick }) => {
               },
             },
             dataLabels: {
+              offsetY: 40,
+
               name: {
                 show: false,
               },
             },
           },
-          // labels: ["Cricket"],
+          labels: [""],
         }}
         type="radialBar"
         width="150px"

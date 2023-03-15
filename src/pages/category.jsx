@@ -18,7 +18,6 @@ function category({
   category,
   currency,
   totalAmount,
-  totalSpent,
   setTotalSpent,
   pieChartItems,
 }) {
@@ -138,6 +137,12 @@ function category({
           }
         }
         categoryToUpdate.value = sum;
+        // Recalculate the total spent for all categories
+        let total = 0;
+        for (const item of pieChartItems) {
+          total += item.value;
+        }
+        setTotalSpent(total);
       } else {
         console.log("Category not found");
       }
@@ -146,7 +151,6 @@ function category({
 
       // Update the state with the new item quantity
       setItems([...items]);
-      setTotalSpent((totalSpent += quantity * price));
     }
   }
 
@@ -199,10 +203,13 @@ function category({
                       type="number"
                       min={item.minPrice}
                       max={item.maxPrice}
-                      value={toNumber(toCurrencies(item.selectedPrice))}
-                      onChange={(e) =>
-                        handleItemChange(item.name, parseInt(e.target.value))
-                      }
+                      value={item.selectedPrice}
+                      onChange={(e) => {
+                        const newValue = parseInt(e.target.value);
+                        if (!isNaN(newValue)) {
+                          handleItemChange(item.name, item.quantity, newValue);
+                        }
+                      }}
                       className="no-arrows ml-4 w-20 rounded-lg border py-1 px-2 text-center"
                     />
                     <div>
@@ -222,9 +229,12 @@ function category({
                       handleItemChange(
                         item.name,
                         parseInt(e.target.value),
-                        item.maxPrice
+                        item.selectedPrice
                       )
                     }
+                    onWheel={(e) => {
+                      e.preventDefault();
+                    }}
                     className="w-16 rounded-lg border px-2 py-1 text-center"
                   />
                 </td>
