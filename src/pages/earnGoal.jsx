@@ -3,12 +3,14 @@ import { Box } from "@mui/material";
 import PieChart from "../components/pieChart";
 import { top20Currencies } from "../constant/topCurrencies";
 import Category from "./category";
+import { formatCurrency, formatCurrency2 } from "../components/formatCurrency";
+import { pieChartItems } from "../constant/pieChartItems";
 
 function earnGoal({ handleButtonClick, country }) {
   const [currency, setCurrency] = useState("USD");
-  const [amount, setAmount] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [totalSpent, setTotalSpent] = useState(0);
   const [category, setCategory] = useState("Summary");
   const [content, setContent] = useState("");
 
@@ -31,47 +33,8 @@ function earnGoal({ handleButtonClick, country }) {
     if (inputAmount > 1000000000) {
       inputAmount = 999999999;
     }
-    // setTotalAmount(
-    //   inputAmount.toLocaleString("en-US", {
-    //     style: "currency",
-    //     currency: "USD",
-    //   })
-    // );
     setTotalAmount(inputAmount);
-    setAmount(inputAmount);
   };
-
-  const formatCurrency = (value) => {
-    if (isTyping) {
-      return value;
-    } else {
-      const formatter = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: currency,
-        minimumFractionDigits: 2,
-      });
-      return formatter.format(value);
-    }
-  };
-
-  const formatCurrency2 = (value) => {
-    let stringAmount = value.toLocaleString("en-US", {
-      style: "currency",
-      currency: currency,
-    });
-    return stringAmount;
-  };
-
-  const pieChartItems = [
-    { title: "House & Utilities", value: 684, series: [75, 15] },
-    { title: "Food Plan", value: 684, series: [75, 25] },
-    { title: "Personal Spending", value: 550, series: [60, 40] },
-    { title: "Transportation", value: 555, series: [75, 25] },
-    { title: "Travel & Recreation", value: 550, series: [60, 40] },
-    { title: "Medical & Healthcare", value: 5684, series: [75, 25] },
-    { title: "Saving & Investing", value: 555, series: [75, 25] },
-    { title: "Insurance", value: 5684, series: [75, 25] },
-  ];
 
   const handlePieChartClick = (category) => {
     setCategory(category);
@@ -81,15 +44,16 @@ function earnGoal({ handleButtonClick, country }) {
           category={category}
           currency={currency}
           totalAmount={totalAmount}
-          setTotalAmount={setTotalAmount}
+          totalSpent={totalSpent}
+          setTotalSpent={setTotalSpent}
+          pieChartItems={pieChartItems}
         />
       </div>
     );
-    // setContent(<div>Content for House category</div>);
   };
 
   return (
-    <div className="rounded-lg bg-white p-4 shadow-md">
+    <div className="rounded-lg bg-white p-4 shadow-md sm:p-6 md:p-8 lg:p-10">
       {category === "Summary" && (
         <div>
           <h1 className="mb-5 text-2xl font-bold">
@@ -114,7 +78,7 @@ function earnGoal({ handleButtonClick, country }) {
               min="0"
               max="1000"
               step="0.01"
-              value={formatCurrency(amount)}
+              value={formatCurrency(isTyping, currency, totalAmount)}
               onChange={handleAmountChange}
               onFocus={() => setIsTyping(true)}
               onBlur={() => setIsTyping(false)}
@@ -141,18 +105,20 @@ function earnGoal({ handleButtonClick, country }) {
           )}
         </div>
         <div className="text-xl font-bold">
-          Amount Remaining: {formatCurrency2(totalAmount)}
+          Amount Remaining:{" "}
+          {formatCurrency2(currency, totalAmount - totalSpent)}
         </div>
       </div>
-      <div className={`grid ${category === "Summary" ? "md:grid-cols-2" : ""}`}>
+      <div className={`grid ${category === "Summary" ? "md:grid-cols-4" : ""}`}>
         {category === "Summary" ? (
           pieChartItems.map((item) => (
-            <Box key={item.title}>
+            <Box key={item.category}>
               <PieChart
-                title={item.title}
+                title={item.category}
+                currency={currency}
                 value={item.value}
-                series={item.series}
-                onClick={() => handlePieChartClick(item.title)}
+                series={[(item.value / totalAmount) * 100]}
+                onClick={() => handlePieChartClick(item.category)}
               />
             </Box>
           ))

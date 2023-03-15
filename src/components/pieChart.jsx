@@ -1,8 +1,9 @@
 import ReactApexChart from "react-apexcharts";
 import { Box, Typography, Stack } from "@mui/material";
+import { formatCurrency } from "./formatCurrency";
 import travelIcon from "../assets/travel.png";
 
-const PieChart = ({ title, value, series, onClick }) => {
+const PieChart = ({ title, currency, value, series, onClick }) => {
   return (
     <Box
       id="chart"
@@ -26,7 +27,7 @@ const PieChart = ({ title, value, series, onClick }) => {
           {title}
         </Typography>
         <Typography fontSize={24} color="#11142d" fontWeight={700} mt={1}>
-          {value}
+          {formatCurrency(false, currency, value)}
         </Typography>
       </Stack>
 
@@ -39,23 +40,48 @@ const PieChart = ({ title, value, series, onClick }) => {
           plotOptions: {
             radialBar: {
               hollow: {
-                margin: 5,
                 size: "40%",
-                image: travelIcon, // use the imported image file
+                image: travelIcon,
                 imageWidth: 24,
                 imageHeight: 24,
               },
-              dataLabels: {
-                name: {
-                  show: true,
-                },
+            },
+            dataLabels: {
+              name: {
+                show: false,
               },
             },
           },
-          labels: ["Progress"],
+          // labels: ["Cricket"],
         }}
         type="radialBar"
         width="150px"
+
+        // series={series}
+        // options={{
+        //   chart: {
+        //     type: "radialBar",
+        //   },
+        //   plotOptions: {
+        //     radialBar: {
+        //       hollow: {
+        //         margin: 5,
+        //         size: "40%",
+        //         image: travelIcon, // use the imported image file
+        //         imageWidth: 24,
+        //         imageHeight: 24,
+        //       },
+        //       dataLabels: {
+        //         name: {
+        //           show: false,
+        //         },
+        //       },
+        //     },
+        //   },
+        //   // labels: ["Progress"],
+        // }}
+        // type="radialBar"
+        // width="150px"
       />
     </Box>
   );

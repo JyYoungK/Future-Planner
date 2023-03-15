@@ -12,9 +12,19 @@ import {
   recreationActivities,
   recreationStays,
 } from "../constant/purchasable";
+import { formatCurrency2 } from "../components/formatCurrency";
 
-function category({ category, currency, totalAmount, setTotalAmount }) {
+function category({
+  category,
+  currency,
+  totalAmount,
+  totalSpent,
+  setTotalSpent,
+  pieChartItems,
+}) {
   const [currentPage, setCurrentPage] = useState(1);
+  const [categoryToUpdate, setCategoryToUpdate] = useState();
+  const [categoryTotal, setCategoryTotal] = useState(0);
 
   const itemsPerPage = 10;
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -22,9 +32,18 @@ function category({ category, currency, totalAmount, setTotalAmount }) {
   const [items, setItems] = useState(
     getCategoryItems(category).slice(startIndex, endIndex)
   );
+
   const totalPages = Math.ceil(
     getCategoryItems(category).length / itemsPerPage
   );
+
+  useEffect(() => {
+    const findCategory = pieChartItems.find(
+      (item) => item.category === category
+    );
+    setCategoryToUpdate(findCategory);
+    setCategoryTotal(findCategory.value);
+  });
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -86,18 +105,9 @@ function category({ category, currency, totalAmount, setTotalAmount }) {
     setCurrentPage(currentPage + 1);
   }
 
-  function handlePriceChange(name, price) {
-    const item = items.find((item) => item.name === name);
-    if (!item) return;
-
-    // Update the item quantity
-    item.selectedPrice = price;
-    setItems([...items]);
-  }
-
-  function handleQuantityChange(name, quantity, maxPrice) {
+  function handleItemChange(name, quantity, price) {
     //First check if have enough budget
-    if (quantity * maxPrice > totalAmount) {
+    if (quantity * price > totalAmount) {
       alert(
         "You cannot add any more item as you have exceeded your budget. Return to summary and increase your budget or lower the quantity of some items"
       );
@@ -108,10 +118,35 @@ function category({ category, currency, totalAmount, setTotalAmount }) {
 
       // Update the item quantity
       item.quantity = quantity;
+      item.selectedPrice = price;
+
+      // Update the pieChartItems with the new purchase information
+
+      if (categoryToUpdate) {
+        const existingPurchase = categoryToUpdate.purchased[name];
+        if (existingPurchase) {
+          existingPurchase.quantity = quantity;
+          existingPurchase.price = price;
+        } else {
+          categoryToUpdate.purchased[name] = { quantity, price };
+        }
+        let sum = 0;
+        for (const key in categoryToUpdate.purchased) {
+          if (Object.hasOwnProperty.call(categoryToUpdate.purchased, key)) {
+            const item = categoryToUpdate.purchased[key];
+            sum += item.quantity * item.price;
+          }
+        }
+        categoryToUpdate.value = sum;
+      } else {
+        console.log("Category not found");
+      }
+
+      console.log(pieChartItems);
 
       // Update the state with the new item quantity
       setItems([...items]);
-      setTotalAmount((totalAmount -= quantity * maxPrice));
+      setTotalSpent((totalSpent += quantity * price));
     }
   }
 
@@ -124,9 +159,6 @@ function category({ category, currency, totalAmount, setTotalAmount }) {
               {items[0]?.type && <th className="px-4 py-2 text-left">Type</th>}
               <th className="px-4 py-2 text-left">Name</th>
               <th className="px-4 py-2 text-left">Price</th>
-
-              {/* <th className="px-4 py-2 text-left">-</th>
-              <th className="px-4 py-2 text-left">+</th> */}
               <th className="px-4 py-2 text-left">Quantity</th>
               <th className="px-4 py-2 text-left">Total</th>
             </tr>
@@ -149,8 +181,9 @@ function category({ category, currency, totalAmount, setTotalAmount }) {
                           max={item.maxPrice}
                           value={item.selectedPrice}
                           onChange={(e) =>
-                            handlePriceChange(
+                            handleItemChange(
                               item.name,
+                              item.quantity,
                               parseInt(e.target.value)
                             )
                           }
@@ -166,16 +199,9 @@ function category({ category, currency, totalAmount, setTotalAmount }) {
                       type="number"
                       min={item.minPrice}
                       max={item.maxPrice}
-                      // step={
-                      //   item.selectedPrice < 1000
-                      //     ? 1
-                      //     : item.selectedPrice < 1000000
-                      //     ? 1000
-                      //     : 1000000
-                      // }
                       value={toNumber(toCurrencies(item.selectedPrice))}
                       onChange={(e) =>
-                        handlePriceChange(item.name, parseInt(e.target.value))
+                        handleItemChange(item.name, parseInt(e.target.value))
                       }
                       className="no-arrows ml-4 w-20 rounded-lg border py-1 px-2 text-center"
                     />
@@ -186,26 +212,6 @@ function category({ category, currency, totalAmount, setTotalAmount }) {
                     </div>{" "}
                   </div>
                 </td>
-                {/* <td className="border px-4 py-2">
-                  {toCurrencies(item.minPrice)}
-                  {(item?.type === "Rent" || item?.type === "Util") && "/mon"}
-                </td>
-                {item?.maxPrice && (
-                  <td className="border px-4 py-2">
-                    {toCurrencies(item.maxPrice)}
-                    {(item?.type === "Rent" || item?.type === "Util") && "/mon"}
-                  </td>
-                )} */}
-                {/* <td className="border px-4 py-2">
-                  <button className="rounded-lg bg-gray-200 px-4 py-2 font-bold hover:bg-gray-300">
-                    -
-                  </button>
-                </td>
-                <td className="border px-4 py-2">
-                  <button className="rounded-lg bg-gray-200 px-4 py-2 font-bold hover:bg-gray-300">
-                    +
-                  </button>
-                </td> */}
                 <td className="border px-4 py-2">
                   <input
                     type="number"
@@ -213,7 +219,7 @@ function category({ category, currency, totalAmount, setTotalAmount }) {
                     max="999"
                     value={item.quantity}
                     onChange={(e) =>
-                      handleQuantityChange(
+                      handleItemChange(
                         item.name,
                         parseInt(e.target.value),
                         item.maxPrice
@@ -223,8 +229,7 @@ function category({ category, currency, totalAmount, setTotalAmount }) {
                   />
                 </td>
                 <td className="border px-4 py-2">
-                  {item.minPrice * item.quantity}
-                  {item?.maxPrice && " ~ " + item?.maxPrice * item.quantity}
+                  {item.selectedPrice * item.quantity}
                 </td>
               </tr>
             ))}
@@ -235,7 +240,7 @@ function category({ category, currency, totalAmount, setTotalAmount }) {
         <div>
           Showing page {currentPage} of {totalPages}
         </div>
-        <div className="flex text-right">
+        <div className="flex">
           <button
             className={`rounded-xl py-2 px-4 font-bold text-white  ${
               currentPage === 1
@@ -259,6 +264,7 @@ function category({ category, currency, totalAmount, setTotalAmount }) {
             Next
           </button>
         </div>
+        <div>Total: {formatCurrency2(currency, categoryTotal)}</div>
       </div>
     </div>
   );
