@@ -3,36 +3,42 @@ import { Box } from "@mui/material";
 import PieChart from "../components/pieChart";
 import { top20Currencies } from "../constant/topCurrencies";
 import Category from "./category";
-import { formatCurrency, formatCurrency2 } from "../components/formatCurrency";
+import { formatCurrency } from "../components/formatCurrency";
 import { pieChartItems } from "../constant/pieChartItems";
+import { profile } from "../constant/profile";
 
-function earnGoal({ handleButtonClick, country }) {
-  const [currency, setCurrency] = useState("USD");
-  const [isTyping, setIsTyping] = useState(false);
-  const [totalAmount, setTotalAmount] = useState(0);
-  const [totalSpent, setTotalSpent] = useState(0);
+function earnGoal({ handleButtonClick }) {
+  const [totalAmount, setTotalAmount] = useState(profile.earnAmount);
   const [category, setCategory] = useState("Summary");
   const [content, setContent] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
-    const matchingCurrency = top20Currencies.find((c) => c.country === country);
+    const matchingCurrency = top20Currencies.find(
+      (c) => c.country === profile.country
+    );
     if (matchingCurrency) {
-      setCurrency(matchingCurrency.code);
+      profile.currency = matchingCurrency.code;
     } else {
-      setCurrency("USD");
+      profile.currency = "USD";
     }
   }, []);
 
+  function handleYearChange(event) {
+    profile.goalYear = event.target.value;
+  }
+
   const handleCurrencyChange = (e) => {
-    setCurrency(e.target.value);
+    profile.currency = e.target.value;
   };
 
   const handleAmountChange = (e) => {
     let inputAmount = e.target.value.replace(/[^0-9.]/g, ""); // only allow numbers and decimal point
-    inputAmount = parseFloat(inputAmount);
+    inputAmount = parseFloat(inputAmount) || 0;
     if (inputAmount > 1000000000) {
       inputAmount = 999999999;
     }
+    profile.earnAmount = inputAmount;
     setTotalAmount(inputAmount);
   };
 
@@ -42,14 +48,13 @@ function earnGoal({ handleButtonClick, country }) {
       <div>
         <Category
           category={category}
-          currency={currency}
-          totalAmount={totalAmount}
-          setTotalSpent={setTotalSpent}
+          currency={profile.currency}
           pieChartItems={pieChartItems}
         />
       </div>
     );
   };
+  console.log(pieChartItems);
 
   return (
     <div className="rounded-lg bg-white p-4 shadow-md sm:p-6 md:p-8 lg:p-10">
@@ -61,7 +66,7 @@ function earnGoal({ handleButtonClick, country }) {
           <div className="mb-5 flex flex-row items-center justify-center">
             <div className="mr-5 text-lg font-bold">Earn</div>
             <select
-              value={currency}
+              value={profile.currency}
               onChange={handleCurrencyChange}
               className="focus:shadow-outline appearance-none rounded border border-gray-400 bg-white px-4 py-2 leading-tight shadow hover:border-gray-500 focus:outline-none"
             >
@@ -74,10 +79,7 @@ function earnGoal({ handleButtonClick, country }) {
             <input
               type="text"
               placeholder="Enter amount"
-              min="0"
-              max="1000"
-              step="0.01"
-              value={formatCurrency(isTyping, currency, totalAmount)}
+              value={formatCurrency(profile.currency, totalAmount, isTyping)}
               onChange={handleAmountChange}
               onFocus={() => setIsTyping(true)}
               onBlur={() => setIsTyping(false)}
@@ -89,6 +91,7 @@ function earnGoal({ handleButtonClick, country }) {
               placeholder="Year"
               maxLength="4"
               className="focus:shadow-outline rounded border border-gray-400 bg-white px-4 py-2 shadow hover:border-gray-500 focus:outline-none"
+              onChange={handleYearChange}
             />
           </div>
         </div>
@@ -96,16 +99,19 @@ function earnGoal({ handleButtonClick, country }) {
       <div className="flex flex-row justify-between p-4">
         <div className="mr-8 text-xl font-bold">
           {category === "Summary" ? (
-            <div>Your spend summary in {country} </div>
+            <div>Your spend summary in {profile.country} </div>
           ) : (
             <div>
-              Current {category} in {country}
+              Current {category} in {profile.country}
             </div>
           )}
         </div>
         <div className="text-xl font-bold">
           Amount Remaining:{" "}
-          {formatCurrency2(currency, totalAmount - totalSpent)}
+          {formatCurrency(
+            profile.currency,
+            profile.earnAmount - profile.spendAmount
+          )}
         </div>
       </div>
       <div className={`grid ${category === "Summary" ? "md:grid-cols-4" : ""}`}>
@@ -114,9 +120,9 @@ function earnGoal({ handleButtonClick, country }) {
             <Box key={item.category}>
               <PieChart
                 title={item.category}
-                currency={currency}
+                currency={profile.currency}
                 value={item.value}
-                series={[parseInt((item.value / totalAmount) * 100)]}
+                series={[parseInt((item.value / profile.earnAmount) * 100)]}
                 onClick={() => handlePieChartClick(item.category)}
               />
             </Box>
@@ -126,12 +132,20 @@ function earnGoal({ handleButtonClick, country }) {
         )}
       </div>
       {category === "Summary" ? (
-        <button
-          className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-          onClick={() => handleButtonClick(2)}
-        >
-          Back
-        </button>
+        <div className="mt-4">
+          <button
+            className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
+            onClick={() => handleButtonClick(4)}
+          >
+            Continue
+          </button>
+          <button
+            className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
+            onClick={() => handleButtonClick(2)}
+          >
+            Back
+          </button>
+        </div>
       ) : (
         <button
           className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"

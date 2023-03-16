@@ -1,20 +1,10 @@
-export const formatCurrency = (isTyping, currency, value) => {
-  if (isTyping) {
-    return value;
+export const formatCurrency = (currency, value, isEditing) => {
+  if (isEditing) {
+    return value.toString();
   } else {
-    const formatter = new Intl.NumberFormat("en-US", {
+    return value.toLocaleString("en-US", {
       style: "currency",
       currency: currency,
-      minimumFractionDigits: 2,
     });
-    return formatter.format(value);
   }
-};
-
-export const formatCurrency2 = (currency, value) => {
-  let stringAmount = value.toLocaleString("en-US", {
-    style: "currency",
-    currency: currency,
-  });
-  return stringAmount;
 };

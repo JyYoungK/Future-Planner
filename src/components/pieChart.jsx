@@ -1,27 +1,14 @@
 import ReactApexChart from "react-apexcharts";
-import { Box, Typography, Stack } from "@mui/material";
+import { Typography, Stack } from "@mui/material";
 import { formatCurrency } from "./formatCurrency";
 import travelIcon from "../assets/travel.png";
 
 const PieChart = ({ title, currency, value, series, onClick }) => {
   console.log(value);
-  console.log(series);
   return (
-    <Box
+    <div
       id="chart"
-      flex={1}
-      display="flex"
-      bgcolor="#f9f9f9"
-      flexDirection="row"
-      justifyContent="space-between"
-      alignItems="center"
-      pl={3.5}
-      py={2}
-      gap={2}
-      borderRadius="15px"
-      minHeight="80px"
-      width="350px"
-      border="1px solid grey"
+      className="min-h-80 flex w-full cursor-pointer items-center justify-between gap-2 rounded-2xl border border-gray-400 bg-gray-50 py-2 pl-3.5"
       onClick={onClick}
     >
       <Stack direction="column" className="text-left">
@@ -29,7 +16,7 @@ const PieChart = ({ title, currency, value, series, onClick }) => {
           {title}
         </Typography>
         <Typography fontSize={24} color="#11142d" fontWeight={700} mt={1}>
-          {formatCurrency(false, currency, value)}
+          {formatCurrency(currency, value, false)}
         </Typography>
       </Stack>
 
@@ -90,7 +77,7 @@ const PieChart = ({ title, currency, value, series, onClick }) => {
         // type="radialBar"
         // width="150px"
       />
-    </Box>
+    </div>
   );
 };
 

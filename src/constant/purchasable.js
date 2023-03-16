@@ -315,7 +315,88 @@ export const healthcare = [
 ];
 
 //Investing (10~20%)
-export const investing = [];
+export const investing = [
+  {
+    type: "Saving",
+    name: "High Yield Savings Account",
+    minPrice: 0,
+    maxPrice: "inf",
+    selectedPrice: 0,
+    quantity: 0,
+  },
+  {
+    type: "Investing",
+    name: "Stocks",
+    minPrice: 0,
+    maxPrice: "inf",
+    selectedPrice: 0,
+    quantity: 0,
+  },
+  {
+    type: "Investing",
+    name: "Exchange-Traded Funds (ETFs)",
+    minPrice: 0,
+    maxPrice: "inf",
+    selectedPrice: 0,
+    quantity: 0,
+  },
+  {
+    type: "Investing",
+    name: "Bonds",
+    minPrice: 0,
+    maxPrice: "inf",
+    selectedPrice: 0,
+    quantity: 0,
+  },
+  {
+    type: "Saving",
+    name: "Certificate of Deposit (CD)",
+    minPrice: 0,
+    maxPrice: "inf",
+    selectedPrice: 0,
+    quantity: 0,
+  },
+  {
+    type: "Investing",
+    name: "Real Estate Investment Trusts (REITs)",
+    minPrice: 0,
+    maxPrice: "inf",
+    selectedPrice: 0,
+    quantity: 0,
+  },
+  {
+    type: "Saving",
+    name: "Individual Retirement Account (IRA)",
+    minPrice: 0,
+    maxPrice: "inf",
+    selectedPrice: 0,
+    quantity: 0,
+  },
+  {
+    type: "Investing",
+    name: "Mutual Funds",
+    minPrice: 0,
+    maxPrice: "inf",
+    selectedPrice: 0,
+    quantity: 0,
+  },
+  {
+    type: "Saving",
+    name: "401(k) Plan",
+    minPrice: 0,
+    maxPrice: "inf",
+    selectedPrice: 0,
+    quantity: 0,
+  },
+  {
+    type: "Investing",
+    name: "Cryptocurrencies",
+    minPrice: 0,
+    maxPrice: "inf",
+    selectedPrice: 0,
+    quantity: 0,
+  },
+];
 
 //PersonalSpending (5~10%)
 export const personalItems = [

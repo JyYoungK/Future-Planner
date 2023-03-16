@@ -1,15 +1,14 @@
 import React from "react";
 import { Dropdown } from "semantic-ui-react";
+import { profile } from "../constant/profile";
 
-function DropdownExampleSearchSelection({ setCountry }) {
+function DropdownExampleSearchSelection() {
   const handleCountryChange = (e, { value }) => {
-    setCountry("");
-
     const selectedOption = countryOptions.find(
       (option) => option.value === value
     );
 
-    setCountry(selectedOption?.text || "");
+    profile.country = selectedOption?.text;
   };
 
   const countryOptions = [
