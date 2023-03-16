@@ -4,7 +4,6 @@ import { formatCurrency } from "./formatCurrency";
 import travelIcon from "../assets/travel.png";
 
 const PieChart = ({ title, currency, value, series, onClick }) => {
-  console.log(value);
   return (
     <div
       id="chart"

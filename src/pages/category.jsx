@@ -1,14 +1,5 @@
 import { useState, useEffect } from "react";
 import {
-  GridComponent,
-  Inject,
-  ColumnsDirective,
-  ColumnDirective,
-  Search,
-  Page,
-} from "@syncfusion/ej2-react-grids";
-
-import {
   houseBuy,
   houseRent,
   transportation,
@@ -25,21 +16,12 @@ import {
 import { profile } from "../constant/profile";
 import { formatCurrency } from "../components/formatCurrency";
 
-function category({ category, currency, pieChartItems }) {
+function category({ category, currency, setTotalSpent, pieChartItems }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [categoryToUpdate, setCategoryToUpdate] = useState();
   const [categoryTotal, setCategoryTotal] = useState(0);
 
   const itemsPerPage = 10;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const [items, setItems] = useState(
-    getCategoryItems(category).slice(startIndex, endIndex)
-  );
-
-  const totalPages = Math.ceil(
-    getCategoryItems(category).length / itemsPerPage
-  );
 
   useEffect(() => {
     const findCategory = pieChartItems.find(
@@ -49,11 +31,23 @@ function category({ category, currency, pieChartItems }) {
     setCategoryTotal(findCategory.value);
   });
 
-  useEffect(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    setItems(getCategoryItems(category).slice(startIndex, endIndex));
-  }, [currentPage, category, itemsPerPage]);
+  const allItems = getCategoryItems(category);
+  const totalPages = Math.ceil(allItems.length / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  let endIndex = startIndex + itemsPerPage;
+
+  if (allItems.length < endIndex) {
+    endIndex = allItems.length;
+  }
+
+  const [items, setItems] = useState(allItems.slice(startIndex, endIndex));
+  const [newItem, setNewItem] = useState({
+    type: "",
+    name: "",
+    price: 0,
+    quantity: 1,
+  });
 
   function getCategoryItems(category) {
     switch (category) {
@@ -73,12 +67,42 @@ function category({ category, currency, pieChartItems }) {
         return insurance;
       case "Saving & Investing":
         return investing;
-
       default:
         return [];
     }
   }
 
+  function handlePreviousPageClick() {
+    setCurrentPage(currentPage - 1);
+  }
+
+  function handleNextPageClick() {
+    setCurrentPage(currentPage + 1);
+  }
+
+  function handleNewItemChange(e) {
+    const { name, value } = e.target;
+    setNewItem({ ...newItem, [name]: value });
+  }
+
+  function handleAddItem() {
+    // create a new item object with unique key
+    const newItemObj = {
+      ...newItem,
+      key: `custom-item-${Date.now()}`,
+    };
+
+    // add the new item to the items array
+    setItems([newItemObj, ...items.slice(0, itemsPerPage - 1)]);
+
+    // reset the newItem state
+    setNewItem({
+      type: "",
+      name: "",
+      price: 0,
+      quantity: 1,
+    });
+  }
   function toCurrencies(value) {
     const symbols = ["", "K", "M", "B"]; // array of symbols to use for values in thousands and millions
     const formatter = new Intl.NumberFormat("en-US", {
@@ -95,16 +119,13 @@ function category({ category, currency, pieChartItems }) {
     return formatter.format(value) + symbols[symbolIndex];
   }
 
-  function handlePreviousPageClick() {
-    setCurrentPage(currentPage - 1);
-  }
-
-  function handleNextPageClick() {
-    setCurrentPage(currentPage + 1);
+  function handleDeleteItem(key) {
+    setItems(items.filter((item) => item.key !== key));
   }
 
   function handleItemChange(name, quantity, price) {
     //First check if have enough budget
+
     if (quantity * price > profile.earnAmount) {
       alert(
         "You cannot add any more item as you have exceeded your budget. Return to summary and increase your budget or lower the quantity of some items"
@@ -141,6 +162,7 @@ function category({ category, currency, pieChartItems }) {
         for (const item of pieChartItems) {
           total += item.value;
         }
+        setTotalSpent(total);
         profile.spendAmount = total;
       } else {
         console.log("Category not found");
@@ -153,6 +175,41 @@ function category({ category, currency, pieChartItems }) {
 
   return (
     <div className="container mx-auto w-full px-4 py-8	">
+      <div className="mb-2 flex">
+        <input
+          type="text"
+          placeholder="Type"
+          name="type"
+          value={newItem.type}
+          onChange={handleNewItemChange}
+          className="mr-2"
+        />
+        <input
+          type="text"
+          placeholder="Name"
+          name="name"
+          value={newItem.name}
+          onChange={handleNewItemChange}
+          className="mr-2"
+        />
+        <input
+          type="number"
+          placeholder="Price"
+          name="price"
+          value={newItem.price}
+          onChange={handleNewItemChange}
+          className="mr-2"
+        />
+        <input
+          type="number"
+          placeholder="Quantity"
+          name="quantity"
+          value={newItem.quantity}
+          onChange={handleNewItemChange}
+          className="mr-2"
+        />
+        <button onClick={handleAddItem}>Add Item</button>
+      </div>
       <table className="w-full ">
         <thead>
           <tr>

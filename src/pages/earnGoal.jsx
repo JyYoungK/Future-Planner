@@ -9,6 +9,7 @@ import { profile } from "../constant/profile";
 
 function earnGoal({ handleButtonClick }) {
   const [totalAmount, setTotalAmount] = useState(profile.earnAmount);
+  const [totalSpent, setTotalSpent] = useState(0);
   const [category, setCategory] = useState("Summary");
   const [content, setContent] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -49,12 +50,12 @@ function earnGoal({ handleButtonClick }) {
         <Category
           category={category}
           currency={profile.currency}
+          setTotalSpent={setTotalSpent}
           pieChartItems={pieChartItems}
         />
       </div>
     );
   };
-  console.log(pieChartItems);
 
   return (
     <div className="rounded-lg bg-white p-4 shadow-md sm:p-6 md:p-8 lg:p-10">
@@ -108,10 +109,11 @@ function earnGoal({ handleButtonClick }) {
         </div>
         <div className="text-xl font-bold">
           Amount Remaining:{" "}
-          {formatCurrency(
+          {/* {formatCurrency(
             profile.currency,
             profile.earnAmount - profile.spendAmount
-          )}
+          )} */}
+          {formatCurrency(profile.currency, totalAmount - totalSpent)}
         </div>
       </div>
       <div className={`grid ${category === "Summary" ? "md:grid-cols-4" : ""}`}>
