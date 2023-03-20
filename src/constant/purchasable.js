@@ -201,6 +201,7 @@ export const transportation = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Subway/Transit Monthly pass",
@@ -209,6 +210,7 @@ export const transportation = [
     selectedPrice: 0,
     type: "Monthly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Uber/Lyft ride",
@@ -217,6 +219,7 @@ export const transportation = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Domestic flight",
@@ -225,6 +228,7 @@ export const transportation = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "International flight",
@@ -233,6 +237,7 @@ export const transportation = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Car Gas",
@@ -241,6 +246,7 @@ export const transportation = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
 ];
 
@@ -252,6 +258,7 @@ export const food = [
     maxPrice: 300,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Takeout",
@@ -259,6 +266,7 @@ export const food = [
     maxPrice: 50,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Delivery food",
@@ -266,6 +274,7 @@ export const food = [
     maxPrice: 50,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Cheap restaurant",
@@ -273,6 +282,7 @@ export const food = [
     maxPrice: 20,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Expensive restaurant",
@@ -280,6 +290,7 @@ export const food = [
     maxPrice: 200,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
 ];
 
@@ -291,6 +302,7 @@ export const insurance = [
     maxPrice: 500,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Homeowner's or renter's insurance",
@@ -298,6 +310,7 @@ export const insurance = [
     maxPrice: 100,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Home warranties or protection plans",
@@ -305,6 +318,7 @@ export const insurance = [
     maxPrice: 100,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Auto insurance",
@@ -312,6 +326,7 @@ export const insurance = [
     maxPrice: 200,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Life insurance",
@@ -319,6 +334,7 @@ export const insurance = [
     maxPrice: 100,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Disability insurance",
@@ -326,17 +342,27 @@ export const insurance = [
     maxPrice: 50,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
 ];
 
 //Healthcare (5~10%)
 export const healthcare = [
   {
-    name: "Specialty care (dermatologists, psychologists, etc.)",
+    name: "Psychology care",
     minPrice: 100,
     maxPrice: 500,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
+  },
+  {
+    name: "Dermatology care",
+    minPrice: 100,
+    maxPrice: 500,
+    selectedPrice: 0,
+    quantity: 0,
+    total: 0,
   },
   {
     name: "Dental care",
@@ -344,6 +370,7 @@ export const healthcare = [
     maxPrice: 300,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Urgent care",
@@ -351,6 +378,7 @@ export const healthcare = [
     maxPrice: 300,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Prescriptions and OTC medications",
@@ -358,6 +386,7 @@ export const healthcare = [
     maxPrice: 100,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Supplements and vitamins",
@@ -365,6 +394,7 @@ export const healthcare = [
     maxPrice: 50,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Medical devices and supplies",
@@ -372,6 +402,7 @@ export const healthcare = [
     maxPrice: 200,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
 ];
 
@@ -384,6 +415,7 @@ export const investing = [
     maxPrice: "inf",
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Investing",
@@ -392,6 +424,7 @@ export const investing = [
     maxPrice: "inf",
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Investing",
@@ -400,6 +433,7 @@ export const investing = [
     maxPrice: "inf",
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Investing",
@@ -408,6 +442,7 @@ export const investing = [
     maxPrice: "inf",
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Saving",
@@ -416,6 +451,7 @@ export const investing = [
     maxPrice: "inf",
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Investing",
@@ -424,6 +460,7 @@ export const investing = [
     maxPrice: "inf",
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Saving",
@@ -432,6 +469,7 @@ export const investing = [
     maxPrice: "inf",
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Investing",
@@ -440,6 +478,7 @@ export const investing = [
     maxPrice: "inf",
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Saving",
@@ -448,6 +487,7 @@ export const investing = [
     maxPrice: "inf",
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Investing",
@@ -456,6 +496,7 @@ export const investing = [
     maxPrice: "inf",
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
 ];
 
@@ -468,6 +509,7 @@ export const personalItems = [
     maxPrice: 5,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -476,6 +518,7 @@ export const personalItems = [
     maxPrice: 10,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -484,6 +527,7 @@ export const personalItems = [
     maxPrice: 15,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -492,6 +536,7 @@ export const personalItems = [
     maxPrice: 500,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -500,6 +545,7 @@ export const personalItems = [
     maxPrice: 50,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -508,6 +554,7 @@ export const personalItems = [
     maxPrice: 20000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -516,6 +563,7 @@ export const personalItems = [
     maxPrice: 1000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -524,6 +572,7 @@ export const personalItems = [
     maxPrice: 200,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -532,6 +581,7 @@ export const personalItems = [
     maxPrice: 2000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -540,6 +590,7 @@ export const personalItems = [
     maxPrice: 700,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -548,6 +599,7 @@ export const personalItems = [
     maxPrice: 1000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -556,6 +608,7 @@ export const personalItems = [
     maxPrice: 5500,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -564,6 +617,7 @@ export const personalItems = [
     maxPrice: 2000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -572,6 +626,7 @@ export const personalItems = [
     maxPrice: 500,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -580,6 +635,7 @@ export const personalItems = [
     maxPrice: 3000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -588,6 +644,7 @@ export const personalItems = [
     maxPrice: 3500,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -596,6 +653,7 @@ export const personalItems = [
     maxPrice: 4000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -604,6 +662,7 @@ export const personalItems = [
     maxPrice: 5000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -612,6 +671,7 @@ export const personalItems = [
     maxPrice: 6000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -620,6 +680,7 @@ export const personalItems = [
     maxPrice: 10000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -628,6 +689,7 @@ export const personalItems = [
     maxPrice: 3500,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -636,6 +698,7 @@ export const personalItems = [
     maxPrice: 15000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -644,6 +707,7 @@ export const personalItems = [
     maxPrice: 15000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -652,6 +716,7 @@ export const personalItems = [
     maxPrice: 100000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -660,6 +725,7 @@ export const personalItems = [
     maxPrice: 50000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -668,6 +734,7 @@ export const personalItems = [
     maxPrice: 100000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -676,6 +743,7 @@ export const personalItems = [
     maxPrice: 1000000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -684,6 +752,7 @@ export const personalItems = [
     maxPrice: 50000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -692,6 +761,7 @@ export const personalItems = [
     maxPrice: 200000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -700,6 +770,7 @@ export const personalItems = [
     maxPrice: 1000000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -708,6 +779,7 @@ export const personalItems = [
     maxPrice: 5000000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -716,6 +788,7 @@ export const personalItems = [
     maxPrice: 500000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -724,6 +797,7 @@ export const personalItems = [
     maxPrice: 10000000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -732,6 +806,7 @@ export const personalItems = [
     maxPrice: 50000000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -740,6 +815,7 @@ export const personalItems = [
     maxPrice: 1000000000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Item",
@@ -748,6 +824,7 @@ export const personalItems = [
     maxPrice: 500000000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
 ];
 
@@ -759,6 +836,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Haircut",
@@ -767,6 +845,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Massage",
@@ -775,6 +854,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "House cleaning",
@@ -783,6 +863,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Plumbing service",
@@ -791,6 +872,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Electrical repair",
@@ -799,6 +881,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Car wash",
@@ -807,6 +890,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Car detailing",
@@ -815,6 +899,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Pest control",
@@ -823,6 +908,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Pet grooming",
@@ -831,6 +917,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Dog walking",
@@ -839,6 +926,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Tutoring services",
@@ -847,6 +935,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
 
   {
@@ -856,6 +945,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Home organization services",
@@ -864,6 +954,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Event planning services",
@@ -872,6 +963,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Wedding planning services",
@@ -880,6 +972,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Photography services",
@@ -888,6 +981,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Videography services",
@@ -896,6 +990,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Graphic design services",
@@ -904,6 +999,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Website development services",
@@ -912,6 +1008,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Tax preparation services",
@@ -920,6 +1017,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Home renovation services",
@@ -928,6 +1026,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Moving services",
@@ -936,6 +1035,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Once",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Legal services",
@@ -944,6 +1044,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "hourly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Accounting services",
@@ -952,6 +1053,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "hourly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Financial planning services",
@@ -960,6 +1062,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "hourly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Career counseling services",
@@ -968,6 +1071,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "hourly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Business coaching services",
@@ -976,6 +1080,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "hourly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Interpretation services",
@@ -984,6 +1089,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "hourly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Social media management services",
@@ -992,6 +1098,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Monthly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Public relations services",
@@ -1000,6 +1107,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Monthly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Executive coaching services",
@@ -1008,6 +1116,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Monthly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Yoga class",
@@ -1016,6 +1125,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Monthly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Cooking classes",
@@ -1024,6 +1134,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Monthly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Art classes",
@@ -1032,6 +1143,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Monthly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Gym Membership",
@@ -1040,6 +1152,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Monthly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Meditation classes",
@@ -1048,6 +1161,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Monthly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Music lessons",
@@ -1056,6 +1170,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Monthly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Dance lessons",
@@ -1064,6 +1179,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Monthly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Language lessons",
@@ -1072,6 +1188,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Monthly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Netflix",
@@ -1080,6 +1197,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Monthly",
     quantity: 0,
+    total: 0,
   },
 
   {
@@ -1089,6 +1207,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Monthly",
     quantity: 0,
+    total: 0,
   },
 
   {
@@ -1098,6 +1217,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Monthly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Nutrition consultation",
@@ -1106,6 +1226,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Monthly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Landscaping",
@@ -1114,6 +1235,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Monthly",
     quantity: 0,
+    total: 0,
   },
   {
     name: "Private jet membership",
@@ -1122,6 +1244,7 @@ export const personalServices = [
     selectedPrice: 0,
     type: "Monthly",
     quantity: 0,
+    total: 0,
   },
 ];
 
@@ -1133,6 +1256,7 @@ export const recreationActivities = [
     maxPrice: 20,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Concert tickets",
@@ -1140,6 +1264,7 @@ export const recreationActivities = [
     maxPrice: 200,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Sports events tickets",
@@ -1147,6 +1272,7 @@ export const recreationActivities = [
     maxPrice: 200,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Museum admission fees",
@@ -1154,6 +1280,7 @@ export const recreationActivities = [
     maxPrice: 30,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Theme park tickets",
@@ -1161,6 +1288,7 @@ export const recreationActivities = [
     maxPrice: 150,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Zoo or aquarium admission fees",
@@ -1168,6 +1296,7 @@ export const recreationActivities = [
     maxPrice: 30,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Scuba diving",
@@ -1175,6 +1304,7 @@ export const recreationActivities = [
     maxPrice: 300,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Skydiving",
@@ -1182,6 +1312,7 @@ export const recreationActivities = [
     maxPrice: 500,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Bungee jumping",
@@ -1189,6 +1320,7 @@ export const recreationActivities = [
     maxPrice: 200,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Jet skiing",
@@ -1196,6 +1328,7 @@ export const recreationActivities = [
     maxPrice: 150,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Kayaking or canoeing rentals",
@@ -1203,6 +1336,7 @@ export const recreationActivities = [
     maxPrice: 50,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Fishing gear rentals",
@@ -1210,6 +1344,7 @@ export const recreationActivities = [
     maxPrice: 50,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Horseback riding",
@@ -1217,6 +1352,7 @@ export const recreationActivities = [
     maxPrice: 100,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Zip-lining",
@@ -1224,6 +1360,7 @@ export const recreationActivities = [
     maxPrice: 150,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Rock climbing gym",
@@ -1231,6 +1368,7 @@ export const recreationActivities = [
     maxPrice: 40,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "White water rafting",
@@ -1238,6 +1376,7 @@ export const recreationActivities = [
     maxPrice: 150,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Camping gear rentals",
@@ -1245,6 +1384,7 @@ export const recreationActivities = [
     maxPrice: 100,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Ski or snowboard rentals",
@@ -1252,6 +1392,7 @@ export const recreationActivities = [
     maxPrice: 80,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Ski lift tickets",
@@ -1259,6 +1400,7 @@ export const recreationActivities = [
     maxPrice: 150,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Snowmobile rentals",
@@ -1266,6 +1408,7 @@ export const recreationActivities = [
     maxPrice: 150,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Hot air balloon ride",
@@ -1273,6 +1416,7 @@ export const recreationActivities = [
     maxPrice: 300,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
 ];
 
@@ -1283,6 +1427,7 @@ export const recreationStays = [
     maxPrice: 100,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Mid-range hotel",
@@ -1290,6 +1435,7 @@ export const recreationStays = [
     maxPrice: 200,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Luxury hotel",
@@ -1297,14 +1443,23 @@ export const recreationStays = [
     maxPrice: 500,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
-  { name: "Hostel", minPrice: 20, maxPrice: 50, selectedPrice: 0, quantity: 0 },
+  {
+    name: "Hostel",
+    minPrice: 20,
+    maxPrice: 50,
+    selectedPrice: 0,
+    quantity: 0,
+    total: 0,
+  },
   {
     name: "Airbnb private room",
     minPrice: 30,
     maxPrice: 100,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Airbnb entire apartment or house",
@@ -1312,14 +1467,23 @@ export const recreationStays = [
     maxPrice: 300,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
-  { name: "Motel", minPrice: 30, maxPrice: 80, selectedPrice: 0, quantity: 0 },
+  {
+    name: "Motel",
+    minPrice: 30,
+    maxPrice: 80,
+    selectedPrice: 0,
+    quantity: 0,
+    total: 0,
+  },
   {
     name: "Resort",
     minPrice: 150,
     maxPrice: 500,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Camping or RV park",
@@ -1327,6 +1491,7 @@ export const recreationStays = [
     maxPrice: 50,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Glamping",
@@ -1334,6 +1499,7 @@ export const recreationStays = [
     maxPrice: 300,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Vacation rental",
@@ -1341,6 +1507,7 @@ export const recreationStays = [
     maxPrice: 500,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Ski lodge",
@@ -1348,6 +1515,7 @@ export const recreationStays = [
     maxPrice: 500,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Beachfront condo or apartment",
@@ -1355,6 +1523,7 @@ export const recreationStays = [
     maxPrice: 500,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     name: "Treehouse or unique rental",
@@ -1362,5 +1531,6 @@ export const recreationStays = [
     maxPrice: 300,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
 ];

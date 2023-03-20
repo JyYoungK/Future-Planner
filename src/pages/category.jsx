@@ -55,7 +55,7 @@ function category({
       case "Travel & Recreation":
         items = [...recreationActivities, ...recreationStays];
         break;
-      case "Insurance":
+      case "Saving & Investing":
         items = insurance;
         break;
       default:
@@ -148,9 +148,6 @@ function category({
   //     setItems([...items]);
   //   }
   // }
-  const selectionsettings = { persistSelection: true };
-  const toolbarOptions = ["Delete"];
-  const editing = { allowDeleting: true, allowEditing: true };
 
   return (
     <div className="h-full w-full">
@@ -159,7 +156,14 @@ function category({
       <DataGrid rows={mockDataContacts} columns={columns} editMode="cell" />
             </Box> */}
       <div className="h-[550px] w-[800px]">
-        <DataGrid rows={rows} columns={columns} />
+        <DataGrid
+          autoPageSize
+          rows={rows}
+          columns={columns}
+          initialState={{
+            pagination: { paginationModel: { pageSize: 5 } },
+          }}
+        />
       </div>
 
       {/* <div className="">
