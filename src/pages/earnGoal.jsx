@@ -119,13 +119,17 @@ function earnGoal({ handleButtonClick }) {
       <div className={`grid ${category === "Summary" ? "md:grid-cols-4" : ""}`}>
         {category === "Summary" ? (
           pieChartItems.map((item) => (
-            <Box key={item.category}>
+            <Box key={item}>
               <PieChart
-                title={item.category}
+                title={item}
                 currency={profile.currency}
-                value={item.value}
-                series={[parseInt((item.value / profile.earnAmount) * 100)]}
-                onClick={() => handlePieChartClick(item.category)}
+                value={25}
+                series={
+                  profile.earnAmount === 0
+                    ? [0]
+                    : [parseInt((25 / profile.earnAmount) * 100)]
+                }
+                onClick={() => handlePieChartClick(item)}
               />
             </Box>
           ))

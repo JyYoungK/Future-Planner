@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import {
+  columns,
   houseBuy,
   houseRent,
   transportation,
@@ -11,325 +12,246 @@ import {
   personalServices,
   recreationActivities,
   recreationStays,
-  investing,
 } from "../constant/purchasable";
 import { profile } from "../constant/profile";
+import { DataGrid } from "@mui/x-data-grid";
+import { Box, Slider } from "@mui/material";
 import { formatCurrency } from "../components/formatCurrency";
 
-function category({ category, currency, setTotalSpent, pieChartItems }) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [categoryToUpdate, setCategoryToUpdate] = useState();
+function category({
+  category,
+  currency,
+  totalAmount,
+  setTotalSpent,
+  pieChartItems,
+}) {
+  const categoryItems = getCategoryItems(category);
+  const rows = [...categoryItems];
+
   const [categoryTotal, setCategoryTotal] = useState(0);
 
-  const itemsPerPage = 10;
-
   useEffect(() => {
-    const findCategory = pieChartItems.find(
-      (item) => item.category === category
-    );
-    setCategoryToUpdate(findCategory);
-    setCategoryTotal(findCategory.value);
-  });
-
-  const allItems = getCategoryItems(category);
-  const totalPages = Math.ceil(allItems.length / itemsPerPage);
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  let endIndex = startIndex + itemsPerPage;
-
-  if (allItems.length < endIndex) {
-    endIndex = allItems.length;
-  }
-
-  const [items, setItems] = useState(allItems.slice(startIndex, endIndex));
-  const [newItem, setNewItem] = useState({
-    type: "",
-    name: "",
-    price: 0,
-    quantity: 1,
-  });
+    setCategoryTotal(profile.purchased[category]?.value);
+  }, [category]);
 
   function getCategoryItems(category) {
+    let items = [];
     switch (category) {
       case "House & Utilities":
-        return [...houseRent, ...houseBuy, ...utilities];
+        items = [...houseRent, ...houseBuy, ...utilities];
+        break;
       case "Personal Spending":
-        return [...personalItems, ...personalServices];
+        items = [...personalItems, ...personalServices];
+        break;
       case "Medical & Healthcare":
-        return healthcare;
+        items = healthcare;
+        break;
       case "Transportation":
-        return transportation;
+        items = transportation;
+        break;
       case "Food Plan":
-        return food;
+        items = food;
+        break;
       case "Travel & Recreation":
-        return [...recreationActivities, ...recreationStays];
+        items = [...recreationActivities, ...recreationStays];
+        break;
       case "Insurance":
-        return insurance;
-      case "Saving & Investing":
-        return investing;
+        items = insurance;
+        break;
       default:
-        return [];
+        break;
     }
+
+    // Generate a unique ID for each item
+    items = items.map((item, index) => ({
+      ...item,
+      id: `${category}-${index}`,
+    }));
+
+    return items;
   }
 
-  function handlePreviousPageClick() {
-    setCurrentPage(currentPage - 1);
-  }
+  // function toCurrencies(value) {
+  //   const symbols = ["", "K", "M", "B"]; // array of symbols to use for values in thousands and millions
+  //   const formatter = new Intl.NumberFormat("en-US", {
+  //     style: "currency",
+  //     currency: currency,
+  //     minimumFractionDigits: 0,
+  //   });
+  //   let symbolIndex = 0;
+  //   while (value >= 1000 && symbolIndex < symbols.length - 1) {
+  //     // loop until value is less than 1000 or all symbols have been used
+  //     value /= 1000;
+  //     symbolIndex++;
+  //   }
+  //   return formatter.format(value) + symbols[symbolIndex];
+  // }
 
-  function handleNextPageClick() {
-    setCurrentPage(currentPage + 1);
-  }
+  // function handleItemChange(name, quantity, price) {
+  //   //First check if have enough budget
+  //   if (quantity * price > totalAmount) {
+  //     alert(
+  //       "You cannot add any more item as you have exceeded your budget. Return to summary and increase your budget or lower the quantity of some items"
+  //     );
+  //   } else {
+  //     // Find the item with the given name
+  //     const item = items.find((item) => item.name === name);
+  //     if (!item) return;
 
-  function handleNewItemChange(e) {
-    const { name, value } = e.target;
-    setNewItem({ ...newItem, [name]: value });
-  }
+  //     // Update the item quantity
+  //     item.quantity = quantity;
+  //     item.selectedPrice = price;
 
-  function handleAddItem() {
-    // create a new item object with unique key
-    const newItemObj = {
-      ...newItem,
-      key: `custom-item-${Date.now()}`,
-    };
+  //     // Update the pieChartItems with the new purchase information
 
-    // add the new item to the items array
-    setItems([newItemObj, ...items.slice(0, itemsPerPage - 1)]);
+  //     if (categoryToUpdate) {
+  //       const existingPurchase =
+  //         profile.purchased[categoryToUpdate.category]?.[name];
+  //       if (existingPurchase) {
+  //         existingPurchase.quantity = quantity;
+  //         existingPurchase.price = price;
+  //       } else {
+  //         if (!profile.purchased[categoryToUpdate.category]) {
+  //           profile.purchased[categoryToUpdate.category] = {};
+  //         }
+  //         profile.purchased[categoryToUpdate.category][name] = {
+  //           quantity,
+  //           price,
+  //         };
+  //       }
+  //       let totalCategorySpent = 0;
+  //       for (const profileCategory in profile.purchased) {
+  //         console.log(profileCategory);
+  //         if (Object.hasOwnProperty.call(profile.purchased, profileCategory)) {
+  //           const purchases = profile.purchased[profileCategory];
+  //           let categoryTotal = 0;
+  //           for (const purchaseName in purchases) {
+  //             if (Object.hasOwnProperty.call(purchases, purchaseName)) {
+  //               const purchase = purchases[purchaseName];
+  //               if (typeof purchase === "object") {
+  //                 categoryTotal += purchase.quantity * purchase.price;
+  //                 totalCategorySpent += purchase.quantity * purchase.price;
+  //               }
+  //             }
+  //           }
+  //           profile.purchased[profileCategory].value = categoryTotal;
+  //         }
+  //       }
+  //       profile.spendAmount = totalCategorySpent;
+  //       setTotalSpent(totalCategorySpent);
+  //     } else {
+  //       console.log("Category not found");
+  //     }
 
-    // reset the newItem state
-    setNewItem({
-      type: "",
-      name: "",
-      price: 0,
-      quantity: 1,
-    });
-  }
-  function toCurrencies(value) {
-    const symbols = ["", "K", "M", "B"]; // array of symbols to use for values in thousands and millions
-    const formatter = new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: currency,
-      minimumFractionDigits: 0,
-    });
-    let symbolIndex = 0;
-    while (value >= 1000 && symbolIndex < symbols.length - 1) {
-      // loop until value is less than 1000 or all symbols have been used
-      value /= 1000;
-      symbolIndex++;
-    }
-    return formatter.format(value) + symbols[symbolIndex];
-  }
-
-  function handleDeleteItem(key) {
-    setItems(items.filter((item) => item.key !== key));
-  }
-
-  function handleItemChange(name, quantity, price) {
-    //First check if have enough budget
-
-    if (quantity * price > profile.earnAmount) {
-      alert(
-        "You cannot add any more item as you have exceeded your budget. Return to summary and increase your budget or lower the quantity of some items"
-      );
-    } else {
-      // Find the item with the given name
-      const item = items.find((item) => item.name === name);
-      if (!item) return;
-
-      // Update the item quantity
-      item.quantity = quantity;
-      item.selectedPrice = price;
-
-      // Update the pieChartItems with the new purchase information
-
-      if (categoryToUpdate) {
-        const existingPurchase = categoryToUpdate.purchased[name];
-        if (existingPurchase) {
-          existingPurchase.quantity = quantity;
-          existingPurchase.price = price;
-        } else {
-          categoryToUpdate.purchased[name] = { quantity, price };
-        }
-        let sum = 0;
-        for (const key in categoryToUpdate.purchased) {
-          if (Object.hasOwnProperty.call(categoryToUpdate.purchased, key)) {
-            const item = categoryToUpdate.purchased[key];
-            sum += item.quantity * item.price;
-          }
-        }
-        categoryToUpdate.value = sum;
-        // Recalculate the total spent for all categories
-        let total = 0;
-        for (const item of pieChartItems) {
-          total += item.value;
-        }
-        setTotalSpent(total);
-        profile.spendAmount = total;
-      } else {
-        console.log("Category not found");
-      }
-
-      // Update the state with the new item quantity
-      setItems([...items]);
-    }
-  }
+  //     console.log(profile);
+  //     // Update the state with the new item quantity
+  //     setItems([...items]);
+  //   }
+  // }
+  const selectionsettings = { persistSelection: true };
+  const toolbarOptions = ["Delete"];
+  const editing = { allowDeleting: true, allowEditing: true };
 
   return (
-    <div className="container mx-auto w-full px-4 py-8	">
-      <div className="mb-2 flex">
-        <input
-          type="text"
-          placeholder="Type"
-          name="type"
-          value={newItem.type}
-          onChange={handleNewItemChange}
-          className="mr-2"
-        />
-        <input
-          type="text"
-          placeholder="Name"
-          name="name"
-          value={newItem.name}
-          onChange={handleNewItemChange}
-          className="mr-2"
-        />
-        <input
-          type="number"
-          placeholder="Price"
-          name="price"
-          value={newItem.price}
-          onChange={handleNewItemChange}
-          className="mr-2"
-        />
-        <input
-          type="number"
-          placeholder="Quantity"
-          name="quantity"
-          value={newItem.quantity}
-          onChange={handleNewItemChange}
-          className="mr-2"
-        />
-        <button onClick={handleAddItem}>Add Item</button>
-      </div>
-      <table className="w-full ">
-        <thead>
-          <tr>
-            {items[0]?.type && <th className="px-4 py-2 text-left">Type</th>}
-            <th className="px-4 py-2 text-left">Name</th>
-            <th className="px-4 py-2 text-left">Price</th>
-            {items[0]?.maxPrice !== "inf" && (
-              <th className="px-4 py-2 text-left">Quantity</th>
-            )}
-            <th className="px-4 py-2 text-left">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => (
-            <tr key={item.name}>
-              {item?.type && <td className="border px-4 py-2">{item.type}</td>}
+    <div className="h-full w-full">
+      {/* <Box m="40px 0 0 0" height="75vh">
 
-              <td className="border px-4 py-2">{item.name}</td>
-              <td className="border px-4 py-2">
-                <div className="flex flex-row items-center">
-                  <div>
-                    <div className="flex items-center">
-                      <input
-                        type="range"
-                        min={item.minPrice}
-                        max={Math.min(
-                          item.maxPrice === "inf"
-                            ? profile.earnAmount - profile.spendAmount
-                            : item.maxPrice,
-                          profile.earnAmount -
-                            profile.spendAmount -
-                            item.quantity * item.selectedPrice +
-                            item.minPrice
-                        )}
-                        value={item.selectedPrice}
-                        onChange={(e) => {
-                          if (item.maxPrice === "inf") {
-                            handleItemChange(
-                              item.name,
-                              1,
-                              parseInt(e.target.value)
-                            );
-                          } else {
+      <DataGrid rows={mockDataContacts} columns={columns} editMode="cell" />
+            </Box> */}
+      <div className="h-[550px] w-[800px]">
+        <DataGrid rows={rows} columns={columns} />
+      </div>
+
+      {/* <div className="">
+        <table className="w-full ">
+          <thead>
+            <tr>
+              {items[0]?.type && <th className="px-4 py-2 text-left">Type</th>}
+              <th className="px-4 py-2 text-left">Name</th>
+              <th className="px-4 py-2 text-left">Price</th>
+              <th className="px-4 py-2 text-left">Quantity</th>
+              <th className="px-4 py-2 text-left">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item) => (
+              <tr key={item.name}>
+                {item?.type && (
+                  <td className="border px-4 py-2">{item.type}</td>
+                )}
+
+                <td className="border px-4 py-2">{item.name}</td>
+                <td className="border px-4 py-2">
+                  <div className="flex flex-row items-center">
+                    <div>
+                      <div className="flex items-center">
+                        <input
+                          type="range"
+                          min={item.minPrice}
+                          max={item.maxPrice}
+                          value={item.selectedPrice}
+                          onChange={(e) =>
                             handleItemChange(
                               item.name,
                               item.quantity,
                               parseInt(e.target.value)
-                            );
+                            )
                           }
-                        }}
-                        className="range mr-2 w-full"
-                      />
+                          className="range mr-2 w-full"
+                        />
+                      </div>
+                      <div className="flex justify-between">
+                        <span>{toCurrencies(item.minPrice)}</span>
+                        <span>{toCurrencies(item.maxPrice)}</span>
+                      </div>
                     </div>
-                    <div className="flex justify-between">
-                      <span>{toCurrencies(item.minPrice)}</span>
-                      <span>
-                        {toCurrencies(
-                          item.maxPrice === "inf"
-                            ? profile.earnAmount - profile.spendAmount
-                            : item.maxPrice
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                  <input
-                    type="number"
-                    min={item.minPrice}
-                    max={item.maxPrice}
-                    value={item.selectedPrice}
-                    onChange={(e) => {
-                      const newValue = parseInt(e.target.value);
-                      if (item.maxPrice === "inf") {
+                    <input
+                      type="number"
+                      min={item.minPrice}
+                      max={item.maxPrice}
+                      value={item.selectedPrice}
+                      onChange={(e) => {
                         const newValue = parseInt(e.target.value);
-                        if (!isNaN(newValue)) {
-                          handleItemChange(item.name, 1, newValue);
-                        }
-                      } else {
                         if (!isNaN(newValue)) {
                           handleItemChange(item.name, item.quantity, newValue);
                         }
-                      }
-                    }}
-                    className="no-arrows ml-4 w-20 rounded-lg border py-1 px-2 text-center"
-                  />
-                  <div>
-                    {item.selectedPrice < 1000 ? "" : "/ "}
-                    {item.selectedPrice >= 1000 &&
-                      toCurrencies(item.selectedPrice).slice(-1)}
-                  </div>{" "}
-                </div>
-              </td>
-              {items[0]?.maxPrice !== "inf" && (
+                      }}
+                      className="no-arrows ml-4 w-20 rounded-lg border py-1 px-2 text-center"
+                    />
+                    <div>
+                      {item.selectedPrice < 1000 ? "" : "/ "}
+                      {item.selectedPrice >= 1000 &&
+                        toCurrencies(item.selectedPrice).slice(-1)}
+                    </div>{" "}
+                  </div>
+                </td>
                 <td className="border px-4 py-2">
                   <input
                     type="number"
                     min="0"
                     max="999"
                     value={item.quantity}
-                    onChange={(e) => {
-                      if (item.maxPrice === "inf") {
-                        handleItemChange(item.name, 1, item.selectedPrice);
-                      } else {
-                        handleItemChange(
-                          item.name,
-                          parseInt(e.target.value),
-                          item.selectedPrice
-                        );
-                      }
+                    onChange={(e) =>
+                      handleItemChange(
+                        item.name,
+                        parseInt(e.target.value),
+                        item.selectedPrice
+                      )
+                    }
+                    onWheel={(e) => {
+                      e.preventDefault();
                     }}
                     className="w-16 rounded-lg border px-2 py-1 text-center"
                   />
                 </td>
-              )}
-              <td className="border px-4 py-2">
-                {item.selectedPrice * item.quantity}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                <td className="border px-4 py-2">
+                  {item.selectedPrice * item.quantity}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <div className="mt-4 flex items-center justify-between">
         <div>
           Showing page {currentPage} of {totalPages}
@@ -359,7 +281,7 @@ function category({ category, currency, setTotalSpent, pieChartItems }) {
           </button>
         </div>
         <div>Total: {formatCurrency(currency, categoryTotal)}</div>
-      </div>
+      </div> */}
     </div>
   );
 }

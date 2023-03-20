@@ -1,3 +1,49 @@
+export const columns = [
+  { field: "id", headerName: "ID", width: 90, hide: true },
+  {
+    field: "type",
+    headerName: "Type",
+    width: 80,
+    editable: false,
+  },
+  {
+    field: "name",
+    headerName: "Name",
+    width: 300,
+    editable: false,
+  },
+  {
+    field: "selectedPrice",
+    headerName: "Price",
+    type: "number",
+    width: 110,
+    editable: true,
+  },
+  {
+    field: "quantity",
+    headerName: "Quantity",
+    type: "number",
+    width: 80,
+    editable: true,
+  },
+  {
+    field: "total",
+    headerName: "Total",
+    type: "number",
+    width: 80,
+    editable: false,
+  },
+  // {
+  //   field: "fullName",
+  //   headerName: "Full name",
+  //   description: "This column has a value getter and is not sortable.",
+  //   sortable: false,
+  //   width: 160,
+  //   valueGetter: (params) =>
+  //     `${params.row.firstName || ""} ${params.row.lastName || ""}`,
+  // },
+];
+
 //https://www.quicken.com/blog/budget-categories/
 
 //Housing (25~35%)
@@ -9,81 +55,91 @@ export const houseBuy = [
     maxPrice: 1000000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Buy",
-    name: "Single-family house in suburban area",
+    name: "Single-family house",
     minPrice: 700000,
     maxPrice: 2000000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Buy",
-    name: "Luxury townhouse in exclusive commtypey",
+    name: "Luxury townhouse",
     minPrice: 2000000,
     maxPrice: 5000000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Buy",
-    name: "Waterfront mansion in coastal area",
+    name: "Waterfront mansion",
     minPrice: 10000000,
     maxPrice: 25000000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Buy",
-    name: "High-rise penthouse in city center",
+    name: "High-rise penthouse",
     minPrice: 5000000,
     maxPrice: 10000000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Buy",
-    name: "Large country estate with acreage",
+    name: "Large country estate",
     minPrice: 2000000,
     maxPrice: 10000000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Buy",
-    name: "Ultra-luxury private island",
+    name: "Private island",
     minPrice: 50000000,
     maxPrice: 100000000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
 ];
 
 export const houseRent = [
   {
     type: "Rent",
-    name: "Small apartment in urban area",
+    name: "Small apartment",
     minPrice: 500,
     maxPrice: 2000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Rent",
-    name: "Luxury apartment in high-end neighborhood",
+    name: "Luxury apartment",
     minPrice: 5000,
     maxPrice: 15000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Rent",
-    name: "Luxury villa in resort area",
+    name: "Luxury villa",
     minPrice: 15000,
     maxPrice: 25000,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
 ];
 
@@ -96,6 +152,7 @@ export const utilities = [
     maxPrice: 150,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Util",
@@ -104,6 +161,7 @@ export const utilities = [
     maxPrice: 100,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Util",
@@ -112,6 +170,7 @@ export const utilities = [
     maxPrice: 100,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Util",
@@ -120,6 +179,7 @@ export const utilities = [
     maxPrice: 100,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
   {
     type: "Util",
@@ -128,6 +188,7 @@ export const utilities = [
     maxPrice: 100,
     selectedPrice: 0,
     quantity: 0,
+    total: 0,
   },
 ];
 

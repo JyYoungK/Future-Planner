@@ -15,7 +15,7 @@ const PieChart = ({ title, currency, value, series, onClick }) => {
           {title}
         </Typography>
         <Typography fontSize={24} color="#11142d" fontWeight={700} mt={1}>
-          {formatCurrency(currency, value, false)}
+          {formatCurrency(currency, value)}
         </Typography>
       </Stack>
 
