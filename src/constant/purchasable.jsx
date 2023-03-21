@@ -74,13 +74,17 @@ function CustomSlider({ row, onPriceChange }) {
 function CustomQuantity({ row, onQuantityChange }) {
   const [value, setValue] = useState(row.quantity);
   const handleInputChange = (event) => {
-    if (profile.earnAmount < row.quantity * row.selectedPrice) {
+    const newQuantity =
+      event.target.value === "" ? "" : Number(event.target.value);
+    if (newQuantity * row.selectedPrice > profile.earnAmount) {
       alert(
         "You cannot increase the quantity of this item as you have exceeded your budget. Return to summary and increase your budget or lower the quantity of this item"
       );
+    } else if (newQuantity < 0) {
+      alert("Quantity cannot be negative");
     } else {
-      setValue(event.target.value === "" ? "" : Number(event.target.value));
-      onQuantityChange(Number(event.target.value));
+      setValue(newQuantity);
+      onQuantityChange(newQuantity);
     }
   };
 
