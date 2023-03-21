@@ -35,6 +35,7 @@ function earnGoal({ handleButtonClick }) {
 
   const handleAmountChange = (e) => {
     let inputAmount = e.target.value.replace(/[^0-9.]/g, ""); // only allow numbers and decimal point
+    console.log("earn goal " + inputAmount);
     inputAmount = parseFloat(inputAmount) || 0;
     if (inputAmount > 1000000000) {
       inputAmount = 999999999;
@@ -51,8 +52,8 @@ function earnGoal({ handleButtonClick }) {
         <Category
           category={category}
           currency={profile.currency}
+          totalAmount={totalAmount}
           setTotalSpent={setTotalSpent}
-          pieChartItems={pieChartItems}
         />
       </div>
     );

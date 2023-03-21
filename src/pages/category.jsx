@@ -12,10 +12,13 @@ import {
   personalServices,
   recreationActivities,
   recreationStays,
+  investing,
 } from "../constant/purchasable";
 import { profile } from "../constant/profile";
 import { DataGrid } from "@mui/x-data-grid";
 import { formatCurrency } from "../components/formatCurrency";
+import { useSelector } from "react-redux";
+import store from "../redux/store";
 
 function category({
   category,
@@ -24,8 +27,9 @@ function category({
   setTotalSpent,
   pieChartItems,
 }) {
+  const [categoryTotalAmount, setCategoryTotalAmount] = useState(0);
   const categoryItems = getCategoryItems(category);
-  console.log(categoryItems);
+  const [selectedRow, setSelectedRow] = useState(0);
   const rows = [...categoryItems];
 
   function getCategoryItems(category) {
@@ -44,11 +48,64 @@ function category({
         return [...recreationActivities, ...recreationStays];
       case "Insurance":
         return insurance;
+      case "Saving & Investing":
+        return investing;
 
       default:
         return [];
     }
   }
+
+  const selectRow = (params) => {
+    setSelectedRow(parseInt(params.row.id));
+  };
+
+  const handleRowClick = (params) => {
+    if (params.rows && selectedRow) {
+      const { id, name, quantity, selectedPrice } =
+        params.rows.idRowsLookup[selectedRow];
+
+      if (quantity > 0) {
+        const newPurchase = { id, name, selectedPrice, quantity };
+        const existingPurchases = profile.purchased || {};
+        const existingCategoryPurchases = existingPurchases[category] || {};
+
+        if (existingCategoryPurchases[id]) {
+          // If there is an existing purchase with the same id, update its quantity
+          existingCategoryPurchases[id].quantity = quantity;
+          existingCategoryPurchases[id].selectedPrice = selectedPrice;
+        } else {
+          // Otherwise, add the new purchase to the purchased object
+          existingCategoryPurchases[id] = newPurchase;
+          existingPurchases[category] = existingCategoryPurchases;
+          profile.purchased = existingPurchases;
+        }
+
+        // Update the spendAmount in the profile object
+        let totalCategorySpent = 0;
+        for (const profileCategory in profile.purchased) {
+          if (Object.hasOwnProperty.call(profile.purchased, profileCategory)) {
+            const purchases = profile.purchased[profileCategory];
+            let categoryTotal = 0;
+            for (const purchaseId in purchases) {
+              if (Object.hasOwnProperty.call(purchases, purchaseId)) {
+                const purchase = purchases[purchaseId];
+                if (typeof purchase === "object") {
+                  categoryTotal += purchase.quantity * purchase.selectedPrice;
+                  totalCategorySpent +=
+                    purchase.quantity * purchase.selectedPrice;
+                }
+              }
+            }
+            profile.purchased[profileCategory].value = categoryTotal;
+            setCategoryTotalAmount(categoryTotal);
+          }
+        }
+        profile.spendAmount = totalCategorySpent;
+        setTotalSpent(totalCategorySpent);
+      }
+    }
+  };
 
   return (
     <div className="h-full w-full">
@@ -61,7 +118,12 @@ function category({
           initialState={{
             pagination: { paginationModel: { pageSize: 5 } },
           }}
+          onRowClick={selectRow}
+          onStateChange={handleRowClick}
         />
+      </div>
+      <div className="mt-4 md:text-lg">
+        Total: {formatCurrency(currency, categoryTotalAmount)}
       </div>
     </div>
   );
