@@ -15,7 +15,6 @@ import {
 } from "../constant/purchasable";
 import { profile } from "../constant/profile";
 import { DataGrid } from "@mui/x-data-grid";
-import { Box, Slider } from "@mui/material";
 import { formatCurrency } from "../components/formatCurrency";
 
 function category({
@@ -26,138 +25,37 @@ function category({
   pieChartItems,
 }) {
   const categoryItems = getCategoryItems(category);
+  console.log(categoryItems);
   const rows = [...categoryItems];
 
-  const [categoryTotal, setCategoryTotal] = useState(0);
-
-  useEffect(() => {
-    setCategoryTotal(profile.purchased[category]?.value);
-  }, [category]);
-
   function getCategoryItems(category) {
-    let items = [];
     switch (category) {
       case "House & Utilities":
-        items = [...houseRent, ...houseBuy, ...utilities];
-        break;
+        return [...houseRent, ...houseBuy, ...utilities];
       case "Personal Spending":
-        items = [...personalItems, ...personalServices];
-        break;
+        return [...personalItems, ...personalServices];
       case "Medical & Healthcare":
-        items = healthcare;
-        break;
+        return healthcare;
       case "Transportation":
-        items = transportation;
-        break;
+        return transportation;
       case "Food Plan":
-        items = food;
-        break;
+        return food;
       case "Travel & Recreation":
-        items = [...recreationActivities, ...recreationStays];
-        break;
-      case "Saving & Investing":
-        items = insurance;
-        break;
+        return [...recreationActivities, ...recreationStays];
+      case "Insurance":
+        return insurance;
+
       default:
-        break;
+        return [];
     }
-
-    // Generate a unique ID for each item
-    items = items.map((item, index) => ({
-      ...item,
-      id: `${category}-${index}`,
-    }));
-
-    return items;
   }
-
-  // function toCurrencies(value) {
-  //   const symbols = ["", "K", "M", "B"]; // array of symbols to use for values in thousands and millions
-  //   const formatter = new Intl.NumberFormat("en-US", {
-  //     style: "currency",
-  //     currency: currency,
-  //     minimumFractionDigits: 0,
-  //   });
-  //   let symbolIndex = 0;
-  //   while (value >= 1000 && symbolIndex < symbols.length - 1) {
-  //     // loop until value is less than 1000 or all symbols have been used
-  //     value /= 1000;
-  //     symbolIndex++;
-  //   }
-  //   return formatter.format(value) + symbols[symbolIndex];
-  // }
-
-  // function handleItemChange(name, quantity, price) {
-  //   //First check if have enough budget
-  //   if (quantity * price > totalAmount) {
-  //     alert(
-  //       "You cannot add any more item as you have exceeded your budget. Return to summary and increase your budget or lower the quantity of some items"
-  //     );
-  //   } else {
-  //     // Find the item with the given name
-  //     const item = items.find((item) => item.name === name);
-  //     if (!item) return;
-
-  //     // Update the item quantity
-  //     item.quantity = quantity;
-  //     item.selectedPrice = price;
-
-  //     // Update the pieChartItems with the new purchase information
-
-  //     if (categoryToUpdate) {
-  //       const existingPurchase =
-  //         profile.purchased[categoryToUpdate.category]?.[name];
-  //       if (existingPurchase) {
-  //         existingPurchase.quantity = quantity;
-  //         existingPurchase.price = price;
-  //       } else {
-  //         if (!profile.purchased[categoryToUpdate.category]) {
-  //           profile.purchased[categoryToUpdate.category] = {};
-  //         }
-  //         profile.purchased[categoryToUpdate.category][name] = {
-  //           quantity,
-  //           price,
-  //         };
-  //       }
-  //       let totalCategorySpent = 0;
-  //       for (const profileCategory in profile.purchased) {
-  //         console.log(profileCategory);
-  //         if (Object.hasOwnProperty.call(profile.purchased, profileCategory)) {
-  //           const purchases = profile.purchased[profileCategory];
-  //           let categoryTotal = 0;
-  //           for (const purchaseName in purchases) {
-  //             if (Object.hasOwnProperty.call(purchases, purchaseName)) {
-  //               const purchase = purchases[purchaseName];
-  //               if (typeof purchase === "object") {
-  //                 categoryTotal += purchase.quantity * purchase.price;
-  //                 totalCategorySpent += purchase.quantity * purchase.price;
-  //               }
-  //             }
-  //           }
-  //           profile.purchased[profileCategory].value = categoryTotal;
-  //         }
-  //       }
-  //       profile.spendAmount = totalCategorySpent;
-  //       setTotalSpent(totalCategorySpent);
-  //     } else {
-  //       console.log("Category not found");
-  //     }
-
-  //     console.log(profile);
-  //     // Update the state with the new item quantity
-  //     setItems([...items]);
-  //   }
-  // }
 
   return (
     <div className="h-full w-full">
-      {/* <Box m="40px 0 0 0" height="75vh">
-
-      <DataGrid rows={mockDataContacts} columns={columns} editMode="cell" />
-            </Box> */}
       <div className="h-[550px] w-[800px]">
         <DataGrid
           autoPageSize
+          rowHeight={80}
           rows={rows}
           columns={columns}
           initialState={{
@@ -165,8 +63,91 @@ function category({
           }}
         />
       </div>
+    </div>
+  );
+}
 
-      {/* <div className="">
+export default category;
+// function toCurrencies(value) {
+//   const symbols = ["", "K", "M", "B"]; // array of symbols to use for values in thousands and millions
+//   const formatter = new Intl.NumberFormat("en-US", {
+//     style: "currency",
+//     currency: currency,
+//     minimumFractionDigits: 0,
+//   });
+//   let symbolIndex = 0;
+//   while (value >= 1000 && symbolIndex < symbols.length - 1) {
+//     // loop until value is less than 1000 or all symbols have been used
+//     value /= 1000;
+//     symbolIndex++;
+//   }
+//   return formatter.format(value) + symbols[symbolIndex];
+// }
+
+// function handleItemChange(name, quantity, price) {
+//   //First check if have enough budget
+//   if (quantity * price > totalAmount) {
+//     alert(
+//       "You cannot add any more item as you have exceeded your budget. Return to summary and increase your budget or lower the quantity of some items"
+//     );
+//   } else {
+//     // Find the item with the given name
+//     const item = items.find((item) => item.name === name);
+//     if (!item) return;
+
+//     // Update the item quantity
+//     item.quantity = quantity;
+//     item.selectedPrice = price;
+
+//     // Update the pieChartItems with the new purchase information
+
+//     if (categoryToUpdate) {
+//       const existingPurchase =
+//         profile.purchased[categoryToUpdate.category]?.[name];
+//       if (existingPurchase) {
+//         existingPurchase.quantity = quantity;
+//         existingPurchase.price = price;
+//       } else {
+//         if (!profile.purchased[categoryToUpdate.category]) {
+//           profile.purchased[categoryToUpdate.category] = {};
+//         }
+//         profile.purchased[categoryToUpdate.category][name] = {
+//           quantity,
+//           price,
+//         };
+//       }
+//       let totalCategorySpent = 0;
+//       for (const profileCategory in profile.purchased) {
+//         console.log(profileCategory);
+//         if (Object.hasOwnProperty.call(profile.purchased, profileCategory)) {
+//           const purchases = profile.purchased[profileCategory];
+//           let categoryTotal = 0;
+//           for (const purchaseName in purchases) {
+//             if (Object.hasOwnProperty.call(purchases, purchaseName)) {
+//               const purchase = purchases[purchaseName];
+//               if (typeof purchase === "object") {
+//                 categoryTotal += purchase.quantity * purchase.price;
+//                 totalCategorySpent += purchase.quantity * purchase.price;
+//               }
+//             }
+//           }
+//           profile.purchased[profileCategory].value = categoryTotal;
+//         }
+//       }
+//       profile.spendAmount = totalCategorySpent;
+//       setTotalSpent(totalCategorySpent);
+//     } else {
+//       console.log("Category not found");
+//     }
+
+//     console.log(profile);
+//     // Update the state with the new item quantity
+//     setItems([...items]);
+//   }
+// }
+
+{
+  /* <div className="">
         <table className="w-full ">
           <thead>
             <tr>
@@ -285,9 +266,5 @@ function category({
           </button>
         </div>
         <div>Total: {formatCurrency(currency, categoryTotal)}</div>
-      </div> */}
-    </div>
-  );
+      </div> */
 }
-
-export default category;

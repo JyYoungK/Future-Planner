@@ -45,6 +45,7 @@ function earnGoal({ handleButtonClick }) {
 
   const handlePieChartClick = (category) => {
     setCategory(category);
+
     setContent(
       <div>
         <Category

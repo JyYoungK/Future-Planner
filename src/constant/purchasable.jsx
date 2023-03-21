@@ -1,3 +1,79 @@
+import { useState, useEffect } from "react";
+import { Slider, Input } from "@mui/material";
+//https://www.quicken.com/blog/budget-categories/
+
+function CustomSlider({ row, onPriceChange }) {
+  const [value, setValue] = useState(
+    row.selectedPrice !== 0 ? row.selectedPrice : row.minPrice
+  );
+
+  const handleSliderChange = (event, newValue) => {
+    setValue(newValue);
+    onPriceChange(newValue);
+  };
+
+  const handleInputChange = (event) => {
+    setValue(event.target.value === "" ? "" : Number(event.target.value));
+    onPriceChange(Number(event.target.value));
+  };
+
+  const handleBlur = () => {
+    if (value < row.minPrice) {
+      setValue(row.minPrice);
+      onPriceChange(row.minPrice);
+    } else if (value > row.maxPrice) {
+      setValue(row.maxPrice);
+      onPriceChange(row.maxPrice);
+    }
+  };
+
+  return (
+    <>
+      <Slider
+        value={typeof value === "number" ? value : row.minPrice}
+        size="small"
+        onChange={handleSliderChange}
+        aria-label="Small"
+        valueLabelDisplay="auto"
+        min={row.minPrice}
+        max={row.maxPrice}
+        style={{ width: "150px" }} // set the width of the slider to 150px
+        className="m-4 md:w-[50px]"
+      />
+      <Input
+        value={value}
+        onChange={handleInputChange}
+        onBlur={handleBlur}
+        inputProps={{
+          step: 1,
+          min: row.minPrice,
+          max: row.maxPrice,
+          type: "number",
+        }}
+      />
+    </>
+  );
+}
+
+function CustomQuantity({ row, onQuantityChange }) {
+  const [value, setValue] = useState(row.quantity);
+  const handleInputChange = (event) => {
+    setValue(event.target.value === "" ? "" : Number(event.target.value));
+    onQuantityChange(Number(event.target.value));
+  };
+
+  return (
+    <Input
+      value={value}
+      onChange={handleInputChange}
+      inputProps={{
+        step: 1,
+        type: "number",
+      }}
+    />
+  );
+}
+
 export const columns = [
   { field: "id", headerName: "ID", width: 90, hide: true },
   {
@@ -9,22 +85,35 @@ export const columns = [
   {
     field: "name",
     headerName: "Name",
-    width: 300,
+    width: 200,
     editable: false,
   },
   {
     field: "selectedPrice",
     headerName: "Price",
-    type: "number",
-    width: 110,
-    editable: true,
+    width: 350,
+    renderCell: (params) => (
+      <CustomSlider
+        row={params.row}
+        onPriceChange={(newValue) => {
+          params.row.selectedPrice = newValue;
+        }}
+      />
+    ),
   },
   {
     field: "quantity",
     headerName: "Quantity",
     type: "number",
     width: 80,
-    editable: true,
+    renderCell: (params) => (
+      <CustomQuantity
+        row={params.row}
+        onQuantityChange={(newValue) => {
+          params.row.quantity = newValue;
+        }}
+      />
+    ),
   },
   {
     field: "total",
@@ -32,23 +121,14 @@ export const columns = [
     type: "number",
     width: 80,
     editable: false,
+    valueGetter: (params) => params.row.selectedPrice * params.row.quantity,
   },
-  // {
-  //   field: "fullName",
-  //   headerName: "Full name",
-  //   description: "This column has a value getter and is not sortable.",
-  //   sortable: false,
-  //   width: 160,
-  //   valueGetter: (params) =>
-  //     `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-  // },
 ];
-
-//https://www.quicken.com/blog/budget-categories/
 
 //Housing (25~35%)
 export const houseBuy = [
   {
+    id: "1",
     type: "Buy",
     name: "Condo in downtown area",
     minPrice: 500000,
@@ -58,6 +138,7 @@ export const houseBuy = [
     total: 0,
   },
   {
+    id: "2",
     type: "Buy",
     name: "Single-family house",
     minPrice: 700000,
@@ -67,6 +148,7 @@ export const houseBuy = [
     total: 0,
   },
   {
+    id: "3",
     type: "Buy",
     name: "Luxury townhouse",
     minPrice: 2000000,
@@ -76,6 +158,7 @@ export const houseBuy = [
     total: 0,
   },
   {
+    id: "4",
     type: "Buy",
     name: "Waterfront mansion",
     minPrice: 10000000,
@@ -85,6 +168,7 @@ export const houseBuy = [
     total: 0,
   },
   {
+    id: "5",
     type: "Buy",
     name: "High-rise penthouse",
     minPrice: 5000000,
@@ -94,6 +178,7 @@ export const houseBuy = [
     total: 0,
   },
   {
+    id: "6",
     type: "Buy",
     name: "Large country estate",
     minPrice: 2000000,
@@ -103,6 +188,7 @@ export const houseBuy = [
     total: 0,
   },
   {
+    id: "7",
     type: "Buy",
     name: "Private island",
     minPrice: 50000000,
@@ -115,6 +201,7 @@ export const houseBuy = [
 
 export const houseRent = [
   {
+    id: "8",
     type: "Rent",
     name: "Small apartment",
     minPrice: 500,
@@ -124,6 +211,7 @@ export const houseRent = [
     total: 0,
   },
   {
+    id: "9",
     type: "Rent",
     name: "Luxury apartment",
     minPrice: 5000,
@@ -133,6 +221,7 @@ export const houseRent = [
     total: 0,
   },
   {
+    id: "10",
     type: "Rent",
     name: "Luxury villa",
     minPrice: 15000,
@@ -146,6 +235,7 @@ export const houseRent = [
 //Utilities (5~10%)
 export const utilities = [
   {
+    id: "11",
     type: "Util",
     name: "Electricity",
     minPrice: 50,
@@ -155,6 +245,7 @@ export const utilities = [
     total: 0,
   },
   {
+    id: "12",
     type: "Util",
     name: "Water",
     minPrice: 30,
@@ -164,6 +255,7 @@ export const utilities = [
     total: 0,
   },
   {
+    id: "13",
     type: "Util",
     name: "Gas",
     minPrice: 20,
@@ -173,6 +265,7 @@ export const utilities = [
     total: 0,
   },
   {
+    id: "14",
     type: "Util",
     name: "Internet",
     minPrice: 50,
@@ -182,6 +275,7 @@ export const utilities = [
     total: 0,
   },
   {
+    id: "15",
     type: "Util",
     name: "Cable TV",
     minPrice: 30,
