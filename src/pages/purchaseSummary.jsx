@@ -31,51 +31,54 @@ function purchaseSummary({ handleButtonClick }) {
             {categories.map((categoryName, index) => {
               const category = profile.purchased[categoryName];
               const color = colors[index % colors.length];
+              if (category.value > 0)
+                return (
+                  <div key={categoryName} className="mb-8">
+                    <h2 className="mb-4 text-xl font-bold">{categoryName}</h2>
+                    <div
+                      className={`max-h-96 overflow-y-scroll rounded-lg border p-4 ${color}`}
+                      style={{ scrollbarColor: `${color} #4B5563` }}
+                    >
+                      {Object.keys(category).map((itemId) => {
+                        if (itemId === "value") {
+                          return (
+                            <div
+                              key={`${categoryName}-total`}
+                              className="mt-4 flex items-center justify-between"
+                            >
+                              <span className="font-bold">Total:</span>
+                              <span className="font-bold">
+                                {formatCurrency(
+                                  profile.currency,
+                                  category.value
+                                )}
+                              </span>
+                            </div>
+                          );
+                        }
 
-              return (
-                <div key={categoryName} className="mb-8">
-                  <h2 className="mb-4 text-xl font-bold">{categoryName}</h2>
-                  <div
-                    className={`max-h-96 overflow-y-scroll rounded-lg border p-4 ${color}`}
-                    style={{ scrollbarColor: `${color} #4B5563` }}
-                  >
-                    {Object.keys(category).map((itemId) => {
-                      if (itemId === "value") {
+                        const item = category[itemId];
                         return (
                           <div
-                            key={`${categoryName}-total`}
+                            key={`${categoryName}-${itemId}`}
                             className="mt-4 flex items-center justify-between"
                           >
-                            <span className="font-bold">Total:</span>
-                            <span className="font-bold">
-                              {formatCurrency(profile.currency, category.value)}
+                            <span>{`${item.name} (${formatCurrency(
+                              profile.currency,
+                              item.selectedPrice
+                            )}) x${item.quantity} `}</span>
+                            <span>
+                              {formatCurrency(
+                                profile.currency,
+                                item.selectedPrice * item.quantity
+                              )}
                             </span>
                           </div>
                         );
-                      }
-
-                      const item = category[itemId];
-                      return (
-                        <div
-                          key={`${categoryName}-${itemId}`}
-                          className="mt-4 flex items-center justify-between"
-                        >
-                          <span>{`${item.name} (${formatCurrency(
-                            profile.currency,
-                            item.selectedPrice
-                          )}) x${item.quantity} `}</span>
-                          <span>
-                            {formatCurrency(
-                              profile.currency,
-                              item.selectedPrice * item.quantity
-                            )}
-                          </span>
-                        </div>
-                      );
-                    })}
+                      })}
+                    </div>
                   </div>
-                </div>
-              );
+                );
             })}
           </div>
         ) : (

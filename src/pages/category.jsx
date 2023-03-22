@@ -77,6 +77,8 @@ function category({ category, setTotalSpent }) {
     }
   }
 
+  console.log(profile);
+
   const selectRow = (params) => {
     setSelectedRow(parseInt(params.row.id));
   };
@@ -86,7 +88,7 @@ function category({ category, setTotalSpent }) {
       const { id, name, quantity, selectedPrice } =
         params.rows.idRowsLookup[selectedRow];
 
-      if (quantity > 0 && selectedPrice > 0) {
+      if (quantity >= 0 && selectedPrice >= 0) {
         const newPurchase = { id, name, selectedPrice, quantity };
         const existingPurchases = profile.purchased || {};
         const existingCategoryPurchases = existingPurchases[category] || {};
