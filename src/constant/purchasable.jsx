@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Slider, Input } from "@mui/material";
-import store from "../redux/store";
 import { profile } from "./profile";
-import { useDispatch } from "react-redux";
 
 //https://www.quicken.com/blog/budget-categories/
 
