@@ -6,6 +6,22 @@ import { useDispatch } from "react-redux";
 
 //https://www.quicken.com/blog/budget-categories/
 
+function toCurrencies(value) {
+  const symbols = ["", "K", "M", "B"]; // array of symbols to use for values in thousands and millions
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: profile.currency,
+    minimumFractionDigits: 0,
+  });
+  let symbolIndex = 0;
+  while (value >= 1000 && symbolIndex < symbols.length - 1) {
+    // loop until value is less than 1000 or all symbols have been used
+    value /= 1000;
+    symbolIndex++;
+  }
+  return formatter.format(value) + symbols[symbolIndex];
+}
+
 function CustomSlider({ row, onPriceChange }) {
   const [value, setValue] = useState(
     row.selectedPrice !== 0 ? row.selectedPrice : row.minPrice
@@ -22,7 +38,7 @@ function CustomSlider({ row, onPriceChange }) {
     }
   };
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event, newValue) => {
     if (profile.earnAmount < row.quantity * newValue) {
       alert(
         "You cannot increase the price of this item as you have exceeded your budget. Return to summary and increase your budget or lower the price of this item"
@@ -56,16 +72,14 @@ function CustomSlider({ row, onPriceChange }) {
         style={{ width: "150px" }} // set the width of the slider to 150px
         className="m-4 md:w-[50px]"
       />
-      <Input
+      <input
+        className="no-arrows w-full"
         value={value}
         onChange={handleInputChange}
         onBlur={handleBlur}
-        inputProps={{
-          step: 1,
-          min: row.minPrice,
-          max: row.maxPrice,
-          type: "number",
-        }}
+        min={row.minPrice}
+        max={row.maxPrice}
+        type="number"
       />
     </>
   );
@@ -101,23 +115,23 @@ function CustomQuantity({ row, onQuantityChange }) {
   );
 }
 
-const handleTotalAmountChange = (row) => {
-  const existingRow = store.getState().rows.find((r) => r.id === row.id);
-  if (!existingRow) {
-    store.dispatch({
-      type: "ADD_ITEM",
-      payload: row,
-    });
-  } else {
-    store.dispatch({
-      type: "UPDATE_ITEM",
-      payload: {
-        id: row.id + row.name,
-        totalPrice: row.quantity * row.selectedPrice,
-      },
-    });
-  }
-};
+// const handleTotalAmountChange = (row) => {
+//   const existingRow = store.getState().rows.find((r) => r.id === row.id);
+//   if (!existingRow) {
+//     store.dispatch({
+//       type: "ADD_ITEM",
+//       payload: row,
+//     });
+//   } else {
+//     store.dispatch({
+//       type: "UPDATE_ITEM",
+//       payload: {
+//         id: row.id + row.name,
+//         totalPrice: row.quantity * row.selectedPrice,
+//       },
+//     });
+//   }
+// };
 
 export const columns = [
   { field: "id", headerName: "ID", width: 90, hide: true },
@@ -136,7 +150,7 @@ export const columns = [
   {
     field: "selectedPrice",
     headerName: "Price",
-    width: 350,
+    width: 250,
     renderCell: (params) => {
       return (
         <CustomSlider
@@ -170,8 +184,8 @@ export const columns = [
     renderCell: (params) => {
       params.total = params.row.selectedPrice * params.row.quantity;
       const total = params.row.selectedPrice * params.row.quantity;
-      handleTotalAmountChange(params.row);
-      return total;
+      // handleTotalAmountChange(params.row);
+      return toCurrencies(total);
     },
   },
 ];
@@ -1830,3 +1844,12 @@ export const recreationStays = [
     total: 0,
   },
 ];
+
+export const customHouseAndUtilities = [];
+export const customPersonalSpending = [];
+export const customMedicalHealthcare = [];
+export const customTransportation = [];
+export const customFoodPlan = [];
+export const customTravelRecreation = [];
+export const customInsurance = [];
+export const customSavingInvesting = [];

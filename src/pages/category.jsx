@@ -13,6 +13,14 @@ import {
   recreationActivities,
   recreationStays,
   investing,
+  customHouseAndUtilities,
+  customFoodPlan,
+  customInsurance,
+  customMedicalHealthcare,
+  customPersonalSpending,
+  customSavingInvesting,
+  customTransportation,
+  customTravelRecreation,
 } from "../constant/purchasable";
 import { profile } from "../constant/profile";
 import { DataGrid } from "@mui/x-data-grid";
@@ -20,37 +28,52 @@ import { formatCurrency } from "../components/formatCurrency";
 import { useSelector } from "react-redux";
 import store from "../redux/store";
 
-function category({
-  category,
-  currency,
-  totalAmount,
-  setTotalSpent,
-  pieChartItems,
-}) {
+function category({ category, currency, totalAmount, setTotalSpent }) {
   const [categoryTotalAmount, setCategoryTotalAmount] = useState(0);
-  const categoryItems = getCategoryItems(category);
   const [selectedRow, setSelectedRow] = useState(0);
-  const rows = [...categoryItems];
+  const categoryItems = getCategoryItems(category);
+
+  const [rows, setRows] = useState([...categoryItems]);
+  const [newItem, setNewItem] = useState({
+    id: (parseInt(rows[rows.length - 1].id) + 1).toLocaleString(),
+    type: "",
+    name: "",
+    selectedPrice: 0,
+    quantity: 0,
+    total: 0,
+  });
 
   function getCategoryItems(category) {
     switch (category) {
       case "House & Utilities":
-        return [...houseRent, ...houseBuy, ...utilities];
+        return [
+          ...customHouseAndUtilities,
+          ...houseRent,
+          ...houseBuy,
+          ...utilities,
+        ];
       case "Personal Spending":
-        return [...personalItems, ...personalServices];
+        return [
+          ...customPersonalSpending,
+          ...personalItems,
+          ...personalServices,
+        ];
       case "Medical & Healthcare":
-        return healthcare;
+        return [...customMedicalHealthcare, ...healthcare];
       case "Transportation":
-        return transportation;
+        return [...customTransportation, ...transportation];
       case "Food Plan":
-        return food;
+        return [...customFoodPlan, ...food];
       case "Travel & Recreation":
-        return [...recreationActivities, ...recreationStays];
+        return [
+          ...customTravelRecreation,
+          ...recreationActivities,
+          ...recreationStays,
+        ];
       case "Insurance":
-        return insurance;
+        return [...customInsurance, insurance];
       case "Saving & Investing":
-        return investing;
-
+        return [...customSavingInvesting, investing];
       default:
         return [];
     }
@@ -107,12 +130,109 @@ function category({
     }
   };
 
+  function handleAddItem() {
+    // create a new item object with unique key
+    const newId = parseInt(rows[rows.length - 1].id) + 1;
+    const idExists = rows.some((row) => row.id === newId);
+    if (idExists) {
+      alert("Item with this ID already exists!");
+      return;
+    }
+
+    const newItemObj = {
+      id: newId.toLocaleString(),
+      type: newItem.type,
+      name: newItem.name,
+      selectedPrice: newItem.selectedPrice,
+      quantity: newItem.quantity,
+      total: newItem.total,
+    };
+
+    setRows([...rows, newItemObj]);
+    switch (category) {
+      case "House & Utilities":
+        customHouseAndUtilities.push(newItemObj);
+        break;
+      case "Personal Spending":
+        customPersonalSpending.push(newItemObj);
+        break;
+      case "Medical & Healthcare":
+        customMedicalHealthcare.push(newItemObj);
+        break;
+      case "Transportation":
+        customTransportation.push(newItemObj);
+        break;
+      case "Food Plan":
+        customFoodPlan.push(newItemObj);
+        break;
+      case "Travel & Recreation":
+        customTravelRecreation.push(newItemObj);
+        break;
+      case "Insurance":
+        customInsurance.push(newItemObj);
+        break;
+      case "Saving & Investing":
+        customSavingInvesting.push(newItemObj);
+        break;
+    }
+
+    // reset the newItem state
+    setNewItem({
+      id: (newId + 1).toLocaleString(),
+      type: "",
+      name: "",
+      selectedPrice: 0,
+      quantity: 0,
+      total: 0,
+    });
+  }
+
+  function handleNewItemChange(e) {
+    const { name, value } = e.target;
+    setNewItem({ ...newItem, [name]: value });
+  }
+
   return (
     <div className="h-full w-full">
-      <div className="h-[550px] w-[800px]">
+      <div className="mb-2 flex">
+        <input
+          type="text"
+          placeholder="Type"
+          name="type"
+          value={newItem.type}
+          onChange={handleNewItemChange}
+          className="mr-2"
+        />
+        <input
+          type="text"
+          placeholder="Name"
+          name="name"
+          value={newItem.name}
+          onChange={handleNewItemChange}
+          className="mr-2"
+        />
+        <input
+          type="number"
+          placeholder="Price"
+          name="price"
+          value={newItem.price}
+          onChange={handleNewItemChange}
+          className="mr-2"
+        />
+        <input
+          type="number"
+          placeholder="Quantity"
+          name="quantity"
+          value={newItem.quantity}
+          onChange={handleNewItemChange}
+          className="mr-2"
+        />
+        <button onClick={handleAddItem}>Add Item</button>
+      </div>
+      <div className="h-[350px] md:h-[550px] md:w-[800px]">
         <DataGrid
           autoPageSize
-          rowHeight={80}
+          rowHeight={30}
           rows={rows}
           columns={columns}
           initialState={{

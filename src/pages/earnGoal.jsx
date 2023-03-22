@@ -35,7 +35,6 @@ function earnGoal({ handleButtonClick }) {
 
   const handleAmountChange = (e) => {
     let inputAmount = e.target.value.replace(/[^0-9.]/g, ""); // only allow numbers and decimal point
-    console.log("earn goal " + inputAmount);
     inputAmount = parseFloat(inputAmount) || 0;
     if (inputAmount > 1000000000) {
       inputAmount = 999999999;
@@ -51,7 +50,6 @@ function earnGoal({ handleButtonClick }) {
       <div>
         <Category
           category={category}
-          currency={profile.currency}
           totalAmount={totalAmount}
           setTotalSpent={setTotalSpent}
         />
@@ -111,10 +109,6 @@ function earnGoal({ handleButtonClick }) {
         </div>
         <div className="text-xl font-bold">
           Amount Remaining:{" "}
-          {/* {formatCurrency(
-            profile.currency,
-            profile.earnAmount - profile.spendAmount
-          )} */}
           {formatCurrency(profile.currency, totalAmount - totalSpent)}
         </div>
       </div>
@@ -125,11 +119,18 @@ function earnGoal({ handleButtonClick }) {
               <PieChart
                 title={item}
                 currency={profile.currency}
-                value={25}
+                value={profile.purchased[item]?.value}
                 series={
-                  profile.earnAmount === 0
+                  profile.earnAmount === 0 ||
+                  profile.purchased?.[item] === undefined
                     ? [0]
-                    : [parseInt((25 / profile.earnAmount) * 100)]
+                    : [
+                        parseInt(
+                          (profile.purchased[item]?.value /
+                            profile.earnAmount) *
+                            100
+                        ),
+                      ]
                 }
                 onClick={() => handlePieChartClick(item)}
               />
