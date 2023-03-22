@@ -84,7 +84,7 @@ function App() {
   }
 
   return (
-    <div className=" flex  bg-white">
+    <div className="bg-white">
       <FadeTransition step={step} show={showContent}>
         {content}
       </FadeTransition>

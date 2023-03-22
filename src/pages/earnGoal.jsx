@@ -48,11 +48,7 @@ function earnGoal({ handleButtonClick }) {
 
     setContent(
       <div>
-        <Category
-          category={category}
-          totalAmount={totalAmount}
-          setTotalSpent={setTotalSpent}
-        />
+        <Category category={category} setTotalSpent={setTotalSpent} />
       </div>
     );
   };

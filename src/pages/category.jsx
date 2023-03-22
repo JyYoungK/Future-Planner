@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   columns,
   houseBuy,
@@ -25,10 +25,8 @@ import {
 import { profile } from "../constant/profile";
 import { DataGrid } from "@mui/x-data-grid";
 import { formatCurrency } from "../components/formatCurrency";
-import { useSelector } from "react-redux";
-import store from "../redux/store";
 
-function category({ category, currency, totalAmount, setTotalSpent }) {
+function category({ category, setTotalSpent }) {
   const [categoryTotalAmount, setCategoryTotalAmount] = useState(0);
   const [selectedRow, setSelectedRow] = useState(0);
   const categoryItems = getCategoryItems(category);
@@ -71,9 +69,9 @@ function category({ category, currency, totalAmount, setTotalSpent }) {
           ...recreationStays,
         ];
       case "Insurance":
-        return [...customInsurance, insurance];
+        return [...customInsurance, ...insurance];
       case "Saving & Investing":
-        return [...customSavingInvesting, investing];
+        return [...customSavingInvesting, ...investing];
       default:
         return [];
     }
@@ -195,14 +193,14 @@ function category({ category, currency, totalAmount, setTotalSpent }) {
   return (
     <div className="h-full w-full">
       <div className="mb-2 flex">
-        <input
+        {/* <input
           type="text"
           placeholder="Type"
           name="type"
           value={newItem.type}
           onChange={handleNewItemChange}
           className="mr-2"
-        />
+        /> */}
         <input
           type="text"
           placeholder="Name"
@@ -232,7 +230,7 @@ function category({ category, currency, totalAmount, setTotalSpent }) {
       <div className="h-[350px] md:h-[550px] md:w-[800px]">
         <DataGrid
           autoPageSize
-          rowHeight={30}
+          rowHeight={60}
           rows={rows}
           columns={columns}
           initialState={{
@@ -243,7 +241,7 @@ function category({ category, currency, totalAmount, setTotalSpent }) {
         />
       </div>
       <div className="mt-4 md:text-lg">
-        Total: {formatCurrency(currency, categoryTotalAmount)}
+        Total: {formatCurrency(profile.currency, categoryTotalAmount)}
       </div>
     </div>
   );
