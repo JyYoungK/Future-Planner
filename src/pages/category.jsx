@@ -27,7 +27,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import { formatCurrency } from "../components/formatCurrency";
 
 function category({ category, setTotalSpent }) {
-  const [categoryTotalAmount, setCategoryTotalAmount] = useState(0);
+  const [categoryTotalAmount, setCategoryTotalAmount] = useState(
+    profile.purchased?.[category]?.value || 0
+  );
   const [selectedRow, setSelectedRow] = useState(0);
   const categoryItems = getCategoryItems(category);
 
@@ -121,7 +123,10 @@ function category({ category, setTotalSpent }) {
               }
             }
             profile.purchased[profileCategory].value = categoryTotal;
-            setCategoryTotalAmount(categoryTotal);
+            console.log(profileCategory);
+            console.log(categoryTotal);
+            if (profileCategory === category)
+              setCategoryTotalAmount(profile.purchased[profileCategory].value);
           }
         }
         profile.spendAmount = totalCategorySpent;

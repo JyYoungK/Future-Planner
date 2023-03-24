@@ -1,8 +1,9 @@
 import { useState } from "react";
+import FadeTransition from "./components/fadeTransition";
 import Country from "./pages/countrySelect";
 import EarnGoal from "./pages/earnGoal";
 import PurchaseSummary from "./pages/purchaseSummary";
-import FadeTransition from "./components/fadeTransition";
+import JobSelect from "./pages/jobSelect";
 import "./App.css";
 
 function App() {
@@ -53,6 +54,8 @@ function App() {
     content = <EarnGoal handleButtonClick={handleButtonClick} />;
   } else if (step === 4) {
     content = <PurchaseSummary handleButtonClick={handleButtonClick} />;
+  } else if (step === 5) {
+    content = <JobSelect handleButtonClick={handleButtonClick} />;
   } else if (step === 8) {
     content = (
       <div className="fixed inset-0 z-10 flex items-center justify-center">

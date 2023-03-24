@@ -8,7 +8,7 @@ import { pieChartItems } from "../constant/pieChartItems";
 import { profile } from "../constant/profile";
 
 function earnGoal({ handleButtonClick }) {
-  const [totalAmount, setTotalAmount] = useState(profile.earnAmount);
+  const [totalAmount, setTotalAmount] = useState(profile.earnAmount || 0);
   const [totalSpent, setTotalSpent] = useState(0);
   const [category, setCategory] = useState("Summary");
   const [content, setContent] = useState("");
@@ -45,7 +45,6 @@ function earnGoal({ handleButtonClick }) {
 
   const handlePieChartClick = (category) => {
     setCategory(category);
-
     setContent(
       <div>
         <Category category={category} setTotalSpent={setTotalSpent} />
@@ -105,7 +104,10 @@ function earnGoal({ handleButtonClick }) {
         </div>
         <div className="text-xl font-bold">
           Amount Remaining:{" "}
-          {formatCurrency(profile.currency, totalAmount - totalSpent)}
+          {formatCurrency(
+            profile.currency,
+            profile.earnAmount - profile.spendAmount
+          )}
         </div>
       </div>
       <div className={`grid ${category === "Summary" ? "md:grid-cols-4" : ""}`}>
@@ -115,7 +117,11 @@ function earnGoal({ handleButtonClick }) {
               <PieChart
                 title={item}
                 currency={profile.currency}
-                value={profile.purchased[item]?.value}
+                value={
+                  profile.purchased[item]?.value
+                    ? profile.purchased[item]?.value
+                    : 0
+                }
                 series={
                   profile.earnAmount === 0 ||
                   profile.purchased?.[item] === undefined

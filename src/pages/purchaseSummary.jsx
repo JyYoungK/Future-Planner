@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
-import { top20Currencies } from "../constant/topCurrencies";
 import { profile } from "../constant/profile";
 import { Fragment } from "react";
 import { formatCurrency } from "../components/formatCurrency";
+import { pieChartItems } from "../constant/pieChartItems";
 
 function purchaseSummary({ handleButtonClick }) {
   const colors = [
@@ -10,13 +9,19 @@ function purchaseSummary({ handleButtonClick }) {
     "bg-red-100",
     "bg-green-100",
     "bg-yellow-100",
-    "bg-pink-100",
+    "bg-pink-200",
+    "bg-orange-200",
     "bg-purple-100",
     "bg-indigo-100",
     "bg-gray-100",
   ];
 
   const categories = Object.keys(profile.purchased);
+  categories.sort((a, b) => {
+    const indexA = pieChartItems.indexOf(a);
+    const indexB = pieChartItems.indexOf(b);
+    return indexA - indexB;
+  });
 
   return (
     <div className="rounded-lg bg-white p-10 shadow-md">
@@ -80,6 +85,18 @@ function purchaseSummary({ handleButtonClick }) {
                   </div>
                 );
             })}
+            <div
+              key={`remaining-total`}
+              className="mt-4 flex items-center justify-between"
+            >
+              <span className="font-bold">Remaining Total:</span>
+              <span className="font-bold">
+                {formatCurrency(
+                  profile.currency,
+                  profile.earnAmount - profile.spendAmount
+                )}
+              </span>
+            </div>
           </div>
         ) : (
           <div>
@@ -89,12 +106,20 @@ function purchaseSummary({ handleButtonClick }) {
           </div>
         )}
       </Fragment>
-      <button
-        className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-        onClick={() => handleButtonClick(3)}
-      >
-        Back
-      </button>
+      <div className="mt-4">
+        <button
+          className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
+          onClick={() => handleButtonClick(5)}
+        >
+          Continue
+        </button>
+        <button
+          className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
+          onClick={() => handleButtonClick(3)}
+        >
+          Back
+        </button>
+      </div>
     </div>
   );
 }

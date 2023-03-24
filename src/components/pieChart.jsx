@@ -4,6 +4,13 @@ import { formatCurrency } from "./formatCurrency";
 import travelIcon from "../assets/travel.png";
 
 const PieChart = ({ title, currency, value, series, onClick }) => {
+  let displayValue = 0;
+  console.log(formatCurrency(currency, value));
+  if (formatCurrency(currency, value) === undefined) {
+    displayValue = "$0.00";
+  } else {
+    displayValue = formatCurrency(currency, value);
+  }
   return (
     <div
       id="chart"
@@ -15,7 +22,7 @@ const PieChart = ({ title, currency, value, series, onClick }) => {
           {title}
         </Typography>
         <Typography fontSize={24} color="#11142d" fontWeight={700} mt={1}>
-          {formatCurrency(currency, value)}
+          {displayValue}
         </Typography>
       </Stack>
 
