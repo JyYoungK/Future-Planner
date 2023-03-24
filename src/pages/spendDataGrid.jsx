@@ -26,7 +26,7 @@ import { profile } from "../constant/profile";
 import { DataGrid } from "@mui/x-data-grid";
 import { formatCurrency } from "../components/formatCurrency";
 
-function category({ category, setTotalSpent }) {
+function SpendDataGrid({ category, setTotalSpent }) {
   const [categoryTotalAmount, setCategoryTotalAmount] = useState(
     profile.purchased?.[category]?.value || 0
   );
@@ -254,7 +254,7 @@ function category({ category, setTotalSpent }) {
   );
 }
 
-export default category;
+export default SpendDataGrid;
 // function toCurrencies(value) {
 //   const symbols = ["", "K", "M", "B"]; // array of symbols to use for values in thousands and millions
 //   const formatter = new Intl.NumberFormat("en-US", {

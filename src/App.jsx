@@ -4,6 +4,7 @@ import Country from "./pages/countrySelect";
 import EarnGoal from "./pages/earnGoal";
 import PurchaseSummary from "./pages/purchaseSummary";
 import JobSelect from "./pages/jobSelect";
+import Salary from "./pages/salary";
 import "./App.css";
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
 
   let content = null;
   if (step === 1) {
-    content = <EarnGoal handleButtonClick={handleButtonClick} />;
+    content = <Salary handleButtonClick={handleButtonClick} />;
     // content = (
     //   <div className="fixed inset-0 z-10 flex items-center justify-center">
     //     <div className="rounded-lg bg-white p-10 shadow-md">
@@ -56,6 +57,8 @@ function App() {
     content = <PurchaseSummary handleButtonClick={handleButtonClick} />;
   } else if (step === 5) {
     content = <JobSelect handleButtonClick={handleButtonClick} />;
+  } else if (step === 6) {
+    content = <Salary handleButtonClick={handleButtonClick} />;
   } else if (step === 8) {
     content = (
       <div className="fixed inset-0 z-10 flex items-center justify-center">

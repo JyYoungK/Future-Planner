@@ -9,7 +9,13 @@ function jobSelect({ handleButtonClick }) {
           className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
           onClick={() => handleButtonClick(6)}
         >
-          Continue
+          Salary
+        </button>
+        <button
+          className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
+          onClick={() => handleButtonClick(7)}
+        >
+          Business
         </button>
         <button
           className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"

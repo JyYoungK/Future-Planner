@@ -5,7 +5,6 @@ import travelIcon from "../assets/travel.png";
 
 const PieChart = ({ title, currency, value, series, onClick }) => {
   let displayValue = 0;
-  console.log(formatCurrency(currency, value));
   if (formatCurrency(currency, value) === undefined) {
     displayValue = "$0.00";
   } else {

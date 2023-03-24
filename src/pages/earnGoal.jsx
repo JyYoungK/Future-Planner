@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import PieChart from "../components/pieChart";
 import { top20Currencies } from "../constant/topCurrencies";
-import Category from "./category";
+import SpendDataGrid from "./spendDataGrid";
 import { formatCurrency } from "../components/formatCurrency";
 import { pieChartItems } from "../constant/pieChartItems";
 import { profile } from "../constant/profile";
 
 function earnGoal({ handleButtonClick }) {
   const [totalAmount, setTotalAmount] = useState(profile.earnAmount || 0);
+  const [currency, setCurrency] = useState(profile.currency || "");
   const [totalSpent, setTotalSpent] = useState(0);
   const [category, setCategory] = useState("Summary");
   const [content, setContent] = useState("");
@@ -30,6 +31,7 @@ function earnGoal({ handleButtonClick }) {
   }
 
   const handleCurrencyChange = (e) => {
+    setCurrency(e.target.value);
     profile.currency = e.target.value;
   };
 
@@ -47,7 +49,7 @@ function earnGoal({ handleButtonClick }) {
     setCategory(category);
     setContent(
       <div>
-        <Category category={category} setTotalSpent={setTotalSpent} />
+        <SpendDataGrid category={category} setTotalSpent={setTotalSpent} />
       </div>
     );
   };
@@ -62,7 +64,7 @@ function earnGoal({ handleButtonClick }) {
           <div className="mb-5 flex flex-row items-center justify-center">
             <div className="mr-5 text-lg font-bold">Earn</div>
             <select
-              value={profile.currency}
+              value={currency}
               onChange={handleCurrencyChange}
               className="focus:shadow-outline appearance-none rounded border border-gray-400 bg-white px-4 py-2 leading-tight shadow hover:border-gray-500 focus:outline-none"
             >

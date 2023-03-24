@@ -24,13 +24,14 @@ function purchaseSummary({ handleButtonClick }) {
   });
 
   return (
-    <div className="rounded-lg bg-white p-10 shadow-md">
+    <div className=" rounded-lg bg-white p-10 shadow-md">
       <Fragment>
         <h1 className="mb-8 text-3xl font-bold">Overview Summary Page</h1>
         {categories.length > 0 ? (
           <div>
             <h1 className="mb-5 text-2xl font-bold">
-              Here are things that you want to purchase in {profile.country} by{" "}
+              You want to earn{" "}
+              {formatCurrency(profile.currency, profile.earnAmount)} by{" "}
               {profile.goalYear}
             </h1>
             {categories.map((categoryName, index) => {
@@ -63,23 +64,25 @@ function purchaseSummary({ handleButtonClick }) {
                         }
 
                         const item = category[itemId];
-                        return (
-                          <div
-                            key={`${categoryName}-${itemId}`}
-                            className="mt-4 flex items-center justify-between"
-                          >
-                            <span>{`${item.name} (${formatCurrency(
-                              profile.currency,
-                              item.selectedPrice
-                            )}) x${item.quantity} `}</span>
-                            <span>
-                              {formatCurrency(
+                        if (item.quantity > 0) {
+                          return (
+                            <div
+                              key={`${categoryName}-${itemId}`}
+                              className="mt-4 flex items-center justify-between"
+                            >
+                              <span>{`${item.name} (${formatCurrency(
                                 profile.currency,
-                                item.selectedPrice * item.quantity
-                              )}
-                            </span>
-                          </div>
-                        );
+                                item.selectedPrice
+                              )}) x${item.quantity} `}</span>
+                              <span>
+                                {formatCurrency(
+                                  profile.currency,
+                                  item.selectedPrice * item.quantity
+                                )}
+                              </span>
+                            </div>
+                          );
+                        }
                       })}
                     </div>
                   </div>

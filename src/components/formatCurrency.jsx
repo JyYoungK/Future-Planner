@@ -9,3 +9,10 @@ export const formatCurrency = (currency, value, isEditing) => {
       });
     }
 };
+
+export const convertStringToNumber = (value) => {
+  // Remove commas and dollar signs from the value
+  const strippedValue = value.replace(/[\$,]/g, "");
+
+  return parseFloat(strippedValue);
+};

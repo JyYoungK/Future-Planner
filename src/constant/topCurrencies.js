@@ -1,8 +1,8 @@
 export const top20Currencies = [
   { code: "CAD", flag: "🇨🇦", country: "Canada" },
-  { code: "USD", flag: "🇺🇸", country: "United States" },
-  { code: "EUR", flag: "🇪🇺", country: "European Union" },
-  { code: "JPY", flag: "🇯🇵", country: "Japan" },
+  // { code: "USD", flag: "🇺🇸", country: "United States" },
+  // { code: "EUR", flag: "🇪🇺", country: "European Union" },
+  // { code: "JPY", flag: "🇯🇵", country: "Japan" },
   // { code: "GBP", flag: "🇬🇧", country: "United Kingdom" },
   // { code: "AUD", flag: "🇦🇺", country: "Australia" },
   // { code: "CHF", flag: "🇨🇭", country: "Switzerland" },
