@@ -3,8 +3,9 @@ import FadeTransition from "./components/fadeTransition";
 import Country from "./pages/countrySelect";
 import EarnGoal from "./pages/earnGoal";
 import PurchaseSummary from "./pages/purchaseSummary";
-import JobSelect from "./pages/jobSelect";
-import Salary from "./pages/salary";
+// import JobSelect from "./pages/jobSelect";
+import CareerGoal from "./pages/careerGoal";
+import CareerSummary from "./pages/careerSummary";
 import "./App.css";
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
 
   let content = null;
   if (step === 1) {
-    content = <Salary handleButtonClick={handleButtonClick} />;
+    content = <CareerGoal handleButtonClick={handleButtonClick} />;
     // content = (
     //   <div className="fixed inset-0 z-10 flex items-center justify-center">
     //     <div className="rounded-lg bg-white p-10 shadow-md">
@@ -56,36 +57,13 @@ function App() {
   } else if (step === 4) {
     content = <PurchaseSummary handleButtonClick={handleButtonClick} />;
   } else if (step === 5) {
-    content = <JobSelect handleButtonClick={handleButtonClick} />;
+    content = <CareerGoal handleButtonClick={handleButtonClick} />;
+    // content = <JobSelect handleButtonClick={handleButtonClick} />;
   } else if (step === 6) {
-    content = <Salary handleButtonClick={handleButtonClick} />;
-  } else if (step === 8) {
+    content = <CareerSummary handleButtonClick={handleButtonClick} />;
+  } else if (step === 7) {
     content = (
-      <div className="fixed inset-0 z-10 flex items-center justify-center">
-        <div className="rounded-lg bg-white p-10 shadow-md">
-          <h1 className="mb-5 text-3xl font-bold">Select your age</h1>
-          <div className="space-x-4">
-            <button
-              className="rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-              onClick={() => handleButtonClick(3)}
-            >
-              Children
-            </button>
-            <button
-              className="rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-              onClick={() => handleButtonClick(4)}
-            >
-              Adult
-            </button>
-          </div>
-          <button
-            className="mt-5 rounded-md bg-gray-300 px-4 py-2 text-gray-700 transition duration-300 ease-in-out hover:bg-gray-400"
-            onClick={() => handleButtonClick(1)}
-          >
-            Back
-          </button>
-        </div>
-      </div>
+      <div className="fixed inset-0 z-10 flex items-center justify-center"></div>
     );
   }
 

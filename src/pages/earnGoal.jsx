@@ -14,6 +14,7 @@ function earnGoal({ handleButtonClick }) {
   const [category, setCategory] = useState("Summary");
   const [content, setContent] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [goalYear, setGoalYear] = useState(new Date().getFullYear());
 
   useEffect(() => {
     const matchingCurrency = top20Currencies.find(
@@ -27,6 +28,7 @@ function earnGoal({ handleButtonClick }) {
   }, []);
 
   function handleYearChange(event) {
+    setGoalYear(event.target.value);
     profile.goalYear = event.target.value;
   }
 
@@ -84,13 +86,20 @@ function earnGoal({ handleButtonClick }) {
               className="focus:shadow-outline rounded border border-gray-400 bg-white px-4 py-2 text-right leading-tight shadow hover:border-gray-500 focus:outline-none"
             />
             <div className="mx-5 text-lg font-bold">By</div>
-            <input
-              type="number"
-              placeholder="Year"
-              maxLength="4"
-              className="focus:shadow-outline rounded border border-gray-400 bg-white px-4 py-2 shadow hover:border-gray-500 focus:outline-none"
+            <select
+              value={goalYear}
               onChange={handleYearChange}
-            />
+              className="focus:shadow-outline rounded border border-gray-400 bg-white px-4 py-2 shadow hover:border-gray-500 focus:outline-none"
+            >
+              {Array.from({ length: 101 }, (_, i) => {
+                const year = new Date().getFullYear() + i;
+                return (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                );
+              })}
+            </select>
           </div>
         </div>
       )}

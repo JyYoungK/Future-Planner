@@ -20,15 +20,19 @@ import {
 import { convertStringToNumber } from "../components/formatCurrency";
 import { profile } from "../constant/profile";
 
-function salary({ handleButtonClick }) {
+function careerGoal({ handleButtonClick }) {
   const [category, setCategory] = useState("Jobs");
   const [content, setContent] = useState("");
+  const [selectedJob, setSelectedJob] = useState("");
 
   function handleCategorySelect(category) {
     setCategory(category);
     setContent(
       <div key={category}>
-        <JobDataGrid category={category} rows={getCategoryItems(category)} />
+        <JobDataGrid
+          rows={getCategoryItems(category)}
+          setSelectedJob={setSelectedJob}
+        />
       </div>
     );
   }
@@ -124,6 +128,7 @@ function salary({ handleButtonClick }) {
           your financial goal
         </h1>
       )}
+      <h1 className="mb-5 text-lg font-bold">Selected Job: {selectedJob}</h1>
       <div className="flex flex-wrap justify-center gap-4 p-4">
         {category === "Jobs" ? (
           jobCategories.map((category, i) => (
@@ -137,13 +142,13 @@ function salary({ handleButtonClick }) {
         <div className="mt-4">
           <button
             className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-            onClick={() => handleButtonClick(7)}
+            onClick={() => handleButtonClick(6)}
           >
             Continue
           </button>
           <button
             className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-            onClick={() => handleButtonClick(5)}
+            onClick={() => handleButtonClick(4)}
           >
             Back
           </button>
@@ -160,4 +165,4 @@ function salary({ handleButtonClick }) {
   );
 }
 
-export default salary;
+export default careerGoal;

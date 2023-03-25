@@ -7,5 +7,9 @@ export const profile = {
   spendAmount: 0,
   purchased: {},
   goalYear: 0,
-  job: "",
+  goalJob: {
+    title: "",
+    medianSalary: 0,
+    topSalary: 0,
+  },
 };
