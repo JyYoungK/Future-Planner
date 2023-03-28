@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense, useState, useEffect } from "react";
 import FadeTransition from "./components/fadeTransition";
 import Country from "./pages/countrySelect";
 import EarnGoal from "./pages/earnGoal";
@@ -9,12 +9,29 @@ import CareerSummary from "./pages/careerSummary";
 import "./App.css";
 import { Canvas } from "@react-three/fiber";
 import { Earth } from "./components/earth";
-import space from "./assets/videos/space.mp4";
-const videoPath = new URL("./assets/videos/space.mp4", import.meta.url).href;
+import { LinearProgressWithLabel } from "./components/linearProgressWithLabel";
 
 function App() {
   const [step, setStep] = useState(1);
   const [showContent, setShowContent] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [showEarth, setShowEarth] = useState(false);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setProgress((prevProgress) =>
+        prevProgress >= 100 ? clearInterval(intervalId) : prevProgress + 10
+      );
+    }, 300);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    if (progress === 100) {
+      setShowEarth(true);
+    }
+  }, [progress]);
 
   const handleButtonClick = (nextStep) => {
     // if (nextStep === 3 && country === "") {
@@ -72,21 +89,25 @@ function App() {
   }
 
   return (
-    <div className="fixed inset-0">
-      {/* <video
-        className="absolute z-0 h-full w-full object-cover"
-        autoPlay
-        muted
-        loop
-        playsInline
-      >
-        <source src={videoPath} type="video/mp4" />
-      </video> */}
-      <Canvas>
-        <Suspense fallback={null}>
-          <Earth />
-        </Suspense>
-      </Canvas>
+    <div>
+      {/* {progress < 100 ? (
+        <LinearProgressWithLabel value={progress} />
+      ) : (
+        showEarth && ( */}
+      <div>
+        <div className="fixed inset-0">
+          <Canvas>
+            <Suspense fallback={null}>
+              <Earth />
+            </Suspense>
+          </Canvas>
+        </div>
+        <FadeTransition step={step} show={showContent}>
+          {content}
+        </FadeTransition>
+      </div>
+      {/* )
+      )} */}
     </div>
   );
 }

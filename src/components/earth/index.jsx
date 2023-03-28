@@ -24,47 +24,6 @@ export function Earth(props) {
     cloudsRef.current.rotation.y = elapsedTime / 6;
   });
 
-  const [animationComplete, setAnimationComplete] = useState(false);
-  const clockRef = useRef(new THREE.Clock());
-  const [position, setPosition] = useState({ x: 0, y: 0, z: 0 });
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setAnimationComplete(true);
-    }, 3000);
-    return () => clearTimeout(timeoutId);
-  }, []);
-
-  useEffect(() => {
-    const earthMesh = earthRef.current;
-    const cloudsMesh = cloudsRef.current;
-
-    const animate = () => {
-      const delta = clockRef.current.getDelta();
-
-      if (!animationComplete) {
-        setPosition((prevPosition) => ({
-          x: prevPosition.x - 0.1 * delta,
-          y: prevPosition.y,
-          z: prevPosition.z,
-        }));
-      }
-
-      earthMesh.position.set(position.x, position.y, position.z);
-      cloudsMesh.position.set(position.x, position.y, position.z);
-    };
-
-    const render = () => {
-      requestAnimationFrame(render);
-      animate();
-    };
-    render();
-
-    return () => {
-      cancelAnimationFrame(render);
-    };
-  }, [animationComplete, position]);
-
   return (
     <>
       <ambientLight intensity={1} />
