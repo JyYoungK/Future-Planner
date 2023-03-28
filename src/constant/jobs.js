@@ -1,3 +1,11 @@
+export const incomeTax = [
+  { incomeLevel: 1, taxRate: 15 },
+  { incomeLevel: 53359, taxRate: 20.5 },
+  { incomeLevel: 106717, taxRate: 26 },
+  { incomeLevel: 165430, taxRate: 29 },
+  { incomeLevel: 235675, taxRate: 33 },
+];
+
 export const jobCategories = [
   { title: "Aviation", color: "from-purple-500 to-sky-400" },
   { title: "Arts", color: "from-rose-500 to-pink-400" },

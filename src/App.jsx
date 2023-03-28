@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import FadeTransition from "./components/fadeTransition";
 import Country from "./pages/countrySelect";
 import EarnGoal from "./pages/earnGoal";
@@ -7,6 +7,10 @@ import PurchaseSummary from "./pages/purchaseSummary";
 import CareerGoal from "./pages/careerGoal";
 import CareerSummary from "./pages/careerSummary";
 import "./App.css";
+import { Canvas } from "@react-three/fiber";
+import { Earth } from "./components/earth";
+import space from "./assets/videos/space.mp4";
+const videoPath = new URL("./assets/videos/space.mp4", import.meta.url).href;
 
 function App() {
   const [step, setStep] = useState(1);
@@ -32,24 +36,24 @@ function App() {
 
   let content = null;
   if (step === 1) {
-    content = <CareerGoal handleButtonClick={handleButtonClick} />;
-    // content = (
-    //   <div className="fixed inset-0 z-10 flex items-center justify-center">
-    //     <div className="rounded-lg bg-white p-10 shadow-md">
-    //       <h1 className="mb-5 text-3xl font-bold">Welcome</h1>
-    //       <h1 className="mb-5 text-lg font-bold">
-    //         This app will help you plan your career, future and reach your
-    //         financial goal
-    //       </h1>
-    //       <button
-    //         className="rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-    //         onClick={() => handleButtonClick(2)}
-    //       >
-    //         Continue
-    //       </button>
-    //     </div>
-    //   </div>
-    // );
+    // content = <CareerGoal handleButtonClick={handleButtonClick} />;
+    content = (
+      <div className="fixed inset-0 z-10 flex items-center justify-center">
+        <div className="rounded-lg bg-white p-10 shadow-md">
+          <h1 className="mb-5 text-3xl font-bold">Welcome</h1>
+          <h1 className="mb-5 text-lg font-bold">
+            This app will help you plan your career, future and reach your
+            financial goal
+          </h1>
+          <button
+            className="rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
+            onClick={() => handleButtonClick(2)}
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    );
   } else if (step === 2) {
     content = <Country handleButtonClick={handleButtonClick} />;
   } else if (step === 3) {
@@ -68,10 +72,21 @@ function App() {
   }
 
   return (
-    <div className="bg-white">
-      <FadeTransition step={step} show={showContent}>
-        {content}
-      </FadeTransition>
+    <div className="fixed inset-0">
+      {/* <video
+        className="absolute z-0 h-full w-full object-cover"
+        autoPlay
+        muted
+        loop
+        playsInline
+      >
+        <source src={videoPath} type="video/mp4" />
+      </video> */}
+      <Canvas>
+        <Suspense fallback={null}>
+          <Earth />
+        </Suspense>
+      </Canvas>
     </div>
   );
 }

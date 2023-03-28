@@ -237,7 +237,7 @@ function SpendDataGrid({ category, setTotalSpent }) {
       <div className="h-[350px] md:h-[550px] md:w-[800px]">
         <DataGrid
           autoPageSize
-          rowHeight={60}
+          rowHeight={80}
           rows={rows}
           columns={columns}
           initialState={{

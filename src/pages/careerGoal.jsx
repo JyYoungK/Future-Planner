@@ -105,15 +105,11 @@ function careerGoal({ handleButtonClick }) {
     rows.forEach((row) => {
       const median = convertStringToNumber(row.median);
       const top = convertStringToNumber(row.top);
-      const earnAmount = profile.earnAmount;
+      const currentYear = new Date().getFullYear();
+      const earnAmount = profile.earnAmount / (profile.goalYear - currentYear);
 
       if (median > earnAmount || top > earnAmount) {
-        if (median > earnAmount) {
-          count++;
-        }
-        if (top > earnAmount) {
-          count++;
-        }
+        count++;
       }
     });
 
