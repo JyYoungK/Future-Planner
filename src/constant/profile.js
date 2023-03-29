@@ -12,4 +12,6 @@ export const profile = {
     medianSalary: 0,
     topSalary: 0,
   },
+  tutorial1: false,
+  tutorial2: false,
 };

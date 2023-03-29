@@ -56,7 +56,7 @@ function App() {
   useEffect(() => {
     setTimeout(() => {
       setShowWelcome(true);
-    }, 5000);
+    }, 500);
   }, []);
 
   let content = null;
