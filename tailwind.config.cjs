@@ -2,7 +2,11 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      transitionDuration: {
+        5000: "5000ms",
+      },
+    },
   },
   plugins: [require("prettier-plugin-tailwindcss")],
 };

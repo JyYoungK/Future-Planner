@@ -1,6 +1,7 @@
 import { Suspense, useState, useEffect } from "react";
 import FadeTransition from "./components/fadeTransition";
-import Country from "./pages/countrySelect";
+import IntroPage from "./pages/introPage";
+import IntroPage2 from "./pages/introPage2";
 import EarnGoal from "./pages/earnGoal";
 import PurchaseSummary from "./pages/purchaseSummary";
 // import JobSelect from "./pages/jobSelect";
@@ -16,6 +17,7 @@ function App() {
   const [showContent, setShowContent] = useState(true);
   const [progress, setProgress] = useState(0);
   const [showEarth, setShowEarth] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -51,28 +53,23 @@ function App() {
     }, 500);
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setShowWelcome(true);
+    }, 5000);
+  }, []);
+
   let content = null;
   if (step === 1) {
     // content = <CareerGoal handleButtonClick={handleButtonClick} />;
     content = (
-      <div className="fixed inset-0 z-10 flex items-center justify-center">
-        <div className="rounded-lg bg-white p-10 shadow-md">
-          <h1 className="mb-5 text-3xl font-bold">Welcome</h1>
-          <h1 className="mb-5 text-lg font-bold">
-            This app will help you plan your career, future and reach your
-            financial goal
-          </h1>
-          <button
-            className="rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-            onClick={() => handleButtonClick(2)}
-          >
-            Continue
-          </button>
-        </div>
-      </div>
+      <IntroPage
+        handleButtonClick={handleButtonClick}
+        showWelcome={showWelcome}
+      />
     );
   } else if (step === 2) {
-    content = <Country handleButtonClick={handleButtonClick} />;
+    content = <IntroPage2 handleButtonClick={handleButtonClick} />;
   } else if (step === 3) {
     content = <EarnGoal handleButtonClick={handleButtonClick} />;
   } else if (step === 4) {
@@ -94,17 +91,19 @@ function App() {
         <LinearProgressWithLabel value={progress} />
       ) : (
         showEarth && ( */}
-      <div>
-        <div className="fixed inset-0">
+      <div className="relative">
+        <div className="absolute inset-0 z-10">
+          <FadeTransition step={step} show={showContent}>
+            {content}
+          </FadeTransition>
+        </div>
+        {/* <div className="fixed inset-0 z-0">
           <Canvas>
             <Suspense fallback={null}>
-              <Earth />
+              <Earth step={step} />
             </Suspense>
           </Canvas>
-        </div>
-        <FadeTransition step={step} show={showContent}>
-          {content}
-        </FadeTransition>
+        </div> */}
       </div>
       {/* )
       )} */}
