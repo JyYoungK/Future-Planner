@@ -21,10 +21,10 @@ import {
   customSavingInvesting,
   customTransportation,
   customTravelRecreation,
-} from "../constant/purchasable";
-import { profile } from "../constant/profile";
+} from "../../constant/purchasable";
+import { profile } from "../../constant/profile";
 import { DataGrid } from "@mui/x-data-grid";
-import { formatCurrency } from "../components/formatCurrency";
+import { formatCurrency } from "../../components/formatCurrency";
 
 function SpendDataGrid({ category, setTotalSpent, setCategory }) {
   const [categoryTotalAmount, setCategoryTotalAmount] = useState(

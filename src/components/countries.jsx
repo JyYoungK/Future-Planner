@@ -1,19 +1,20 @@
-import React from "react";
+import { useState } from "react";
 import { Dropdown } from "semantic-ui-react";
 import { profile } from "../constant/profile";
 import { countryOptions } from "../constant/countries";
 
 function DropdownExampleSearchSelection() {
+  const [country, setCountry] = useState(profile.countryCode || "ca");
   const handleCountryChange = (e, { value }) => {
     const selectedOption = countryOptions.find(
       (option) => option.value === value
     );
-
     profile.country = selectedOption?.text;
+    profile.countryCode = selectedOption?.value;
+    setCountry(selectedOption?.value || "");
   };
-
   return (
-    <div className="flex flex-row items-center justify-center ">
+    <div className="flex flex-row items-center justify-center">
       <Dropdown
         placeholder="Select Country"
         fluid
@@ -21,7 +22,8 @@ function DropdownExampleSearchSelection() {
         selection
         onChange={handleCountryChange}
         options={countryOptions}
-        className="text-black"
+        className="w-full text-black"
+        value={country}
       />
     </div>
   );

@@ -3,6 +3,12 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  --glow-color: #ffae18;
+  --color: var(--yellow-5);
+  --shadow: var(--yellow-8);
+  --glare: hsl(0 0% 100% / 0.75);
+  --font-size: var(--font-size-fluid-3);
+  --transition: 0.2s;
 }
 
 .no-arrows::-webkit-outer-spin-button,
@@ -15,46 +21,408 @@
   -moz-appearance: textfield;
 }
 
-/* table {
-  width: 100%;
-  table-layout: fixed;
-  border-collapse: collapse;
+.glowing-btn {
+  position: relative;
+  color: var(--glow-color);
+  cursor: pointer;
+  padding: 0.35em;
+  border: 0.15em solid var(--glow-color);
+  border-radius: 0.45em;
+  background: none;
+  perspective: 2em;
+  font-family: "Raleway", sans-serif;
+  font-size: 2em;
+  font-weight: 900;
+  letter-spacing: 1em;
+
+  -webkit-box-shadow: inset 0px 0px 0.5em 0px var(--glow-color),
+    0px 0px 0.5em 0px var(--glow-color);
+  -moz-box-shadow: inset 0px 0px 0.5em 0px var(--glow-color),
+    0px 0px 0.5em 0px var(--glow-color);
+  box-shadow: inset 0px 0px 0.5em 0px var(--glow-color),
+    0px 0px 0.5em 0px var(--glow-color);
+  /* animation: border-flicker 2s linear infinite; */
 }
 
-th,
-td {
-  text-align: left;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
+.glowing-txt {
+  float: left;
+  margin-right: -0.8em;
+  -webkit-text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3),
+    0 0 0.45em var(--glow-color);
+  -moz-text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3),
+    0 0 0.45em var(--glow-color);
+  text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3), 0 0 0.45em var(--glow-color);
+  animation: text-flicker 3s linear infinite;
 }
 
-th:first-child,
-td:first-child {
-  width: 25%;
+.faulty-letter {
+  opacity: 0.5;
+  animation: faulty-flicker 1s linear infinite;
 }
 
-th:nth-child(2),
-td:nth-child(2) {
-  width: 30%;
+.faulty-letter2 {
+  opacity: 0.5;
+  animation: faulty-flicker 2s linear infinite;
 }
 
-th:nth-child(3),
-td:nth-child(3) {
-  width: 20%;
+.faulty-letter3 {
+  opacity: 0.5;
+  animation: faulty-flicker 3s linear infinite;
 }
 
-th:nth-child(4),
-td:nth-child(4) {
-  width: 10%;
+.faulty-letter4 {
+  opacity: 0.5;
+  animation: faulty-flicker 4s linear infinite;
 }
 
-th:last-child,
-td:last-child {
-  width: 15%;
+.faulty-letter5 {
+  opacity: 0.5;
+  animation: faulty-flicker 5s linear infinite;
 }
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-} */
+.faulty-letter6 {
+  opacity: 0.5;
+  animation: faulty-flicker 4s linear infinite;
+}
+
+.glowing-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.7;
+  filter: blur(1em);
+  transform: translateY(120%) rotateX(95deg) scale(1, 0.35);
+  background: var(--glow-color);
+  pointer-events: none;
+}
+
+.glowing-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  z-index: -1;
+  background-color: var(--glow-color);
+  box-shadow: 0 0 2em 0.2em var(--glow-color);
+  transition: opacity 100ms linear;
+}
+
+.glowing-btn.hover-effect:hover {
+  color: rgba(0, 0, 0, 0.8);
+  text-shadow: none;
+  animation: none;
+}
+
+.glowing-btn.hover-effect:hover .glowing-txt {
+  animation: none;
+}
+
+.glowing-btn.hover-effect:hover .faulty-letter {
+  animation: none;
+  text-shadow: none;
+  opacity: 1;
+}
+
+.glowing-btn.hover-effect:hover .faulty-letter2 {
+  animation: none;
+  text-shadow: none;
+  opacity: 1;
+}
+
+.glowing-btn.hover-effect:hover .faulty-letter3 {
+  animation: none;
+  text-shadow: none;
+  opacity: 1;
+}
+
+.glowing-btn.hover-effect:hover .faulty-letter4 {
+  animation: none;
+  text-shadow: none;
+  opacity: 1;
+}
+
+.glowing-btn.hover-effect:hover .faulty-letter5 {
+  animation: none;
+  text-shadow: none;
+  opacity: 1;
+}
+
+.glowing-btn.hover-effect:hover .faulty-letter6 {
+  animation: none;
+  text-shadow: none;
+  opacity: 1;
+}
+.glowing-btn.hover-effect:hover:before {
+  filter: blur(1.5em);
+  opacity: 1;
+}
+
+.glowing-btn.hover-effect:hover:after {
+  opacity: 1;
+}
+
+@keyframes faulty-flicker {
+  0% {
+    opacity: 0.1;
+  }
+  2% {
+    opacity: 0.1;
+  }
+  4% {
+    opacity: 0.5;
+  }
+  19% {
+    opacity: 0.5;
+  }
+  21% {
+    opacity: 0.1;
+  }
+  23% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.5;
+  }
+  83% {
+    opacity: 0.4;
+  }
+
+  87% {
+    opacity: 1;
+  }
+}
+
+@keyframes text-flicker {
+  0% {
+    opacity: 0.1;
+  }
+
+  2% {
+    opacity: 1;
+  }
+
+  8% {
+    opacity: 0.1;
+  }
+
+  9% {
+    opacity: 1;
+  }
+
+  12% {
+    opacity: 0.1;
+  }
+  20% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.3;
+  }
+  30% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0.7;
+  }
+  72% {
+    opacity: 0.2;
+  }
+
+  77% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes border-flicker {
+  0% {
+    opacity: 0.1;
+  }
+  2% {
+    opacity: 1;
+  }
+  4% {
+    opacity: 0.1;
+  }
+
+  8% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .glowing-btn {
+    font-size: 1em;
+  }
+}
+
+/* Sparks */
+div svg {
+  position: absolute;
+  z-index: 3;
+}
+
+div svg path {
+  fill: var(--glare);
+}
+
+/* Animation for sparkles */
+
+.sparkle svg {
+  animation: sparkle 0.5s ease-in-out alternate infinite;
+}
+
+@keyframes sparkle {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(0.1);
+  }
+}
+
+div svg {
+  --delay-step: 0.15;
+  top: calc(var(--y, 0) * 1%);
+  left: calc(var(--x, 0) * 1%);
+  /* transform: translate(-25%, -25%) scale(0); */
+}
+
+div svg:nth-of-type(1) {
+  --x: 10;
+  --y: 10;
+  --s: 1.5;
+}
+
+div svg:nth-of-type(2) {
+  --x: 30;
+  --y: 80;
+  --s: -1.2;
+}
+
+div svg:nth-of-type(3) {
+  --x: 70;
+  --y: 50;
+  --s: 1.1;
+}
+
+div svg:nth-of-type(4) {
+  --x: 90;
+  --y: 20;
+  --s: 0.9;
+}
+
+div svg:nth-of-type(5) {
+  --x: 50;
+  --y: 90;
+  --s: 0.8;
+}
+
+/* BUTTON GLITCH */
+.button-glitch,
+.button-glitch:after {
+  font-family: "Bebas Neue", sans-serif;
+  background: red;
+  border: 0;
+  color: #fff;
+  letter-spacing: 3px;
+  outline: transparent;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-glitch:after {
+  --slice-0: inset(50% 50% 50% 50%);
+  --slice-1: inset(80% -6px 0 0);
+  --slice-2: inset(50% -6px 30% 0);
+  --slice-3: inset(10% -6px 85% 0);
+  --slice-4: inset(40% -6px 43% 0);
+  --slice-5: inset(80% -6px 5% 0);
+  content: "ALTERNATE TEXT";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 3%,
+    #00e6f6 5%,
+    #00e6f6 8%,
+    #ff013c 8%
+  );
+  text-shadow: -3px -3px 0px #f8f005, 3px 3px 0px #00e6f6;
+  clip-path: var(--slice-0);
+}
+
+.button-glitch:hover:after {
+  animation: 1s glitch;
+  animation-timing-function: steps(2, end);
+}
+
+@keyframes glitch {
+  0% {
+    clip-path: var(--slice-1);
+    transform: translate(-20px, -10px);
+  }
+  10% {
+    clip-path: var(--slice-3);
+    transform: translate(10px, 10px);
+  }
+  20% {
+    clip-path: var(--slice-1);
+    transform: translate(-10px, 10px);
+  }
+  30% {
+    clip-path: var(--slice-3);
+    transform: translate(0px, 5px);
+  }
+  40% {
+    clip-path: var(--slice-2);
+    transform: translate(-5px, 0px);
+  }
+  50% {
+    clip-path: var(--slice-3);
+    transform: translate(5px, 0px);
+  }
+  60% {
+    clip-path: var(--slice-4);
+    transform: translate(5px, 10px);
+  }
+  70% {
+    clip-path: var(--slice-2);
+    transform: translate(-10px, 10px);
+  }
+  80% {
+    clip-path: var(--slice-5);
+    transform: translate(20px, -10px);
+  }
+  90% {
+    clip-path: var(--slice-1);
+    transform: translate(-10px, 0px);
+  }
+  100% {
+    clip-path: var(--slice-1);
+    transform: translate(0);
+  }
+}

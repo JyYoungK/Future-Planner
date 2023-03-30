@@ -1,4 +1,4 @@
-function FadeTransition({ step, show, children }) {
+function FadeTransition({ show, children }) {
   return (
     <div
       className={`z-10 flex h-[90vh] w-full items-center justify-center transition-opacity duration-500 ${

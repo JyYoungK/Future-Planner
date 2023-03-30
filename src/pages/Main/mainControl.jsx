@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from "react";
-import SpaceThemeBorder from "../components/spaceThemeBorder";
-import AstronautImage from "../assets/Astronaut.png";
-import ShuttlePart1 from "../assets/ShuttlePart1.png";
-import ShuttlePart2 from "../assets/ShuttlePart2.png";
-import ShuttlePart3 from "../assets/ShuttlePart3.png";
-import Countries from "../components/countries";
-import GeneralInput from "./generalInput";
-import { profile } from "../constant/profile";
-import { formatCurrency } from "../components/formatCurrency";
+import SpaceThemeBorder from "../../components/spaceThemeBorder";
+import AstronautImage from "../../assets/Astronaut.png";
+import Countries from "../../components/countries";
+import GeneralInput from "../General/generalInput";
+import { profile } from "../../constant/profile";
+import { formatCurrency } from "../../components/formatCurrency";
+// import ShuttlePart1 from "../../assets/ShuttlePart1.png";
+// import ShuttlePart2 from "../../assets/ShuttlePart2.png";
+// import ShuttlePart3 from "../../assets/ShuttlePart3.png";
 
-function mainControl({ handleButtonClick, setCountry, totalSpent }) {
+function mainControl({ handleButtonClick, totalSpent }) {
   const [totalAmount, setTotalAmount] = useState(profile.earnAmount || 0);
   const [speechIndex, setSpeechIndex] = useState(0);
   const [build, setBuild] = useState(false);
   const [tutorialOn, setTutorialOn] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [generalCheck, setGeneralCheck] = useState(false);
+  const [spendCheck, setSpendCheck] = useState(false);
+  const [careerCheck, setCareerCheck] = useState(false);
+  const [countDown, setCountDown] = useState(0);
 
   const speeches = [
     "Hello? Hello? Can you hear me?",
@@ -59,15 +63,32 @@ function mainControl({ handleButtonClick, setCountry, totalSpent }) {
 
   useEffect(() => {
     profile.goalYear = new Date().getFullYear() + 1;
+    if (profile.spendAmount > 0) {
+      setSpendCheck(true);
+    } else {
+      setSpendCheck(false);
+    }
+    if (
+      profile.goalJob.title !== "" &&
+      profile.goalJob.medianSalary !== "" &&
+      profile.goalJob.topSalary !== ""
+    ) {
+      setCareerCheck(true);
+    } else {
+      setCareerCheck(false);
+    }
   }, []);
+
+  useEffect(() => {
+    setCountDown(
+      [generalCheck, spendCheck, careerCheck].filter(Boolean).length
+    );
+  }, [generalCheck, spendCheck, careerCheck]);
 
   return (
     <div className="flex w-screen items-center justify-center">
       <div className="h-4/5 w-5/6">
         <SpaceThemeBorder>
-          {/* <div class="mb-5 flex items-center justify-center">
-        <Countries class={dropdownStyle} setCountry={setCountry} />
-      </div> */}
           <div className="grid md:grid-cols-2">
             <img
               src={AstronautImage}
@@ -76,7 +97,7 @@ function mainControl({ handleButtonClick, setCountry, totalSpent }) {
               className="animate-bounce-slow hidden md:block"
             />
             <div className="flex w-full flex-col items-center justify-center">
-              <div className="mb-2 w-4/5 border-2 border-cyan-300 p-2">
+              <div className="mb-2 w-4/5 border-2 border-cyan-300 md:p-2">
                 <div className="flex items-center justify-center border-2 border-cyan-300">
                   <div className="p-4 font-bold text-white md:text-xl">
                     General Information
@@ -85,20 +106,23 @@ function mainControl({ handleButtonClick, setCountry, totalSpent }) {
                 <div className="border-2 border-cyan-300 p-5">
                   <div className="text-white md:flex-row">
                     <div className="mb-5 flex flex-row items-center justify-center whitespace-nowrap">
-                      <div className="mr-5 text-lg font-bold">
-                        Country to land :
+                      <div className="flex flex-col items-center justify-center md:flex-row">
+                        <div className="mr-5 mb-5 text-lg font-bold md:mb-0">
+                          Country to land :
+                        </div>
+                        <Countries />
                       </div>
-                      <Countries setCountry={setCountry} />
                     </div>
                     <GeneralInput
                       totalAmount={totalAmount}
                       setTotalAmount={setTotalAmount}
+                      setGeneralCheck={setGeneralCheck}
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="mb-2 w-4/5 border-2 border-green-300 p-2">
+              <div className="mb-2 w-4/5 border-2 border-green-300 md:p-2">
                 <div className="flex items-center justify-center border-2 border-green-300 hover:bg-green-300">
                   <button
                     className="p-4 font-bold text-white transition-colors duration-300  hover:text-black md:text-xl"
@@ -125,7 +149,7 @@ function mainControl({ handleButtonClick, setCountry, totalSpent }) {
                 </div>
               </div>
 
-              <div className="mb-2 w-4/5 border-2 border-indigo-300 p-2">
+              <div className="mb-2 w-4/5 border-2 border-indigo-300 md:p-2">
                 <div className="flex items-center justify-center border-2 border-indigo-300 hover:bg-indigo-300">
                   <button
                     className="p-4 font-bold text-white transition-colors duration-300  hover:text-black md:text-xl"
@@ -142,9 +166,9 @@ function mainControl({ handleButtonClick, setCountry, totalSpent }) {
                     </div>
                     <div className="flex flex-row items-center justify-center whitespace-nowrap text-lg font-bold">
                       <div className="mr-5 ">Income/Year: </div>
-                      {(profile.goalJob.medianSalary === 0 ||
+                      {(profile.goalJob.medianSalary === "" ||
                         profile.goalJob.medianSalary === null) &&
-                      (profile.goalJob.topSalary === 0 ||
+                      (profile.goalJob.topSalary === "" ||
                         profile.goalJob.topSalary === null)
                         ? "N/A"
                         : `${profile.goalJob.medianSalary} ~ ${profile.goalJob.topSalary}`}
@@ -152,6 +176,32 @@ function mainControl({ handleButtonClick, setCountry, totalSpent }) {
                   </div>
                 </div>
               </div>
+              <button
+                className={`glowing-btn flex w-4/5 justify-center ${
+                  countDown === 3 ? "hover-effect" : ""
+                }`}
+                onClick={() => {
+                  if (countDown === 3) {
+                    handleButtonClick(7);
+                  }
+                }}
+              >
+                <span className="glowing-txt">
+                  {countDown === 0 && "3"}
+                  {countDown === 1 && "2"}
+                  {countDown === 2 && "1"}
+                  {countDown === 3 && (
+                    <div>
+                      L<span className="faulty-letter2">A</span>
+                      <span className="faulty-letter3">U</span>
+                      <span className="faulty-letter4">N</span>
+                      <span className="faulty-letter5">C</span>
+                      <span className="faulty-letter6">H</span>
+                      <span className="faulty-letter">!</span>
+                    </div>
+                  )}
+                </span>
+              </button>
             </div>
             {showPopup && (
               <div className="fixed top-0 left-0 flex h-full w-full items-center justify-center">

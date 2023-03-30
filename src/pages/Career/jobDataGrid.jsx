@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { jobColumns } from "../constant/jobs";
-import { profile } from "../constant/profile";
+import { jobColumns } from "../../constant/jobs";
+import { profile } from "../../constant/profile";
 import {
   salaryInYear,
   salaryAfterGraduatingInYear,
-} from "../components/formatCurrency";
-import QuestionMarkIcon from "../assets/QuestionMarkIcon.png";
+} from "../../components/formatCurrency";
+import QuestionMarkIcon from "../../assets/QuestionMarkIcon.png";
 
 function JobDataGrid({ rows, selectedJob, setSelectedJob }) {
   const [prevSelectedJob, setPrevSelectedJob] = useState(selectedJob);
@@ -21,9 +21,14 @@ function JobDataGrid({ rows, selectedJob, setSelectedJob }) {
 
   function handleCellSelect(degree, title, median, top, education) {
     if (prevSelectedJob === title && profile.goalJob.title !== "") {
-      //same job selected
+      //reset if same job selected
       setSelectedJob("");
       profile.goalJob.title = "";
+      profile.goalJob.topSalary = "";
+      profile.goalJob.medianSalary = "";
+      profile.goalJob.educationPeriod = "";
+      profile.goalJob.hasDegree = false;
+      profile.goalJob.degree = "";
     } else {
       setTempTitle(title);
       setTempMedian(median);
@@ -37,7 +42,6 @@ function JobDataGrid({ rows, selectedJob, setSelectedJob }) {
   function handleJobSelect(hasDegree) {
     setShowPopup(false);
     if (greenJob) {
-      console.log(tempEducationPeriod === "None required");
       if (hasDegree || tempEducationPeriod === "None required") {
         profile.goalJob.hasDegree = true;
       } else {
@@ -49,6 +53,7 @@ function JobDataGrid({ rows, selectedJob, setSelectedJob }) {
       profile.goalJob.medianSalary = tempMedian;
       profile.goalJob.topSalary = tempTop;
       profile.goalJob.educationPeriod = tempEducationPeriod;
+      profile.goalJob.degree = degree;
       setTempTitle("");
       setTempMedian("");
       setTempTop("");
@@ -62,6 +67,7 @@ function JobDataGrid({ rows, selectedJob, setSelectedJob }) {
         profile.goalJob.medianSalary = tempMedian;
         profile.goalJob.topSalary = tempTop;
         profile.goalJob.educationPeriod = tempEducationPeriod;
+        profile.goalJob.degree = degree;
         setTempTitle("");
         setTempMedian("");
         setTempTop("");
@@ -76,12 +82,12 @@ function JobDataGrid({ rows, selectedJob, setSelectedJob }) {
 
   return (
     <div className="h-full w-full">
-      <div className="h-[800px] w-full  md:h-[550px]">
+      <div className="h-[800px] w-full md:h-[550px]">
         <img
           src={QuestionMarkIcon}
           alt={QuestionMarkIcon}
           style={{ marginLeft: "auto" }}
-          className="mb-4 h-12 w-12"
+          className="mb-4 h-6 w-6 md:h-12 md:w-12"
           onClick={() => setShowHelp(true)}
         />
         <DataGrid

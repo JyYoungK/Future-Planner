@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import PieChart from "../components/pieChart";
-import { top20Currencies } from "../constant/topCurrencies";
+import PieChart from "../../components/pieChart";
+import { top20Currencies } from "../../constant/topCurrencies";
 import SpendDataGrid from "./spendDataGrid";
-import { formatCurrency } from "../components/formatCurrency";
-import { pieChartItems } from "../constant/pieChartItems";
-import { profile } from "../constant/profile";
-import SpaceThemeBorder from "../components/spaceThemeBorder";
+import { formatCurrency } from "../../components/formatCurrency";
+import { pieChartItems } from "../../constant/pieChartItems";
+import { profile } from "../../constant/profile";
+import SpaceThemeBorder from "../../components/spaceThemeBorder";
 
 function earnGoal({ handleButtonClick, setTotalSpent }) {
   const [category, setCategory] = useState("Summary");
@@ -42,7 +42,7 @@ function earnGoal({ handleButtonClick, setTotalSpent }) {
         <SpaceThemeBorder>
           <div className="rounded-lg bg-gray-900 text-white shadow-md sm:p-6 md:p-8 lg:p-10">
             <div className="flex flex-col justify-between p-4 md:flex-row">
-              <div className="text-xl font-bold">
+              <div className="text-3xl font-bold">
                 {category === "Summary" ? (
                   <div>Your spend summary in {profile.country} </div>
                 ) : (
@@ -51,7 +51,7 @@ function earnGoal({ handleButtonClick, setTotalSpent }) {
                   </div>
                 )}
               </div>
-              <div className="mt-4 text-xl font-bold md:mt-0">
+              <div className="mt-4 text-3xl font-bold md:mt-0">
                 Amount Remaining:{" "}
                 {formatCurrency(
                   profile.currency,
@@ -102,29 +102,31 @@ function earnGoal({ handleButtonClick, setTotalSpent }) {
                 <div> {content} </div>
               )}
             </div>
-            {category === "Summary" ? (
-              <div className="mt-4">
+            <div className="mt-10 md:mt-20">
+              {category === "Summary" ? (
+                <div>
+                  <button
+                    className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
+                    onClick={() => handleButtonClick(4)}
+                  >
+                    Summary
+                  </button>
+                  <button
+                    className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
+                    onClick={() => handleButtonClick(2)}
+                  >
+                    Back
+                  </button>
+                </div>
+              ) : (
                 <button
-                  className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-                  onClick={() => handleButtonClick(4)}
-                >
-                  Summary
-                </button>
-                <button
-                  className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-                  onClick={() => handleButtonClick(2)}
+                  className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
+                  onClick={() => setCategory("Summary")}
                 >
                   Back
                 </button>
-              </div>
-            ) : (
-              <button
-                className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-                onClick={() => setCategory("Summary")}
-              >
-                Back
-              </button>
-            )}
+              )}
+            </div>
           </div>
         </SpaceThemeBorder>
       </div>

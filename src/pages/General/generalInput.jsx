@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { profile } from "../constant/profile";
-import { top20Currencies } from "../constant/topCurrencies";
-import { formatCurrency } from "../components/formatCurrency";
+import { profile } from "../../constant/profile";
+import { top20Currencies } from "../../constant/topCurrencies";
+import { formatCurrency } from "../../components/formatCurrency";
 
-function generalInput({ totalAmount, setTotalAmount }) {
+function generalInput({ totalAmount, setTotalAmount, setGeneralCheck }) {
   const [currency, setCurrency] = useState(profile.currency || "CAD");
-  const [totalSpent, setTotalSpent] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const [goalYear, setGoalYear] = useState(
     profile.goalYear || new Date().getFullYear()
@@ -30,6 +29,14 @@ function generalInput({ totalAmount, setTotalAmount }) {
     setTotalAmount(inputAmount);
   };
 
+  useEffect(() => {
+    if (totalAmount > 0) {
+      setGeneralCheck(true);
+    } else {
+      setGeneralCheck(false);
+    }
+  }, [totalAmount]);
+
   return (
     <div className="flex flex-col items-center justify-center md:flex-row">
       <div className="mb-5 flex flex-row items-center justify-center whitespace-nowrap">
@@ -49,10 +56,10 @@ function generalInput({ totalAmount, setTotalAmount }) {
           type="text"
           placeholder="Enter amount"
           value={formatCurrency(profile.currency, totalAmount, isTyping)}
-          onChange={handleAmountChange}
+          onChange={(e) => handleAmountChange(e)}
           onFocus={() => setIsTyping(true)}
           onBlur={() => setIsTyping(false)}
-          className="focus:shadow-outline mt-2  rounded border border-gray-400 bg-white px-4 py-2 text-right leading-tight text-black shadow hover:border-gray-500 focus:outline-none md:mt-0"
+          className="focus:shadow-outline mt-2 w-full rounded border border-gray-400 bg-white px-4 py-2 text-right leading-tight text-black shadow hover:border-gray-500 focus:outline-none md:mt-0"
         />
       </div>
       <div className="mb-5 flex flex-row items-center justify-center whitespace-nowrap">
@@ -60,7 +67,7 @@ function generalInput({ totalAmount, setTotalAmount }) {
         <select
           value={goalYear}
           onChange={handleYearChange}
-          className="focus:shadow-outline mt-2 rounded border border-gray-400 bg-white px-4 py-2 text-black shadow hover:border-gray-500 focus:outline-none md:mt-0"
+          className="focus:shadow-outline mt-2 w-full rounded border border-gray-400 bg-white px-4 py-2 text-black shadow hover:border-gray-500 focus:outline-none md:mt-0"
         >
           {Array.from({ length: 101 }, (_, i) => {
             const year = new Date().getFullYear() + 1 + i;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { jobCategories } from "../constant/jobs";
+import { jobCategories } from "../../constant/jobs";
 import JobDataGrid from "./jobDataGrid";
 import {
   artsCategory,
@@ -16,10 +16,10 @@ import {
   medicalCategory,
   sportsCategory,
   militaryCategory,
-} from "../constant/jobs";
-import { formatCurrency, salaryInYear } from "../components/formatCurrency";
-import { profile } from "../constant/profile";
-import SpaceThemeBorder from "../components/spaceThemeBorder";
+} from "../../constant/jobs";
+import { formatCurrency, salaryInYear } from "../../components/formatCurrency";
+import { profile } from "../../constant/profile";
+import SpaceThemeBorder from "../../components/spaceThemeBorder";
 
 function careerGoal({ handleButtonClick }) {
   const [category, setCategory] = useState("Jobs");
@@ -117,20 +117,18 @@ function careerGoal({ handleButtonClick }) {
     <div className="flex w-screen items-center justify-center">
       <div className="h-4/5 w-5/6">
         <SpaceThemeBorder>
-          <div className="rounded-lg bg-gray-900 text-white shadow-md sm:p-6 md:p-8 lg:p-10">
+          <div className="h-full rounded-lg bg-gray-900 text-white ">
             {category === "Jobs" && (
-              <div>
-                <h1 className="mb-5 text-2xl font-bold">
-                  List of job categories with available number of jobs that
-                  potentially earn{" "}
-                  {formatCurrency(
-                    profile.currency,
-                    profile.earnAmount /
-                      (profile.goalYear - new Date().getFullYear())
-                  )}{" "}
-                  / year
-                </h1>
-              </div>
+              <h1 className="mb-5 h-full text-2xl font-bold">
+                List of job categories with available number of jobs that
+                potentially earn{" "}
+                {formatCurrency(
+                  profile.currency,
+                  profile.earnAmount /
+                    (profile.goalYear - new Date().getFullYear())
+                )}{" "}
+                / year
+              </h1>
             )}
             <h1 className="my-5 justify-end text-2xl font-bold">
               {selectedJob ? "Selected Job: " : "Job not selected"}
@@ -142,7 +140,7 @@ function careerGoal({ handleButtonClick }) {
                 {selectedJob}
               </span>
             </h1>
-            <div className="p-4">
+            <div className="mt-4">
               {category === "Jobs" ? (
                 <div className="grid grid-cols-1 justify-center gap-4 md:grid-cols-5">
                   {jobCategories.map((category, i) => (
@@ -153,29 +151,31 @@ function careerGoal({ handleButtonClick }) {
                 <div> {content} </div>
               )}
             </div>
-            {category === "Jobs" ? (
-              <div className="absolute inset-x-0 bottom-0 mb-40">
+            <div className="mt-10 md:mt-20">
+              {category === "Jobs" ? (
+                <div>
+                  <button
+                    className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
+                    onClick={() => handleButtonClick(6)}
+                  >
+                    Summary
+                  </button>
+                  <button
+                    className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
+                    onClick={() => handleButtonClick(2)}
+                  >
+                    Back
+                  </button>
+                </div>
+              ) : (
                 <button
-                  className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-                  onClick={() => handleButtonClick(6)}
-                >
-                  Summary
-                </button>
-                <button
-                  className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-                  onClick={() => handleButtonClick(2)}
+                  className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
+                  onClick={() => setCategory("Jobs")}
                 >
                   Back
                 </button>
-              </div>
-            ) : (
-              <button
-                className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-                onClick={() => setCategory("Jobs")}
-              >
-                Back
-              </button>
-            )}
+              )}
+            </div>
           </div>
         </SpaceThemeBorder>
       </div>

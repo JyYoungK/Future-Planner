@@ -1,17 +1,18 @@
-import { Suspense, useState, useEffect } from "react";
-import FadeTransition from "./components/fadeTransition";
-import IntroPage from "./pages/introPage";
-import MainControl from "./pages/mainControl";
-import EarnGoal from "./pages/earnGoal";
-import PurchaseSummary from "./pages/purchaseSummary";
-// import JobSelect from "./pages/jobSelect";
-import CareerGoal from "./pages/careerGoal";
-import CareerSummary from "./pages/careerSummary";
 import "./App.css";
+import { Suspense, useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Earth } from "./components/earth";
 import { LinearProgressWithLabel } from "./components/linearProgressWithLabel";
 import { profile } from "./constant/profile";
+import FadeTransition from "./components/fadeTransition";
+import IntroPage from "./pages/introPage";
+import MainControl from "./pages/Main/mainControl";
+import EarnGoal from "./pages/Spend/earnGoal";
+import PurchaseSummary from "./pages/Spend/purchaseSummary";
+import CareerGoal from "./pages/Career/careerGoal";
+import CareerSummary from "./pages/Career/careerSummary";
+import FinalSummary from "./pages/Main/finalSummary";
+import Goodbye from "./pages/Main/goodbye";
 
 function App() {
   const [step, setStep] = useState(1);
@@ -38,16 +39,6 @@ function App() {
   }, [progress]);
 
   const handleButtonClick = (nextStep) => {
-    // if (nextStep === 3 && country === "") {
-    //   alert("Please select your residing country to continue");
-    // } else {
-    //   setShowContent(false);
-    //   setTimeout(() => {
-    //     setStep(nextStep);
-    //     setShowContent(true);
-    //   }, 500);
-    // }
-
     setShowContent(false);
     setTimeout(() => {
       setStep(nextStep);
@@ -63,7 +54,6 @@ function App() {
 
   let content = null;
   if (step === 1) {
-    // content = <CareerGoal handleButtonClick={handleButtonClick} />;
     content = (
       <IntroPage
         handleButtonClick={handleButtonClick}
@@ -88,13 +78,12 @@ function App() {
     content = <PurchaseSummary handleButtonClick={handleButtonClick} />;
   } else if (step === 5) {
     content = <CareerGoal handleButtonClick={handleButtonClick} />;
-    // content = <JobSelect handleButtonClick={handleButtonClick} />;
   } else if (step === 6) {
     content = <CareerSummary handleButtonClick={handleButtonClick} />;
   } else if (step === 7) {
-    content = (
-      <div className="fixed inset-0 z-10 flex items-center justify-center"></div>
-    );
+    content = <FinalSummary handleButtonClick={handleButtonClick} />;
+  } else if (step === 8) {
+    content = <Goodbye />;
   }
 
   return (
@@ -105,9 +94,11 @@ function App() {
         showEarth && ( */}
       <div className="relative">
         <div className="absolute inset-0 z-10">
-          <FadeTransition step={step} show={showContent}>
-            {content}
-          </FadeTransition>
+          {step < 8 ? (
+            <FadeTransition show={showContent}>{content}</FadeTransition>
+          ) : (
+            <div>{content}</div>
+          )}
         </div>
         {/* <div className="fixed inset-0 z-0">
           <Canvas>

@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import {
   formatCurrency,
   getYearsOfExperience,
-} from "../components/formatCurrency";
-import { profile } from "../constant/profile";
-import SpaceThemeBorder from "../components/spaceThemeBorder";
+} from "../../components/formatCurrency";
+import { profile } from "../../constant/profile";
+import SpaceThemeBorder from "../../components/spaceThemeBorder";
 
 function careerSummary({ handleButtonClick }) {
   const [feedback, setFeedback] = useState("");
@@ -45,12 +45,12 @@ function careerSummary({ handleButtonClick }) {
   }, []);
 
   return (
-    <div className="flex w-screen items-center justify-center">
+    <div className="flex w-screen items-center justify-center text-white">
       <div className="h-4/5 w-5/6">
         <SpaceThemeBorder>
-          {profile.goalJob.title !== "" ? (
-            <div className="rounded-lg p-8 text-white ">
-              <h1 className="mb-8 text-3xl font-bold">Career Summary Page</h1>
+          <div className="rounded-lg p-8 ">
+            <h1 className="mb-8 text-3xl font-bold">Career Summary Page</h1>
+            {profile.goalJob.title !== "" ? (
               <div className="text-2xl">
                 <div>
                   You have chosen to pursue a career in{" "}
@@ -71,19 +71,19 @@ function careerSummary({ handleButtonClick }) {
           job search and stay safe!
         </div> */}
               </div>
+            ) : (
+              <div className="mb-5 text-xl font-bold">
+                You haven't picked a career yet
+              </div>
+            )}
+            <div className="mt-8">
+              <button
+                className="mx-2 rounded-md bg-blue-500 px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600"
+                onClick={() => handleButtonClick(5)}
+              >
+                Back
+              </button>
             </div>
-          ) : (
-            <div className="mb-5 text-xl font-bold">
-              You haven't picked a career yet
-            </div>
-          )}
-          <div className="mt-4">
-            <button
-              className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-              onClick={() => handleButtonClick(5)}
-            >
-              Back
-            </button>
           </div>
         </SpaceThemeBorder>
       </div>
