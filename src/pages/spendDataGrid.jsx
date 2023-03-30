@@ -201,7 +201,7 @@ function SpendDataGrid({ category, setTotalSpent, setCategory }) {
   }
 
   return (
-    <div className="h-full w-full ">
+    <div className="h-full w-full">
       <div className="my-4 flex-col justify-between border-4 border-white p-4 text-xl md:flex md:w-full md:flex-row">
         <div className="mb-4 font-bold md:mb-0">Add your custom item</div>
         <div className="md:item-left grid grid-cols-2 md:grid-cols-4">
@@ -237,7 +237,7 @@ function SpendDataGrid({ category, setTotalSpent, setCategory }) {
           </button>
         </div>
       </div>
-      <div className="h-[800px] md:h-[550px] md:w-full">
+      <div className="h-[800px] md:h-[550px]">
         <DataGrid
           autoPageSize
           rowHeight={80}

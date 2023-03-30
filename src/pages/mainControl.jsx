@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SpaceThemeBorder from "../components/spaceThemeBorder";
 import AstronautImage from "../assets/Astronaut.png";
 import ShuttlePart1 from "../assets/ShuttlePart1.png";
@@ -57,6 +57,10 @@ function mainControl({ handleButtonClick, setCountry, totalSpent }) {
     }
   }
 
+  useEffect(() => {
+    profile.goalYear = new Date().getFullYear() + 1;
+  }, []);
+
   return (
     <div className="flex w-screen items-center justify-center">
       <div className="h-4/5 w-5/6">
@@ -71,8 +75,8 @@ function mainControl({ handleButtonClick, setCountry, totalSpent }) {
               style={{ maxWidth: "80%" }}
               className="animate-bounce-slow hidden md:block"
             />
-            <div>
-              <div className=" mb-2 border-2 border-cyan-300 p-2">
+            <div className="flex w-full flex-col items-center justify-center">
+              <div className="mb-2 w-4/5 border-2 border-cyan-300 p-2">
                 <div className="flex items-center justify-center border-2 border-cyan-300">
                   <div className="p-4 font-bold text-white md:text-xl">
                     General Information
@@ -80,8 +84,8 @@ function mainControl({ handleButtonClick, setCountry, totalSpent }) {
                 </div>
                 <div className="border-2 border-cyan-300 p-5">
                   <div className="text-white md:flex-row">
-                    <div className="mb-5 flex flex-col items-center justify-center whitespace-nowrap md:flex-row">
-                      <div className="mr-5 font-bold md:text-lg">
+                    <div className="mb-5 flex flex-row items-center justify-center whitespace-nowrap">
+                      <div className="mr-5 text-lg font-bold">
                         Country to land :
                       </div>
                       <Countries setCountry={setCountry} />
@@ -94,7 +98,7 @@ function mainControl({ handleButtonClick, setCountry, totalSpent }) {
                 </div>
               </div>
 
-              <div className=" mb-2 border-2 border-green-300 p-2">
+              <div className="mb-2 w-4/5 border-2 border-green-300 p-2">
                 <div className="flex items-center justify-center border-2 border-green-300 hover:bg-green-300">
                   <button
                     className="p-4 font-bold text-white transition-colors duration-300  hover:text-black md:text-xl"
@@ -105,12 +109,12 @@ function mainControl({ handleButtonClick, setCountry, totalSpent }) {
                 </div>
                 <div className="border-2 border-green-300 p-5">
                   <div className="text-white md:flex-row">
-                    <div className="mb-5 flex flex-col items-center justify-center whitespace-nowrap font-bold md:flex-row md:text-lg">
+                    <div className="mb-5 flex  flex-row items-center justify-center whitespace-nowrap text-lg font-bold">
                       <div className="mr-5">Total Spend :</div>
                       {formatCurrency(profile.currency, profile.spendAmount) ||
                         "CA$0.00"}
                     </div>
-                    <div className="flex flex-col items-center justify-center whitespace-nowrap font-bold md:flex-row md:text-lg">
+                    <div className="flex flex-row items-center justify-center whitespace-nowrap text-lg font-bold">
                       <div className="mr-5">Remaining :</div>
                       {formatCurrency(
                         profile.currency,
@@ -121,7 +125,7 @@ function mainControl({ handleButtonClick, setCountry, totalSpent }) {
                 </div>
               </div>
 
-              <div className=" mb-2 border-2 border-indigo-300 p-2">
+              <div className="mb-2 w-4/5 border-2 border-indigo-300 p-2">
                 <div className="flex items-center justify-center border-2 border-indigo-300 hover:bg-indigo-300">
                   <button
                     className="p-4 font-bold text-white transition-colors duration-300  hover:text-black md:text-xl"
@@ -132,15 +136,18 @@ function mainControl({ handleButtonClick, setCountry, totalSpent }) {
                 </div>
                 <div className="border-2 border-indigo-300 p-5">
                   <div className="text-white md:flex-row">
-                    <div className="mb-5 flex flex-col items-center justify-center whitespace-nowrap md:flex-row">
-                      <div className="mr-5 font-bold md:text-lg">Job:</div>
-                      <Countries setCountry={setCountry} />
+                    <div className="mb-5 flex  flex-row items-center justify-center whitespace-nowrap text-lg font-bold">
+                      <div className="mr-5 ">Job:</div>
+                      {profile.goalJob.title || "N/A"}
                     </div>
-                    <div className="flex flex-col items-center justify-center whitespace-nowrap md:flex-row">
-                      <div className="mr-5 font-bold md:text-lg">
-                        Income/Year
-                      </div>
-                      <Countries setCountry={setCountry} />
+                    <div className="flex flex-row items-center justify-center whitespace-nowrap text-lg font-bold">
+                      <div className="mr-5 ">Income/Year: </div>
+                      {(profile.goalJob.medianSalary === 0 ||
+                        profile.goalJob.medianSalary === null) &&
+                      (profile.goalJob.topSalary === 0 ||
+                        profile.goalJob.topSalary === null)
+                        ? "N/A"
+                        : `${profile.goalJob.medianSalary} ~ ${profile.goalJob.topSalary}`}
                     </div>
                   </div>
                 </div>

@@ -17,14 +17,14 @@ import {
   sportsCategory,
   militaryCategory,
 } from "../constant/jobs";
-import { convertStringToNumber } from "../components/formatCurrency";
+import { formatCurrency, salaryInYear } from "../components/formatCurrency";
 import { profile } from "../constant/profile";
 import SpaceThemeBorder from "../components/spaceThemeBorder";
 
 function careerGoal({ handleButtonClick }) {
   const [category, setCategory] = useState("Jobs");
   const [content, setContent] = useState("");
-  const [selectedJob, setSelectedJob] = useState("");
+  const [selectedJob, setSelectedJob] = useState(profile.goalJob.title || "");
 
   function handleCategorySelect(category) {
     setCategory(category);
@@ -32,6 +32,7 @@ function careerGoal({ handleButtonClick }) {
       <div key={category}>
         <JobDataGrid
           rows={getCategoryItems(category)}
+          selectedJob={selectedJob}
           setSelectedJob={setSelectedJob}
         />
       </div>
@@ -104,13 +105,7 @@ function careerGoal({ handleButtonClick }) {
     let count = 0;
 
     rows.forEach((row) => {
-      const median = convertStringToNumber(row.median);
-      const top = convertStringToNumber(row.top);
-      const currentYear = new Date().getFullYear();
-      const goalYear = profile.goalYear - currentYear || 1;
-      const earnAmount = profile.earnAmount / goalYear;
-
-      if (median > earnAmount || top > earnAmount) {
+      if (salaryInYear(profile, row)) {
         count++;
       }
     });
@@ -124,25 +119,42 @@ function careerGoal({ handleButtonClick }) {
         <SpaceThemeBorder>
           <div className="rounded-lg bg-gray-900 text-white shadow-md sm:p-6 md:p-8 lg:p-10">
             {category === "Jobs" && (
-              <h1 className="mb-5 text-2xl font-bold">
-                List of job categories with available number of jobs that can
-                satisfy your financial goal
-              </h1>
+              <div>
+                <h1 className="mb-5 text-2xl font-bold">
+                  List of job categories with available number of jobs that
+                  potentially earn{" "}
+                  {formatCurrency(
+                    profile.currency,
+                    profile.earnAmount /
+                      (profile.goalYear - new Date().getFullYear())
+                  )}{" "}
+                  / year
+                </h1>
+              </div>
             )}
-            <h1 className="mb-5 text-lg font-bold">
-              Selected Job: {selectedJob}
+            <h1 className="my-5 justify-end text-2xl font-bold">
+              {selectedJob ? "Selected Job: " : "Job not selected"}
+              <span
+                style={{
+                  textDecoration: selectedJob ? "underline yellow" : "none",
+                }}
+              >
+                {selectedJob}
+              </span>
             </h1>
-            <div className="grid grid-cols-1 justify-center gap-4 p-4 md:grid-cols-5">
+            <div className="p-4">
               {category === "Jobs" ? (
-                jobCategories.map((category, i) => (
-                  <JobCategory key={i} category={category} />
-                ))
+                <div className="grid grid-cols-1 justify-center gap-4 md:grid-cols-5">
+                  {jobCategories.map((category, i) => (
+                    <JobCategory key={i} category={category} />
+                  ))}
+                </div>
               ) : (
                 <div> {content} </div>
               )}
             </div>
             {category === "Jobs" ? (
-              <div className="mt-4">
+              <div className="absolute inset-x-0 bottom-0 mb-40">
                 <button
                   className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
                   onClick={() => handleButtonClick(6)}
