@@ -6,7 +6,7 @@ export const profile = {
   earnAmount: 0,
   spendAmount: 0,
   purchased: {},
-  goalYear: 0,
+  goalYear: 2023,
   goalJob: {
     title: "",
     medianSalary: 0,

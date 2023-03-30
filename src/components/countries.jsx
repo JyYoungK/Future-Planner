@@ -1,7 +1,6 @@
 import React from "react";
 import { Dropdown } from "semantic-ui-react";
 import { profile } from "../constant/profile";
-import dropdownStyle from "../components/countrySelect.css?inline";
 import { countryOptions } from "../constant/countries";
 
 function DropdownExampleSearchSelection() {
@@ -14,15 +13,17 @@ function DropdownExampleSearchSelection() {
   };
 
   return (
-    <Dropdown
-      placeholder="Select Country"
-      fluid
-      search
-      selection
-      onChange={handleCountryChange}
-      options={countryOptions}
-      className={dropdownStyle}
-    />
+    <div className="flex flex-row items-center justify-center ">
+      <Dropdown
+        placeholder="Select Country"
+        fluid
+        search
+        selection
+        onChange={handleCountryChange}
+        options={countryOptions}
+        className="text-black"
+      />
+    </div>
   );
 }
 

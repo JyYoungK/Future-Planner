@@ -26,7 +26,7 @@ import { profile } from "../constant/profile";
 import { DataGrid } from "@mui/x-data-grid";
 import { formatCurrency } from "../components/formatCurrency";
 
-function SpendDataGrid({ category, setTotalSpent }) {
+function SpendDataGrid({ category, setTotalSpent, setCategory }) {
   const [categoryTotalAmount, setCategoryTotalAmount] = useState(
     profile.purchased?.[category]?.value || 0
   );
@@ -36,7 +36,7 @@ function SpendDataGrid({ category, setTotalSpent }) {
   const [rows, setRows] = useState([...categoryItems]);
   const [newItem, setNewItem] = useState({
     id: (parseInt(rows[rows.length - 1].id) + 1).toLocaleString(),
-    type: "",
+    type: "Custom",
     name: "",
     selectedPrice: 0,
     quantity: 0,
@@ -78,8 +78,6 @@ function SpendDataGrid({ category, setTotalSpent }) {
         return [];
     }
   }
-
-  console.log(profile);
 
   const selectRow = (params) => {
     setSelectedRow(parseInt(params.row.id));
@@ -123,8 +121,7 @@ function SpendDataGrid({ category, setTotalSpent }) {
               }
             }
             profile.purchased[profileCategory].value = categoryTotal;
-            console.log(profileCategory);
-            console.log(categoryTotal);
+
             if (profileCategory === category)
               setCategoryTotalAmount(profile.purchased[profileCategory].value);
           }
@@ -181,10 +178,12 @@ function SpendDataGrid({ category, setTotalSpent }) {
         break;
     }
 
+    alert(newItem.name + " has been successfully added to the list");
+
     // reset the newItem state
     setNewItem({
       id: (newId + 1).toLocaleString(),
-      type: "",
+      type: "Custom",
       name: "",
       selectedPrice: 0,
       quantity: 0,
@@ -194,61 +193,82 @@ function SpendDataGrid({ category, setTotalSpent }) {
 
   function handleNewItemChange(e) {
     const { name, value } = e.target;
-    setNewItem({ ...newItem, [name]: value });
+    let newValue = value;
+    if (/^0/.test(newValue)) {
+      newValue = newValue.replace(/^0+/, "");
+    }
+    setNewItem({ ...newItem, [name]: newValue });
   }
 
   return (
-    <div className="h-full w-full">
-      <div className="mb-2 flex">
-        {/* <input
-          type="text"
-          placeholder="Type"
-          name="type"
-          value={newItem.type}
-          onChange={handleNewItemChange}
-          className="mr-2"
-        /> */}
-        <input
-          type="text"
-          placeholder="Name"
-          name="name"
-          value={newItem.name}
-          onChange={handleNewItemChange}
-          className="mr-2"
-        />
-        <input
-          type="number"
-          placeholder="Price"
-          name="price"
-          value={newItem.price}
-          onChange={handleNewItemChange}
-          className="mr-2"
-        />
-        <input
-          type="number"
-          placeholder="Quantity"
-          name="quantity"
-          value={newItem.quantity}
-          onChange={handleNewItemChange}
-          className="mr-2"
-        />
-        <button onClick={handleAddItem}>Add Item</button>
+    <div className="h-full w-full ">
+      <div className="my-4 flex-col justify-between border-4 border-white p-4 text-xl md:flex md:w-full md:flex-row">
+        <div className="mb-4 font-bold md:mb-0">Add your custom item</div>
+        <div className="md:item-left grid grid-cols-2 md:grid-cols-4">
+          <input
+            type="text"
+            placeholder="Name"
+            name="name"
+            value={newItem.name}
+            onChange={handleNewItemChange}
+            className="mr-2 "
+            style={{ backgroundColor: "transparent", color: "white" }}
+          />
+          <input
+            type="number"
+            placeholder="Price"
+            name="price"
+            value={newItem.price}
+            onChange={handleNewItemChange}
+            className="no-arrows mr-2"
+            style={{ backgroundColor: "transparent", color: "white" }}
+          />
+          <input
+            type="number"
+            placeholder="Quantity"
+            name="quantity"
+            value={newItem.quantity}
+            onChange={handleNewItemChange}
+            className="no-arrows mr-2"
+            style={{ backgroundColor: "transparent", color: "white" }}
+          />
+          <button className="mr-2 text-green-500" onClick={handleAddItem}>
+            Add Item
+          </button>
+        </div>
       </div>
-      <div className="h-[350px] md:h-[550px] md:w-[800px]">
+      <div className="h-[800px] md:h-[550px] md:w-full">
         <DataGrid
           autoPageSize
           rowHeight={80}
           rows={rows}
           columns={columns}
-          initialState={{
-            pagination: { paginationModel: { pageSize: 5 } },
-          }}
+          // initialState={{
+          //   pagination: { paginationModel: { pageSize: 10 } },
+          // }}
           onRowClick={selectRow}
           onStateChange={handleRowClick}
+          sx={{
+            button: { color: "#ffffff" },
+            boxShadow: 2,
+            border: 3,
+            color: "white",
+            borderColor: "primary.light",
+            "& .MuiDataGrid-cell:hover": {
+              color: "primary.main",
+            },
+            "& .MuiDataGrid-pagination": {
+              color: "#ffffff",
+            },
+            "& .MuiTablePagination-root": {
+              color: "#ffffff",
+            },
+          }}
         />
       </div>
-      <div className="mt-4 md:text-lg">
-        Total: {formatCurrency(profile.currency, categoryTotalAmount)}
+      <div className="mt-4 font-bold md:text-2xl">
+        Total:{" "}
+        {formatCurrency(profile.currency, categoryTotalAmount) || "CA$0.00"}
       </div>
     </div>
   );

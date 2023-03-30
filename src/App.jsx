@@ -1,7 +1,7 @@
 import { Suspense, useState, useEffect } from "react";
 import FadeTransition from "./components/fadeTransition";
 import IntroPage from "./pages/introPage";
-import IntroPage2 from "./pages/introPage2";
+import MainControl from "./pages/mainControl";
 import EarnGoal from "./pages/earnGoal";
 import PurchaseSummary from "./pages/purchaseSummary";
 // import JobSelect from "./pages/jobSelect";
@@ -11,6 +11,7 @@ import "./App.css";
 import { Canvas } from "@react-three/fiber";
 import { Earth } from "./components/earth";
 import { LinearProgressWithLabel } from "./components/linearProgressWithLabel";
+import { profile } from "./constant/profile";
 
 function App() {
   const [step, setStep] = useState(1);
@@ -18,6 +19,7 @@ function App() {
   const [progress, setProgress] = useState(0);
   const [showEarth, setShowEarth] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
+  const [totalSpent, setTotalSpent] = useState(profile.spendAmount || 0);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -69,9 +71,19 @@ function App() {
       />
     );
   } else if (step === 2) {
-    content = <IntroPage2 handleButtonClick={handleButtonClick} />;
+    content = (
+      <MainControl
+        handleButtonClick={handleButtonClick}
+        totalSpent={totalSpent}
+      />
+    );
   } else if (step === 3) {
-    content = <EarnGoal handleButtonClick={handleButtonClick} />;
+    content = (
+      <EarnGoal
+        handleButtonClick={handleButtonClick}
+        setTotalSpent={setTotalSpent}
+      />
+    );
   } else if (step === 4) {
     content = <PurchaseSummary handleButtonClick={handleButtonClick} />;
   } else if (step === 5) {

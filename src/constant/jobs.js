@@ -1,3 +1,19 @@
+import ArtsIcon from "../assets/jobCategories/ArtsIcon.png";
+import AviationIcon from "../assets/jobCategories/AviationIcon.png";
+import BusinessIcon from "../assets/jobCategories/BusinessIcon.png";
+import ConstructionIcon from "../assets/jobCategories/ConstructionIcon.png";
+import EducationIcon from "../assets/jobCategories/EducationIcon.png";
+import EnginnerIcon from "../assets/jobCategories/EngineerIcon.png";
+import JusticeIcon from "../assets/jobCategories/JusticeIcon.png";
+import MediaIcon from "../assets/jobCategories/MediaIcon.png";
+import MedicalIcon from "../assets/jobCategories/MedicalIcon.png";
+import MilitaryIcon from "../assets/jobCategories/MilitaryIcon.png";
+import PublicIcon from "../assets/jobCategories/PublicIcon.png";
+import ScienceIcon from "../assets/jobCategories/ScienceIcon.png";
+import ServiceIcon from "../assets/jobCategories/ServiceIcon.png";
+import SportsIcon from "../assets/jobCategories/SportsIcon.png";
+import TechnologyIcon from "../assets/jobCategories/TechnologyIcon.png";
+
 export const incomeTax = [
   { incomeLevel: 1, taxRate: 15 },
   { incomeLevel: 53359, taxRate: 20.5 },
@@ -7,21 +23,61 @@ export const incomeTax = [
 ];
 
 export const jobCategories = [
-  { title: "Aviation", color: "from-purple-500 to-sky-400" },
-  { title: "Arts", color: "from-rose-500 to-pink-400" },
-  { title: "Business", color: "from-blue-600 to-blue-300" },
-  { title: "Construction", color: "from-gray-500 to-stone-300" },
-  { title: "Engineer", color: "from-teal-600 to-teal-400" },
-  { title: "Education", color: "from-green-400 to-indigo-400" },
-  { title: "Justice System", color: "from-sky-600 to-yellow-400" },
-  { title: "Media", color: "from-rose-500 to-violet-500" },
-  { title: "Medical", color: "from-green-500 to-lime-400" },
-  { title: "Military", color: "from-yellow-800 to-lime-700" },
-  { title: "Public Safety", color: "from-red-500 to-sky-500" },
-  { title: "Science", color: "from-emerald-400 to-purple-500" },
-  { title: "Service", color: "from-amber-500 to-orange-300" },
-  { title: "Sports", color: "from-cyan-600 to-sky-300" },
-  { title: "Technology", color: "from-teal-400 to-teal-300" },
+  {
+    title: "Aviation",
+    color: "from-sky-200 to-sky-500",
+    icon: AviationIcon,
+  },
+  { title: "Arts", color: "from-amber-800 to-rose-400", icon: ArtsIcon },
+  { title: "Business", color: "from-blue-300 to-blue-600", icon: BusinessIcon },
+  {
+    title: "Construction",
+    color: "from-gray-500 to-stone-300",
+    icon: ConstructionIcon,
+  },
+  { title: "Engineer", color: "from-cyan-300 to-cyan-600", icon: EnginnerIcon },
+  {
+    title: "Education",
+    color: "from-green-600 to-red-600",
+    icon: EducationIcon,
+  },
+  {
+    title: "Justice System",
+    color: "from-sky-600 to-yellow-400",
+    icon: JusticeIcon,
+  },
+  { title: "Media", color: "from-fuchsia-300 to-pink-500", icon: MediaIcon },
+  { title: "Medical", color: "from-lime-400 to-green-500", icon: MedicalIcon },
+  {
+    title: "Military",
+    color: "from-yellow-800 to-lime-700",
+    icon: MilitaryIcon,
+  },
+  {
+    title: "Public Safety",
+    color: "from-red-500 to-sky-500",
+    icon: PublicIcon,
+  },
+  {
+    title: "Science",
+    color: "from-emerald-400 to-purple-500",
+    icon: ScienceIcon,
+  },
+  {
+    title: "Service",
+    color: "from-amber-500 to-amber-700",
+    icon: ServiceIcon,
+  },
+  {
+    title: "Sports",
+    color: "from-emerald-300 to-emerald-500",
+    icon: SportsIcon,
+  },
+  {
+    title: "Technology",
+    color: "from-teal-400 to-teal-300",
+    icon: TechnologyIcon,
+  },
 ];
 
 export const jobColumns = [

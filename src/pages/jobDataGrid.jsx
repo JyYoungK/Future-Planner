@@ -5,7 +5,7 @@ import { convertStringToNumber } from "../components/formatCurrency";
 
 function JobDataGrid({ rows, setSelectedJob }) {
   return (
-    <div className="flex h-full w-full">
+    <div className="flex h-full w-full text-white">
       <div className="h-[350px] items-center justify-center md:h-[550px] lg:w-[1000px]">
         <DataGrid
           autoPageSize

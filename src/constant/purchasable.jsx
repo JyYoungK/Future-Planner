@@ -21,6 +21,7 @@ function toCurrencies(value) {
 }
 
 function CustomSlider({ row, onPriceChange }) {
+  const [isTyping, setIsTyping] = useState(false);
   const [value, setValue] = useState(
     row.selectedPrice !== 0 ? row.selectedPrice : row.minPrice
   );
@@ -42,8 +43,12 @@ function CustomSlider({ row, onPriceChange }) {
         "You cannot increase the price of this item as you have exceeded your budget. Return to summary and increase your budget or lower the price of this item"
       );
     } else {
-      setValue(event.target.value === "" ? "" : Number(event.target.value));
-      onPriceChange(Number(event.target.value));
+      let newValue = event.target.value;
+      if (/^0/.test(newValue)) {
+        newValue = newValue.replace(/^0+/, "");
+      }
+      setValue(newValue === "" ? "" : Number(newValue));
+      onPriceChange(Number(newValue));
     }
   };
 
@@ -60,6 +65,7 @@ function CustomSlider({ row, onPriceChange }) {
   return (
     <>
       <Slider
+        className="m-4 w-3/5"
         value={typeof value === "number" ? value : row.minPrice}
         size="small"
         onChange={handleSliderChange}
@@ -71,14 +77,13 @@ function CustomSlider({ row, onPriceChange }) {
             ? profile.earnAmount - profile.spendAmount
             : row.maxPrice
         }
-        style={{ width: "150px" }} // set the width of the slider to 150px
-        className="m-4 md:w-[80px]"
       />
       <input
-        className="no-arrows w-full"
+        className="no-arrows w-2/5"
         value={value}
         onChange={handleInputChange}
         onBlur={handleBlur}
+        onFocus={() => setIsTyping(true)}
         min={row.minPrice}
         max={
           row.maxPrice === "inf"
@@ -86,6 +91,7 @@ function CustomSlider({ row, onPriceChange }) {
             : row.maxPrice
         }
         type="number"
+        style={{ backgroundColor: "transparent", color: "white" }}
       />
     </>
   );
@@ -93,9 +99,13 @@ function CustomSlider({ row, onPriceChange }) {
 
 function CustomQuantity({ row, onQuantityChange }) {
   const [value, setValue] = useState(row.quantity);
+
   const handleInputChange = (event) => {
-    const newQuantity =
-      event.target.value === "" ? "" : Number(event.target.value);
+    let newValue = event.target.value;
+    if (/^0/.test(newValue)) {
+      newValue = newValue.replace(/^0+/, "");
+    }
+    const newQuantity = newValue === "" ? "" : Number(newValue);
     if (newQuantity * row.selectedPrice > profile.earnAmount) {
       alert(
         "You cannot increase the quantity of this item as you have exceeded your budget. Return to summary and increase your budget or lower the quantity of this item"
@@ -109,14 +119,12 @@ function CustomQuantity({ row, onQuantityChange }) {
   };
 
   return (
-    <Input
+    <input
+      className="no-arrows w-full"
       value={value}
       onChange={handleInputChange}
-      inputProps={{
-        step: 1,
-        min: 0,
-        type: "number",
-      }}
+      type="number"
+      style={{ backgroundColor: "transparent", color: "white" }}
     />
   );
 }
@@ -140,23 +148,24 @@ function CustomQuantity({ row, onQuantityChange }) {
 // };
 
 export const columns = [
-  { field: "id", headerName: "ID", width: 90, hide: true },
+  { field: "id", headerName: "ID", hide: true },
   {
     field: "type",
     headerName: "Type",
-    width: 80,
-    editable: false,
   },
   {
     field: "name",
     headerName: "Name",
-    width: 300,
-    editable: false,
+    width: 400,
+    minWidth: 150,
+    maxWidth: 600,
   },
   {
     field: "selectedPrice",
     headerName: "Price",
-    width: 250,
+    width: 400,
+    minWidth: 150,
+    maxWidth: 500,
     renderCell: (params) => {
       return (
         <CustomSlider
@@ -171,22 +180,26 @@ export const columns = [
   {
     field: "quantity",
     headerName: "Quantity",
-    type: "number",
-    width: 80,
-    renderCell: (params) => (
-      <CustomQuantity
-        row={params.row}
-        onQuantityChange={(newValue) => {
-          params.row.quantity = newValue;
-        }}
-      />
-    ),
+    width: 200,
+    minWidth: 150,
+    maxWidth: 500,
+    renderCell: (params) => {
+      return (
+        <CustomQuantity
+          row={params.row}
+          onQuantityChange={(newValue) => {
+            params.row.quantity = newValue;
+          }}
+        />
+      );
+    },
   },
   {
     field: "total",
     headerName: "Total",
-    type: "number",
-    width: 80,
+    width: 400,
+    minWidth: 150,
+    maxWidth: 600,
     renderCell: (params) => {
       params.total = params.row.selectedPrice * params.row.quantity;
       const total = params.row.selectedPrice * params.row.quantity;

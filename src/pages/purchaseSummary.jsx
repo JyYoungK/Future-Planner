@@ -31,8 +31,9 @@ function purchaseSummary({ handleButtonClick }) {
           <div>
             <h1 className="mb-5 text-2xl font-bold">
               You want to earn{" "}
-              {formatCurrency(profile.currency, profile.earnAmount)} by{" "}
-              {profile.goalYear}
+              {formatCurrency(profile.currency, profile.earnAmount) ||
+                "CA$0.00"}{" "}
+              by {profile.goalYear}
             </h1>
             {categories.map((categoryName, index) => {
               const category = profile.purchased[categoryName];
@@ -110,12 +111,12 @@ function purchaseSummary({ handleButtonClick }) {
         )}
       </Fragment>
       <div className="mt-4">
-        <button
+        {/* <button
           className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
           onClick={() => handleButtonClick(5)}
         >
           Continue
-        </button>
+        </button> */}
         <button
           className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
           onClick={() => handleButtonClick(3)}
