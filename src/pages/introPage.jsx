@@ -8,16 +8,16 @@ function introPage({ handleButtonClick, showWelcome }) {
           showWelcome ? "opacity-100" : "opacity-0"
         }`}
       >
-        <h1 className="mb-5 text-3xl transition-opacity duration-500">
+        <h1 className="mb-5 text-4xl transition-opacity duration-500">
           Welcome
         </h1>
-        <h1 className="mb-5 text-xl">
+        <h1 className="mb-5 text-2xl">
           This app will help you plan your future, career and reach your
           financial goal
         </h1>
         <button
-          className="rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-          onClick={() => handleButtonClick(2)}
+          className="mt-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
+          onClick={() => handleButtonClick(0)}
         >
           Continue
         </button>

@@ -5,15 +5,13 @@ import Countries from "../../components/countries";
 import GeneralInput from "../General/generalInput";
 import { profile } from "../../constant/profile";
 import { formatCurrency } from "../../components/formatCurrency";
-// import ShuttlePart1 from "../../assets/ShuttlePart1.png";
-// import ShuttlePart2 from "../../assets/ShuttlePart2.png";
-// import ShuttlePart3 from "../../assets/ShuttlePart3.png";
+import TypeWriter from "typewriter-effect";
+import NextIcon from "../../assets/NextIcon.png";
 
 function mainControl({ handleButtonClick, totalSpent }) {
   const [totalAmount, setTotalAmount] = useState(profile.earnAmount || 0);
   const [speechIndex, setSpeechIndex] = useState(0);
-  const [build, setBuild] = useState(false);
-  const [tutorialOn, setTutorialOn] = useState(false);
+  const [tutorialOn, setTutorialOn] = useState(profile.tutorial);
   const [showPopup, setShowPopup] = useState(false);
   const [generalCheck, setGeneralCheck] = useState(false);
   const [spendCheck, setSpendCheck] = useState(false);
@@ -22,29 +20,24 @@ function mainControl({ handleButtonClick, totalSpent }) {
 
   const speeches = [
     "Hello? Hello? Can you hear me?",
-    "Great! You can hear me!",
-    "By the way my name is Junyoung and I can help you get to Earth!",
-    "First we need to build a rocket to get there!",
-    "Don't worry! I know it's your first time building one but it's not a rocket science!",
-    "I can help you build it! I just built my first one yesterday haha!",
-    "Shall we get started?",
-  ];
-
-  const countrySpeeches = [
-    "Let's build our station first!",
-    "To build our station, we need to point it towards the right location!",
-    // "Earth has many beautiful countries, but you can only choose one!",
-    "However, due to our limited data, we can only point it towards Canada for now",
+    "Great! Hey, how is it going?",
+    "Oh, you're interested in visiting Earth?",
+    "I can definitely help you get to Earth!",
+    "You would need a rocket to get there and I was just finish building one! You can take mine!",
+    "While I finish up building the rocket, have you thought about what you want to do on Earth?",
+    "Earth is a beautiful planet with an incredible diversity of life and landscapes.",
+    "There are so many things to do on Earth!",
+    "Here, take a look at this guide.",
+    "It will help you choose what to do!",
+    "Follow the guide from filling out General Information, Spend List, then Career Selection.",
+    "After you are done, the rocket should be ready!",
+    "Talk to you soon!",
   ];
 
   function handleNextSpeech() {
-    if (speechIndex === speeches.length - 2) {
-      document.getElementById("next-button").textContent =
-        "Let's build a rocket!";
-      setBuild(true);
-    } else if (speechIndex === speeches.length - 1) {
-      // handleButtonClick(3);
+    if (speechIndex === speeches.length - 1) {
       setTutorialOn(false);
+      profile.tutorial = false;
     }
     setSpeechIndex((prevIndex) => prevIndex + 1);
   }
@@ -96,6 +89,7 @@ function mainControl({ handleButtonClick, totalSpent }) {
               style={{ maxWidth: "80%" }}
               className="animate-bounce-slow hidden md:block"
             />
+
             <div className="flex w-full flex-col items-center justify-center">
               <div className="mb-2 w-4/5 border-2 border-cyan-300 md:p-2">
                 <div className="flex items-center justify-center border-2 border-cyan-300">
@@ -164,7 +158,7 @@ function mainControl({ handleButtonClick, totalSpent }) {
                       <div className="mr-5 ">Job:</div>
                       {profile.goalJob.title || "N/A"}
                     </div>
-                    <div className="flex flex-row items-center justify-center whitespace-nowrap text-lg font-bold">
+                    <div className="flex flex-col items-center justify-center whitespace-nowrap text-lg font-bold md:flex-row">
                       <div className="mr-5 ">Income/Year: </div>
                       {(profile.goalJob.medianSalary === "" ||
                         profile.goalJob.medianSalary === null) &&
@@ -203,6 +197,32 @@ function mainControl({ handleButtonClick, totalSpent }) {
                 </span>
               </button>
             </div>
+            {tutorialOn && (
+              <div className="fixed top-0 left-0 flex h-full w-full items-center justify-center">
+                <div className="absolute z-10 h-full w-full bg-[#083344] bg-opacity-75">
+                  <div className=" absolute bottom-0 left-1/2 z-10 mb-10 flex h-1/6 w-4/5 -translate-x-1/2 transform items-center justify-center border-8 border-[#03121d] bg-[#02200f] bg-opacity-100">
+                    <div className="space-letter text-md z-10 text-center text-[#1bc75a] md:text-xl">
+                      <div className="flex flex-col md:flex-row">
+                        <TypeWriter
+                          options={{
+                            autoStart: true,
+                            loop: false,
+                            delay: 50,
+                            strings: speeches[speechIndex],
+                          }}
+                        />
+                        <img
+                          src={NextIcon}
+                          alt={NextIcon}
+                          className="ml-4 h-8 w-8 hover:scale-110"
+                          onClick={handleNextSpeech}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
             {showPopup && (
               <div className="fixed top-0 left-0 flex h-full w-full items-center justify-center">
                 <div className="absolute z-10 h-full w-full bg-red-500 opacity-75"></div>
@@ -228,53 +248,6 @@ function mainControl({ handleButtonClick, totalSpent }) {
                 </div>
               </div>
             )}
-            {/* {tutorialOn && (
-              <div
-                className="relative my-4 bg-white p-4 shadow-md"
-                style={{
-                  clipPath:
-                    "polygon(0 0, 100% 0, 100% 70%, 60% 70%, 20% 100%, 40% 70%, 0 70%)",
-                  height: "200px", // Set a fixed height for the speech bubble
-                  width: "500px",
-                }}
-              >
-                <p className="text-lg">{speeches[speechIndex]}</p>
-                <button
-                  id="next-button"
-                  onClick={handleNextSpeech}
-                  className={`absolute bottom-20 left-1/2 -translate-x-1/2 transform rounded-md  px-4 py-2 text-white ${
-                    build
-                      ? "bg-red-500 hover:bg-orange-500"
-                      : "bg-blue-500 hover:bg-blue-600"
-                  }`}
-                >
-                  Next
-                </button>
-                <span
-                  className="absolute h-6 w-6 rotate-45 transform bg-white"
-                  style={{ left: "-3px", bottom: "-3px" }}
-                ></span>
-              </div>
-            )} */}
-            {/* {!tutorialOn && (
-              <div className="relative h-full w-full">
-                <img
-                  src={ShuttlePart1}
-                  alt="Part1"
-                  className="absolute inset-0 z-30 w-1/2 cursor-pointer object-contain grayscale hover:grayscale-0"
-                />
-                <img
-                  src={ShuttlePart2}
-                  alt="Part2"
-                  className="absolute inset-0 z-20 w-1/2 cursor-pointer object-contain grayscale hover:grayscale-0"
-                />
-                <img
-                  src={ShuttlePart3}
-                  alt="Part3"
-                  className="absolute inset-0 z-10 w-1/2 cursor-pointer object-contain grayscale hover:grayscale-0"
-                />
-              </div>
-            )} */}
           </div>
         </SpaceThemeBorder>
       </div>
@@ -284,9 +257,25 @@ function mainControl({ handleButtonClick, totalSpent }) {
 
 export default mainControl;
 
-// <button
-//   className="mx-2 rounded-md bg-blue-500 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-600"
-//   onClick={() => handleButtonClick(3)}
-// >
-//   Continue
-// </button>
+{
+  /* <button
+                    id="next-button"
+                    onClick={handleNextSpeech}
+                    className="mx-auto mt-4 block rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                    >
+                    Next
+                  </button> */
+}
+{
+  /* <div
+className="fixed right-0 top-0  my-4 bg-white p-4 shadow-md"
+style={{
+  clipPath:
+    "polygon(0 0, 100% 0, 100% 70%, 60% 70%, 20% 100%, 40% 70%, 0 70%)",
+  height: "200px", // Set a fixed height for the speech bubble
+  width: "500px",
+  top: "50%", // center the speech bubble vertically
+  transform: "translateY(-50%)", // center the speech bubble vertically
+}}>
+</div> */
+}

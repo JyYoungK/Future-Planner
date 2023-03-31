@@ -16,6 +16,5 @@ export const profile = {
     hasDegree: false,
     degree: "",
   },
-  tutorial1: false,
-  tutorial2: false,
+  tutorial: false,
 };

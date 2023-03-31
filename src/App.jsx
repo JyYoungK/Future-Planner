@@ -6,6 +6,7 @@ import { LinearProgressWithLabel } from "./components/linearProgressWithLabel";
 import { profile } from "./constant/profile";
 import FadeTransition from "./components/fadeTransition";
 import IntroPage from "./pages/introPage";
+import Tutorial from "./pages/tutorial";
 import MainControl from "./pages/Main/mainControl";
 import EarnGoal from "./pages/Spend/earnGoal";
 import PurchaseSummary from "./pages/Spend/purchaseSummary";
@@ -84,32 +85,34 @@ function App() {
     content = <FinalSummary handleButtonClick={handleButtonClick} />;
   } else if (step === 8) {
     content = <Goodbye />;
+  } else if (step === 0) {
+    content = <Tutorial handleButtonClick={handleButtonClick} />;
   }
 
   return (
     <div>
-      {/* {progress < 100 ? (
+      {progress < 100 ? (
         <LinearProgressWithLabel value={progress} />
       ) : (
-        showEarth && ( */}
-      <div className="relative">
-        <div className="absolute inset-0 z-10">
-          {step < 8 ? (
-            <FadeTransition show={showContent}>{content}</FadeTransition>
-          ) : (
-            <div>{content}</div>
-          )}
-        </div>
-        {/* <div className="fixed inset-0 z-0">
-          <Canvas>
-            <Suspense fallback={null}>
-              <Earth step={step} />
-            </Suspense>
-          </Canvas>
-        </div> */}
-      </div>
-      {/* )
-      )} */}
+        showEarth && (
+          <div className="relative">
+            <div className="absolute inset-0 z-10">
+              {step < 8 ? (
+                <FadeTransition show={showContent}>{content}</FadeTransition>
+              ) : (
+                <div>{content}</div>
+              )}
+            </div>
+            <div className="fixed inset-0 z-0">
+              <Canvas>
+                <Suspense fallback={null}>
+                  <Earth step={step} />
+                </Suspense>
+              </Canvas>
+            </div>
+          </div>
+        )
+      )}
     </div>
   );
 }

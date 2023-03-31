@@ -11,6 +11,10 @@
   --transition: 0.2s;
 }
 
+.space-letter {
+  font-family: "Public Pixel", sans-serif;
+}
+
 .no-arrows::-webkit-outer-spin-button,
 .no-arrows::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -272,12 +276,12 @@
 }
 
 /* Sparks */
-div svg {
+a svg {
   position: absolute;
   z-index: 3;
 }
 
-div svg path {
+a svg path {
   fill: var(--glare);
 }
 
@@ -298,38 +302,38 @@ div svg path {
   }
 }
 
-div svg {
+a svg {
   --delay-step: 0.15;
   top: calc(var(--y, 0) * 1%);
   left: calc(var(--x, 0) * 1%);
   /* transform: translate(-25%, -25%) scale(0); */
 }
 
-div svg:nth-of-type(1) {
+a svg:nth-of-type(1) {
   --x: 10;
   --y: 10;
   --s: 1.5;
 }
 
-div svg:nth-of-type(2) {
+a svg:nth-of-type(2) {
   --x: 30;
   --y: 80;
   --s: -1.2;
 }
 
-div svg:nth-of-type(3) {
+a svg:nth-of-type(3) {
   --x: 70;
   --y: 50;
   --s: 1.1;
 }
 
-div svg:nth-of-type(4) {
+a svg:nth-of-type(4) {
   --x: 90;
   --y: 20;
   --s: 0.9;
 }
 
-div svg:nth-of-type(5) {
+a svg:nth-of-type(5) {
   --x: 50;
   --y: 90;
   --s: 0.8;

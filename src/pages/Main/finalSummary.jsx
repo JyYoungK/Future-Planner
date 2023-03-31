@@ -4,10 +4,14 @@ import { profile } from "../../constant/profile";
 import { formatCurrency } from "../../components/formatCurrency";
 import Sparks from "../../components/earth/sparks";
 import SmileIcon from "../../assets/Smile.png";
+import TypeWriter from "typewriter-effect";
+import NextIcon from "../../assets/NextIcon.png";
 
 function finalSummary({ handleButtonClick }) {
   const [showSparks, setShowSparks] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+  const [speechIndex, setSpeechIndex] = useState(0);
+  const [bye, setBye] = useState(false);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -19,15 +23,15 @@ function finalSummary({ handleButtonClick }) {
   }, []);
 
   const colors = [
-    "blue-100",
-    "red-100",
-    "green-100",
-    "yellow-100",
-    "pink-200",
-    "orange-200",
-    "purple-100",
-    "indigo-100",
-    "gray-100",
+    "bg-blue-100",
+    "bg-red-100",
+    "bg-green-100",
+    "bg-yellow-100",
+    "bg-pink-200",
+    "bg-orange-200",
+    "bg-purple-100",
+    "bg-indigo-100",
+    "bg-gray-100",
   ];
 
   const textColors = [
@@ -42,12 +46,28 @@ function finalSummary({ handleButtonClick }) {
     "text-gray-300",
   ];
 
+  const speeches = [
+    "I see that you are all set!",
+    "The rocket is ready to go as well!",
+    "I double checked the rocket for your safe trip.",
+    "I hope you enjoy the ride to Earth!",
+    "See you around again!",
+    "Bye!",
+  ];
+
   const categories = Object.keys(profile.purchased);
   categories.sort((a, b) => {
     const indexA = pieChartItems.indexOf(a);
     const indexB = pieChartItems.indexOf(b);
     return indexA - indexB;
   });
+
+  function handleNextSpeech() {
+    if (speechIndex === speeches.length - 1) {
+      handleButtonClick(8);
+    }
+    setSpeechIndex((prevIndex) => prevIndex + 1);
+  }
 
   return (
     <div className="flex w-screen items-center justify-center text-white">
@@ -89,7 +109,7 @@ function finalSummary({ handleButtonClick }) {
                           {categoryName}
                         </h2>
                         <div
-                          className={`max-h-96 overflow-y-scroll rounded-lg border p-4 bg-${color}`}
+                          className={`max-h-96 overflow-y-scroll rounded-lg border p-4 ${color}`}
                           style={{ scrollbarColor: `${color} #4B5563` }}
                         >
                           {Object.keys(category).map((itemId) => {
@@ -138,7 +158,7 @@ function finalSummary({ handleButtonClick }) {
                 role="button"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
-                onClick={() => handleButtonClick(8)}
+                onClick={() => setBye(true)}
               >
                 {isHovered ? (
                   <div className="flex items-center">
@@ -156,14 +176,32 @@ function finalSummary({ handleButtonClick }) {
                 Not ready to leave?
               </button>
             </div>
-            {/* <div className="mt-8">
-              <button
-                className="mx-2 rounded-md bg-blue-500 px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-600"
-                onClick={() => handleButtonClick(2)}
-              >
-                Not ready to leave?
-              </button>
-            </div> */}
+            {bye && (
+              <div className="fixed top-0 left-0 flex h-full w-full items-center justify-center">
+                <div className="absolute z-10 h-full w-full bg-[#083344] bg-opacity-75">
+                  <div className=" absolute bottom-0 left-1/2 z-10 mb-10 flex h-1/6 w-4/5 -translate-x-1/2 transform items-center justify-center border-8 border-[#03121d] bg-[#02200f] bg-opacity-100">
+                    <div className="space-letter text-md z-10 text-center text-[#1bc75a] md:text-xl">
+                      <div className="flex flex-col md:flex-row">
+                        <TypeWriter
+                          options={{
+                            autoStart: true,
+                            loop: false,
+                            delay: 50,
+                            strings: speeches[speechIndex],
+                          }}
+                        />
+                        <img
+                          src={NextIcon}
+                          alt={NextIcon}
+                          className="ml-4 h-8 w-8 hover:scale-110"
+                          onClick={handleNextSpeech}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </SpaceThemeBorder>
       </div>
