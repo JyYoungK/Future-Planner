@@ -1,5 +1,4 @@
-import React from "react";
-
+import { useEffect } from "react";
 import SpaceBackground from "../../assets/SpaceBackground.gif";
 
 function goodbye() {
@@ -14,11 +13,12 @@ function goodbye() {
 
   return (
     <div
-      className="flex w-full flex-col justify-between"
+      className="flex w-full flex-col  text-3xl font-black text-yellow-500 md:text-5xl"
       style={backgroundStyle}
     >
-      <div className="mb-5 text-3xl text-white">Thank you</div>
-      <div className="text-2xl text-white">Made by: Junyoung Kang</div>
+      <div className="my-4">Thank you</div>
+      <div className="my-4">Made by</div>
+      <div className="my-4">Junyoung Kang</div>
     </div>
   );
 }

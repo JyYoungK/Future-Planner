@@ -430,3 +430,32 @@ a svg:nth-of-type(5) {
     transform: translate(0);
   }
 }
+
+/* Falling Words */
+
+.falling-words {
+  overflow: hidden;
+  height: 10vh;
+  width: 50vw;
+}
+
+.falling-words > .word {
+  position: absolute;
+  top: -25vh;
+  animation: fallIn 10s ease-in-out infinite, rotation 3s linear infinite;
+}
+
+@keyframes fallIn {
+  to {
+    top: 110vh;
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
