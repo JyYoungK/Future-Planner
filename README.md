@@ -4,7 +4,7 @@ Imagine having a million dreams of places to go, things to buy, and eat deliciou
 
 If you like the idea, feel free to message me collaborate and contribute!
 
-- Demo Site URL: Coming soon!
+- Demo Site URL: https://future-planner.vercel.app/
 - Demo Video URL: Coming soon!
 
 ### Frontend
