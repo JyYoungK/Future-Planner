@@ -53,6 +53,7 @@ function finalSummary({ handleButtonClick }) {
     "I hope you enjoy the ride to Earth!",
     "See you around again!",
     "Bye!",
+    "(Returning back to the start page)",
   ];
 
   const categories = Object.keys(profile.purchased);
@@ -64,7 +65,25 @@ function finalSummary({ handleButtonClick }) {
 
   function handleNextSpeech() {
     if (speechIndex === speeches.length - 1) {
-      handleButtonClick(8);
+      //Reset the values
+
+      profile.country = "";
+      profile.countryCode = "";
+      profile.currency = "CAD";
+      profile.earnAmount = 0;
+      profile.spendAmount = 0;
+      profile.purchased = {};
+      profile.goalYear = null;
+      profile.goalJob = {
+        title: "",
+        medianSalary: "",
+        topSalary: "",
+        educationPeriod: "",
+        hasDegree: false,
+        degree: "",
+      };
+      profile.tutorial = false;
+      handleButtonClick(1);
     }
     setSpeechIndex((prevIndex) => prevIndex + 1);
   }
@@ -182,14 +201,15 @@ function finalSummary({ handleButtonClick }) {
                   <div className=" absolute bottom-0 left-1/2 z-10 mb-10 flex h-1/6 w-4/5 -translate-x-1/2 transform items-center justify-center border-8 border-[#03121d] bg-[#02200f] bg-opacity-100">
                     <div className="space-letter text-md z-10 text-center text-[#1bc75a] md:text-xl">
                       <div className="flex flex-col md:flex-row">
-                        <TypeWriter
+                        {/* <TypeWriter
                           options={{
                             autoStart: true,
                             loop: false,
                             delay: 50,
                             strings: speeches[speechIndex],
                           }}
-                        />
+                        /> */}
+                        {speeches[speechIndex]}
                         <img
                           src={NextIcon}
                           alt={NextIcon}

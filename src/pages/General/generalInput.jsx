@@ -6,18 +6,16 @@ import { formatCurrency } from "../../components/formatCurrency";
 function generalInput({ totalAmount, setTotalAmount, setGeneralCheck }) {
   const [currency, setCurrency] = useState(profile.currency || "CAD");
   const [isTyping, setIsTyping] = useState(false);
-  const [goalYear, setGoalYear] = useState(
-    profile.goalYear || new Date().getFullYear()
-  );
+  const [goalYear, setGoalYear] = useState(profile.goalYear);
   function handleYearChange(event) {
     setGoalYear(event.target.value);
     profile.goalYear = event.target.value;
   }
 
-  const handleCurrencyChange = (e) => {
-    setCurrency(e.target.value);
-    profile.currency = e.target.value;
-  };
+  // const handleCurrencyChange = (e) => {
+  //   setCurrency(e.target.value);
+  //   profile.currency = e.target.value;
+  // };
 
   const handleAmountChange = (e) => {
     let inputAmount = e.target.value.replace(/[^0-9.]/g, ""); // only allow numbers and decimal point

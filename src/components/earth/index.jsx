@@ -29,30 +29,30 @@ export function Earth({ step }) {
   });
 
   useEffect(() => {
-    const earthMesh = earthRef.current;
-    const cloudMesh = cloudsRef.current;
+    // const earthMesh = earthRef.current;
+    // const cloudMesh = cloudsRef.current;
 
-    const animate = () => {
-      const delta = clockRef.current.getDelta();
+    // const animate = () => {
+    //   const delta = clockRef.current.getDelta();
 
-      if (!animationComplete && step === 2) {
-        setPosition((prevPosition) => ({
-          x: prevPosition.x,
-          y: prevPosition.y + 0.3 * delta,
-          z: prevPosition.z,
-        }));
-        // console.log(controlsRef.current);
-        // controlsRef.current.autoRotate = false; // stop auto rotation
-        // controlsRef.current.target.set(0, position.y, 0); // set new target position
-      }
+    //   if (!animationComplete && step === 2) {
+    //     setPosition((prevPosition) => ({
+    //       x: prevPosition.x,
+    //       y: prevPosition.y + 0.3 * delta,
+    //       z: prevPosition.z,
+    //     }));
+    //     // console.log(controlsRef.current);
+    //     // controlsRef.current.autoRotate = false; // stop auto rotation
+    //     // controlsRef.current.target.set(0, position.y, 0); // set new target position
+    //   }
 
-      earthMesh.position.set(position.x, position.y, position.z);
-      cloudMesh.position.set(position.x, position.y, position.z);
-    };
+    //   earthMesh.position.set(position.x, position.y, position.z);
+    //   cloudMesh.position.set(position.x, position.y, position.z);
+    // };
 
     const render = () => {
       requestAnimationFrame(render);
-      animate();
+      // animate();
     };
     render();
 
@@ -73,27 +73,31 @@ export function Earth({ step }) {
         saturation={0}
         fade={true}
       />
-      <mesh ref={cloudsRef}>
-        <sphereGeometry args={[1.2, 64, 64]} />
-        <meshPhongMaterial
-          map={cloudsMap}
-          opacity={0.4}
-          depthWrite={true}
-          transparent={true}
-          side={THREE.DoubleSide}
-        />
-      </mesh>
+      {step < 2 && (
+        <>
+          <mesh ref={cloudsRef}>
+            <sphereGeometry args={[1.2, 64, 64]} />
+            <meshPhongMaterial
+              map={cloudsMap}
+              opacity={0.4}
+              depthWrite={true}
+              transparent={true}
+              side={THREE.DoubleSide}
+            />
+          </mesh>
 
-      <mesh ref={earthRef}>
-        <sphereGeometry args={[1.2, 64, 64]} />
-        <meshPhongMaterial specularMap={specularMap} />
-        <meshStandardMaterial
-          map={colorMap}
-          normalMap={normalMap}
-          metalness={0.4}
-          roughness={0.7}
-        />
-      </mesh>
+          <mesh ref={earthRef}>
+            <sphereGeometry args={[1.2, 64, 64]} />
+            <meshPhongMaterial specularMap={specularMap} />
+            <meshStandardMaterial
+              map={colorMap}
+              normalMap={normalMap}
+              metalness={0.4}
+              roughness={0.7}
+            />
+          </mesh>
+        </>
+      )}
 
       <OrbitControls
         enableZoom={false}

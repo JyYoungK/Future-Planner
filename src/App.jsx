@@ -57,6 +57,7 @@ function App() {
   if (step === 1) {
     content = (
       <IntroPage
+        setTotalSpent={setTotalSpent}
         handleButtonClick={handleButtonClick}
         showWelcome={showWelcome}
       />

@@ -55,7 +55,7 @@ function mainControl({ handleButtonClick, totalSpent }) {
   }
 
   useEffect(() => {
-    profile.goalYear = new Date().getFullYear() + 1;
+    // profile.goalYear = new Date().getFullYear() + 1;
     if (profile.spendAmount > 0) {
       setSpendCheck(true);
     } else {
@@ -203,14 +203,15 @@ function mainControl({ handleButtonClick, totalSpent }) {
                   <div className=" absolute bottom-0 left-1/2 z-10 mb-10 flex h-1/6 w-4/5 -translate-x-1/2 transform items-center justify-center border-8 border-[#03121d] bg-[#02200f] bg-opacity-100">
                     <div className="space-letter text-md z-10 text-center text-[#1bc75a] md:text-xl">
                       <div className="flex flex-col md:flex-row">
-                        <TypeWriter
+                        {/* <TypeWriter
                           options={{
                             autoStart: true,
                             loop: false,
-                            delay: 50,
+                            delay: 1,
                             strings: speeches[speechIndex],
                           }}
-                        />
+                        /> */}
+                        {speeches[speechIndex]}
                         <img
                           src={NextIcon}
                           alt={NextIcon}

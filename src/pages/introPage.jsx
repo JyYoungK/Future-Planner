@@ -1,6 +1,7 @@
 import React from "react";
 
-function introPage({ handleButtonClick, showWelcome }) {
+function introPage({ handleButtonClick, showWelcome, setTotalSpent }) {
+  setTotalSpent(0);
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center">
       <div
