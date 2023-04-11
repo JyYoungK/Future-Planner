@@ -7,7 +7,7 @@ export const profile = {
   earnAmount: 0,
   spendAmount: 0,
   purchased: {},
-  goalYear: null,
+  goalYear: new Date().getFullYear() + 1,
   goalJob: {
     title: "",
     medianSalary: "",
