@@ -117,13 +117,11 @@ function mainControl({ handleButtonClick, totalSpent }) {
               </div>
 
               <div className="mb-2 w-4/5 border-2 border-green-300 md:p-2">
-                <div className="flex items-center justify-center border-2 border-green-300 hover:bg-green-300">
-                  <button
-                    className="p-4 font-bold text-white transition-colors duration-300  hover:text-black md:text-xl"
-                    onClick={() => handlePageClick("spend")}
-                  >
-                    Spend List
-                  </button>
+                <div
+                  onClick={() => handlePageClick("spend")}
+                  className="flex items-center justify-center border-2 border-green-300 p-4 font-bold text-white transition-colors duration-300 hover:bg-green-300 hover:text-black md:text-xl"
+                >
+                  <div className="">Spend List</div>
                 </div>
                 <div className="border-2 border-green-300 p-5">
                   <div className="text-white md:flex-row">
@@ -144,13 +142,11 @@ function mainControl({ handleButtonClick, totalSpent }) {
               </div>
 
               <div className="mb-2 w-4/5 border-2 border-indigo-300 md:p-2">
-                <div className="flex items-center justify-center border-2 border-indigo-300 hover:bg-indigo-300">
-                  <button
-                    className="p-4 font-bold text-white transition-colors duration-300  hover:text-black md:text-xl"
-                    onClick={() => handlePageClick("career")}
-                  >
-                    Career Selection
-                  </button>
+                <div
+                  onClick={() => handlePageClick("career")}
+                  className="flex items-center justify-center border-2 border-indigo-300  p-4 font-bold text-white transition-colors duration-300 hover:bg-indigo-300 hover:text-black md:text-xl"
+                >
+                  <div className="">Career Selection</div>
                 </div>
                 <div className="border-2 border-indigo-300 p-5">
                   <div className="text-white md:flex-row">
