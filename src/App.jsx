@@ -15,6 +15,8 @@ import CareerSummary from "./pages/Career/careerSummary";
 import FinalSummary from "./pages/Main/finalSummary";
 import Goodbye from "./pages/Main/goodbye";
 
+import * as linkedin from 'linkedin-jobs-api';
+
 function App() {
   const [step, setStep] = useState(1);
   const [showContent, setShowContent] = useState(true);
@@ -22,6 +24,24 @@ function App() {
   const [showEarth, setShowEarth] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
   const [totalSpent, setTotalSpent] = useState(profile.spendAmount || 0);
+
+  // -------------- Test Case
+  const queryOptions = {
+    keyword: 'software engineer',
+    location: 'Singapore',
+    dateSincePosted: 'past Week',
+    jobType: 'full time',
+    remoteFilter: 'remote',
+    salary: '10000',
+    experienceLevel: 'entry level',
+    limit: '10'
+  };
+
+  linkedin.query(queryOptions).then(response => {
+    console.log(response);
+  });
+
+  // ---------------
 
   useEffect(() => {
     const intervalId = setInterval(() => {
