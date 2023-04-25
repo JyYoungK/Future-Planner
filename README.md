@@ -28,4 +28,4 @@ cd to client and server folder then
 ### Create Your Own Demo Working Website on your localhost
 
 - Local development client:
-  npm run dev
+  npm run devd
