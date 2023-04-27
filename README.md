@@ -7,11 +7,15 @@ If you like the idea, feel free to message me collaborate and contribute!
 - Demo Site URL: https://future-planner.vercel.app/
 - Demo Video URL: Coming soon!
 
-### Frontend
-
+### Frontend Work - @JyYoungK
+- UI/UX 
 - React for the main frame work
 - Tailwind for CSS
 - ApexChart for Chart
+
+### Backend Work - @JyYoungK
+- API/Database
+
 
 ## Getting Started
 
