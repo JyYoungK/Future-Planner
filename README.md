@@ -1,6 +1,6 @@
 # Future-Planner
 
-##This repo only contains Frontend Code
+## This repo only contains Frontend Code
 
 Over hundred places to go, things to buy, and eat delicious meals. But the reality is, life is expensive, and there are bills to pay. Job sites are supposed to help you find the right career in your area but I find the majority of job search websites are inadequate. They only present positions that match your search criteria and fail to provide sufficient information on the popularity or availability of certain jobs in comparison to others. Consequently, job seekers are restricted to a narrow range of options and may struggle to find what they are looking for. However, we can revolutionize this system. By determining your actual cost of living and income goals based on your location, you can explore the precise and up-to-date job market to identify the ideal career that will meet your financial needs. Say goodbye to financial stress and embrace the thrilling adventures that await you!
 
