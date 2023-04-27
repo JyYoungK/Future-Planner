@@ -13,7 +13,7 @@ If you like the idea, feel free to message me collaborate and contribute!
 - Tailwind for CSS
 - ApexChart for Chart
 
-### Backend Work - @JyYoungK
+### Backend Work - @bitcooker
 - API/Database
 
 
