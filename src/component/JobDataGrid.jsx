@@ -21,9 +21,9 @@ function JobDataGrid() {
           sx={{
             button: { color: "#000000" },
             boxShadow: 2,
-            border: 3,
+            border: 1,
             color: "black",
-            borderColor: "primary.light",
+            // borderColor: "primary.light",
             "& .MuiDataGrid-cell:hover": {
               color: "primary.main",
             },

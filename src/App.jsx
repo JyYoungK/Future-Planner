@@ -14,7 +14,7 @@ function App() {
 
   return (
     <div className="h-full w-screen">
-      <div className="flex h-1/6 flex-row justify-between border-2 border-black p-4">
+      <div className="border-1 flex h-1/6 flex-row justify-between border-black p-4">
         <div className="flex flex-row">
           <div className="text-2xl">Website Title</div>
           <button
