@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Dropdown } from "semantic-ui-react";
 import { Country, State, City } from "country-state-city";
+import { getFormattedWeatherData } from "./fetchWeather";
 
 function Regions() {
-  const [country, setCountry] = useState("ca");
+  const [country, setCountry] = useState("");
   const countries = Country.getAllCountries();
-
   const [state, setState] = useState("");
+
   const states = State.getAllStates();
   const countryOptions = countries
     .filter(
@@ -61,6 +62,34 @@ function Regions() {
 
     setState(selectedOption?.value || "");
   };
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      const fetchWeatherData = async () => {
+        navigator.geolocation.getCurrentPosition(async function (position) {
+          const data = await getFormattedWeatherData(
+            position.coords.latitude,
+            position.coords.longitude
+          );
+          const countryName = data.country.toLowerCase();
+          setCountry(data.country.toLowerCase());
+
+          const filteredStateOptions = states
+            .filter((state) => state.countryCode.toLowerCase() === countryName)
+            .map((state) => ({
+              key: state.isoCode.toLowerCase(),
+              value: state.isoCode.toLowerCase(),
+              text: state.name,
+            }));
+          setState("");
+          setStateOptions(filteredStateOptions);
+        });
+      };
+      fetchWeatherData();
+    } else {
+      setIsLoading(false);
+    }
+  }, []);
 
   return (
     <div className="flex flex-row items-center justify-center text-xl">

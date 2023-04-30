@@ -6,7 +6,7 @@ import { artsCategory } from "../old/constant/jobs";
 function JobDataGrid() {
   return (
     <div className="h-full w-full">
-      <div className="h-[900px] w-full md:h-[650px]">
+      <div className="h-[200px] w-full md:h-[650px]">
         <DataGrid
           autoPageSize
           rowHeight={60}
