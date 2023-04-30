@@ -15,7 +15,7 @@ function DropdownExampleSearchSelection() {
   };
   return (
     <div className="flex flex-row items-center justify-center">
-      <Dropdown
+      <dropdown
         placeholder="Select Country"
         fluid
         search
